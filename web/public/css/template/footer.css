@@ -1,7 +1,7 @@
 footer{
     min-height: 8vh;
-    position: relative;
-    margin-bottom: auto;
+    position: absolute;
+    margin-bottom: 0;
 
     width: 100%;
     min-width: 100%;
