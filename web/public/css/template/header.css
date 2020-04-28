@@ -1,0 +1,11 @@
+header{
+    position: relative;
+    height: 10vh;
+    min-width: 100%;
+    background-color: black;
+    min-height: 60px;
+}
+nav{
+    min-width: 100%;
+    min-height: 100%;
+}
