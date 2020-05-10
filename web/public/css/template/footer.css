@@ -1,10 +1,10 @@
 footer{
-    min-height: 8vh;
+    min-height: 10vh;
     position: absolute;
     margin-bottom: 0;
 
-    width: 100%;
     min-width: 100%;
 
-    background-color: black;
+    background-color: #1E1E1E;
+    color: rgb(102, 102, 102);
 }
