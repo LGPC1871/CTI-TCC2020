@@ -20,6 +20,12 @@ $templateStyles = array("body.css", "header.css", "main.css", "footer.css");
             <link href="<?=$href?>" rel="stylesheet" />
         <?php endforeach ?>
     <?php endif ?>
+    <?php if(isset($styles)): ?>
+        <?php foreach($styles as $style_name): ?>
+            <?php $href =$diretorio . "public/css/" . $style_name ?>
+            <link href="<?=$href?>" rel="stylesheet" />
+        <?php endforeach ?>
+    <?php endif ?>
     <title>COTIL Jogos</title>
 </head>
 <body>
