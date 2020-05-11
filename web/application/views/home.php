@@ -56,18 +56,3 @@ $diretorio = base_url();
     </div>
 </div>
 </main>
-
-<?php
-/*
-                <?php if(isset($carrossel)):?>
-                    <?php foreach($carrossel as $item): ?>
-                        <div class="carousel-item">
-                        <?php echo "<img src='data:image/jpg;base64,".base64_encode($item['HA_imagem'])."' alt=$item[HA_imagemalt] />"; ?>
-                        <div class="carousel-caption">
-                            <h5><?php echo $item['HA_legendatitulo'] ?></h5>
-                            <p><?php echo $item['HA_legendatexto'] ?></p>
-                        </div>
-                    </div>
-                    <?php endforeach ?>
-                <?php endif ?>
-*/
