@@ -5,6 +5,10 @@ $diretorio = base_url();
 
 <main>
 <div class="container">
+    <!--COLOCAR JUMBOTRON AQUI-->
+    <div class="row">
+        
+    </div>
     <div class="row">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
@@ -54,5 +58,6 @@ $diretorio = base_url();
             </a>
         </div>
     </div>
+
 </div>
 </main>
