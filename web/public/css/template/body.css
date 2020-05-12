@@ -1,12 +1,17 @@
 *{
     font-family: "Titillium Web", Sans-serif;
     font-weight: 500;
-    font-size: 1rem;
 }
 body{
+    display:flex; 
+    flex-direction:column;
+
+    margin: 0;
     max-width: 100vw;
-    width: 100vw;
-    margin: 0px;
-    display: flexbox;
-    flex-direction: column;
+    min-height: 100vh;
 }
+div > .row{
+    max-width: 100%;
+    margin:0;
+}
+

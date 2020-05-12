@@ -15,7 +15,7 @@ class Home extends CI_Controller{
         $carrosselArray = $this->Home_content->selectCarrosselData();
         $jumbotronArray = $this->Home_content->selectJumbotronData();
         $content = array(
-            "styles" => array('carrossel.css', 'jumbotron.css'),
+            "styles" => array('carrossel.css', 'jumbotron.css', 'home.css'),
             "carrossel" => $carrosselArray,
             "jumbotron" => $jumbotronArray
         );

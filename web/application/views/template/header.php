@@ -2,14 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $diretorio = base_url();
 ?>
-
+<header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <div class="navbar-brand">
-                <a href="<?=$diretorio?>home">
-                    <img src="<?=$diretorio?>public/images/cotiljogos.svg" alt="Logo do Projeto">
-                </a>
-            </div>
+            <a class="navbar-brand" href="<?=$diretorio?>home">
+                <img src="<?=$diretorio?>public/images/cotiljogos.svg" alt="Logo do Projeto">
+            </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,3 +23,4 @@ $diretorio = base_url();
         </div>
     </nav>
     <div class="div-header"></div>
+</header>
