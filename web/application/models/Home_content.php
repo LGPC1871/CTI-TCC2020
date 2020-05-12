@@ -34,22 +34,42 @@ class Home_content extends CI_Model{
                 ->from($this->carrossel)
                 ->where($this->carrossel_status, true);
         $result = $this->db->get();
-        foreach($result->result_array() as $row){
-            array_push($retorno, $row);
+        if($result->num_rows() > 0){
+            foreach($result->result_array() as $row){
+                $rowArray = array(
+                    "id" =>$row[$this->carrossel_id],
+                    "status" =>$row[$this->carrossel_status],
+                    "imagem" =>$row[$this->carrossel_imagem],
+                    "imagemalt" =>$row[$this->carrossel_imagemalt],
+                    "legendatitulo" =>$row[$this->carrossel_legendatitulo],
+                    "legendatexto" =>$row[$this->carrossel_legendatexto],
+                );
+                array_push($retorno, $rowArray);
+            }
+            return $retorno;
+        }else{
+            return false;
         }
-
-        return $retorno;
     }
     function selectJumbotronData(){
-        $retorno = array();
         $this->db->select('*')
                 ->from($this->jumbotron)
                 ->where($this->jumbotron_status, true);
         $result = $this->db->get();
-        foreach($result->result_array() as $row){
-            array_push($retorno, $row);
+        if($result->num_rows() > 0){
+            $data = $result->first_row('array');
+    
+            $retorno = array(
+                "id" => $data[$this->jumbotron_id],
+                "status" => $data[$this->jumbotron_status],
+                "titulo" => $data[$this->jumbotron_titulo],
+                "subtitulo" => $data[$this->jumbotron_subtitulo],
+                "texto" => $data[$this->jumbotron_texto],
+                "textobotao" => $data[$this->jumbotron_textobotao],
+            );
+            return $retorno;
+        }else{
+            return false;
         }
-
-        return $retorno;
     }
 }

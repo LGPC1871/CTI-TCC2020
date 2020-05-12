@@ -8,12 +8,12 @@ $diretorio = base_url();
     <div class="row justify-content-center">
         <div class= "jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-4">Titulo</h1>
-                <p class="lead">Sub-titulo</p>
+                <h1 class="display-4">Bem-vindo</h1>
+                <p class="lead">teste</p>
                 <hr class="my-4">
-                <p>Texto</p>
+                <p>Texto teste</p>
                 <p class="lead">
-                    <a class="btn btn-primary btn-lg" href="#" role="button">Texto botão</a>
+                    <a class="btn btn-primary btn-lg" href="#" role="button">Texto botão teste</a>
                 </p>
             </div>
         </div>

@@ -30,34 +30,15 @@ class Home extends CI_Controller{
     public function principal(){
         $content = array(
             "styles" => array('carrossel.css', 'jumbotron.css', 'home.css'),
-            "carrossel" => array()
         );
         $carrosselArray = $this->Home_content->selectCarrosselData();
+        if($carrosselArray){
+            $content["carrossel"] = $carrosselArray;
+        }
         $jumbotronArray = $this->Home_content->selectJumbotronData();
-        
-        foreach($carrosselArray as $item){
-            $row = array(
-                "id" =>$item[$this->carrossel_id],
-                "status" =>$item[$this->carrossel_status],
-                "imagem" =>$item[$this->carrossel_imagem],
-                "imagemalt" =>$item[$this->carrossel_imagemalt],
-                "legendatitulo" =>$item[$this->carrossel_legendatitulo],
-                "legendatexto" =>$item[$this->carrossel_legendatexto],
-            );
-            array_push($content["carrossel"], $row);
+        if($jumbotronArray){
+            $content["jumbotron"] = $jumbotronArray;
         }
-        foreach($jumbotronArray as $item){
-            $row = array(
-                "id" => $jumbotronArray[$this->jumbotron_id],
-                "status" => $jumbotronArray[$this->jumbotron_status],
-                "titulo" => $jumbotronArray[$this->jumbotron_titulo],
-                "subtitulo" => $jumbotronArray[$this->jumbotron_subtitulo],
-                "texto" => $jumbotronArray[$this->jumbotron_texto],
-                "textobotao" => $jumbotronArray[$this->jumbotron_textobotao],
-            );
-            array_push($content["jumbotron"], $row);
-        }
-        
         $this->template->show("home.php", $content);
     }
 }
