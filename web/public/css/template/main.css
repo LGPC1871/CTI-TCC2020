@@ -1,6 +1,6 @@
 main{
     padding: 2rem;
-    height: calc(100vh - 22vh);
+    min-height: calc(100vh - 22vh);
     justify-content: center;
     justify-items: center;
     width: 100%;

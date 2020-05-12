@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema cl19467
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema cl19467
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `cl19467` DEFAULT CHARACTER SET utf8 ;
+USE `cl19467` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`HB_jumbotron`
+-- Table `cl19467`.`HB_jumbotron`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`HB_jumbotron` (
+CREATE TABLE IF NOT EXISTS `cl19467`.`HB_jumbotron` (
   `HB_id` INT NOT NULL AUTO_INCREMENT,
   `HB_status` TINYINT NOT NULL DEFAULT 1,
   `HB_titulo` VARCHAR(45) NULL,

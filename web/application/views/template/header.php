@@ -6,7 +6,7 @@ $diretorio = base_url();
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <div class="navbar-brand">
-                <a href="<?=$diretorio?>Home">
+                <a href="<?=$diretorio?>home">
                     <img src="<?=$diretorio?>public/images/cotiljogos.svg" alt="Logo do Projeto">
                 </a>
             </div>
