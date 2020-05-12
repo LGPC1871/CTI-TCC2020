@@ -7,7 +7,15 @@ $diretorio = base_url();
 <div class="container">
     <!--COLOCAR JUMBOTRON AQUI-->
     <div class="row">
-        
+        <div class="jumbotron">
+  <h1 class="display-4">Titulo</h1>
+  <p class="lead">Sub-titulo</p>
+  <hr class="my-4">
+  <p>Texto</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Texto botão</a>
+  </p>
+</div>
     </div>
     <div class="row">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
