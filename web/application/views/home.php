@@ -7,7 +7,7 @@ $diretorio = base_url();
 <div class="container">
     <!--COLOCAR JUMBOTRON AQUI-->
     <div class="row">
-        <div class="jumbotron">
+        <div class= "jumbotron-fluid">
             <h1 class="display-4">Titulo</h1>
             <p class="lead">Sub-titulo</p>
             <hr class="my-4">

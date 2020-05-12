@@ -1,8 +1,8 @@
-.jumbotron
+.jumbotron-fluid
 {
 	/*ALTURA E LARGURA */
 	width: 100%;
-	height: 50vh;
+	height: 35vh;
 	min-width : 100%;
 
     /*CORES*/
