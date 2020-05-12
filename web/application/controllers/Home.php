@@ -8,10 +8,10 @@ class Home extends CI_Controller{
     }
     
     public function index(){
-        redirect('home/main');
+        redirect('home/principal');
     }
 
-    public function main(){
+    public function principal(){
         $carrosselArray = $this->Home_content->selectCarrosselData();
         $jumbotronArray = $this->Home_content->selectJumbotronData();
         $content = array(
