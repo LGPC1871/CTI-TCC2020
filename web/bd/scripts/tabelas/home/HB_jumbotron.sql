@@ -20,15 +20,16 @@ USE `cl19467` ;
 -- -----------------------------------------------------
 -- Table `cl19467`.`HB_jumbotron`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cl19467`.`HB_jumbotron` (
-  `HB_id` INT NOT NULL AUTO_INCREMENT,
-  `HB_status` TINYINT NOT NULL DEFAULT 1,
-  `HB_titulo` VARCHAR(45) NULL,
-  `HB_subtitulo` VARCHAR(256) NULL,
-  `HB_texto` MEDIUMTEXT NULL,
-  `HB_textobotao` VARCHAR(25) NULL,
-  PRIMARY KEY (`HB_id`))
-ENGINE = InnoDB;
+CREATE TABLE `HB_jumbotron` (
+  `HB_id` int(11) NOT NULL AUTO_INCREMENT,
+  `HB_status` tinyint(1) DEFAULT NULL,
+  `HB_titulo` varchar(45) DEFAULT NULL,
+  `HB_subtitulo` varchar(256) DEFAULT NULL,
+  `HB_texto` mediumtext,
+  `HB_textobotao` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`HB_id`),
+  UNIQUE KEY `HB_status_UNIQUE` (`HB_status`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
