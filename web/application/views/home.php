@@ -44,7 +44,7 @@ $diretorio = base_url();
                 <div class="carousel-inner">
                     <?php if(isset($carrossel)):?>
                         <?php $cont = 1; ?>
-                        <?php foreach($carrossel as $item): ?>
+                        <?php foreach($carrossel as $arrayCarrossel): ?>
 
                             <?php if($cont == 1):?>
                                 <div class="carousel-item active">
@@ -52,10 +52,10 @@ $diretorio = base_url();
                                 <div class="carousel-item">
                             <?php endif ?>
 
-                            <?php echo "<img src='data:image/jpg;base64,".base64_encode($item['HA_imagem'])."' alt=$item[HA_imagemalt] class='carrossel-img' />"; ?>
+                            <?php echo "<img src='data:image/jpg;base64,".base64_encode($arrayCarrossel['imagem'])."' alt=$arrayCarrossel[imagemalt] class='carrossel-img' />"; ?>
                             <div class="carousel-caption">
-                                <h5><?php echo $item['HA_legendatitulo'] ?></h5>
-                                <p><?php echo $item['HA_legendatexto'] ?></p>
+                                <h5><?php echo $arrayCarrossel['legendatitulo'] ?></h5>
+                                <p><?php echo $arrayCarrossel['legendatexto'] ?></p>
                             </div>
                         </div>
                         <?php $cont++; ?>
