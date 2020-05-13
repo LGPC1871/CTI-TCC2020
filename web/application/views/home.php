@@ -87,6 +87,7 @@ $diretorio = base_url();
             </div>
         </div>
     </div>
-
+    <!--Preview da galeria AQUI-->
+    
 </div>
 </main>
