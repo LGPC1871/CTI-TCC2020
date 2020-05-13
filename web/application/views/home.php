@@ -4,7 +4,7 @@ $diretorio = base_url();
 ?>
 
 <main>
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class= "jumbotron jumbotron-fluid">
             <div class="container">
@@ -26,10 +26,11 @@ $diretorio = base_url();
                         <a class="btn btn-primary btn-lg" href="#" role="button">Texto botão teste</a>
                     </p>
                 <?php endif ?>
-
             </div>
         </div>
     </div>
+</div>
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12">
             <h1 class="titulo-home">BEM VINDO!</h1>
