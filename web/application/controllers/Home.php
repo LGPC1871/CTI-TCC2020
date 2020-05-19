@@ -25,6 +25,11 @@ class Home extends CI_Controller{
         if($jumbotronArray){
             $content["jumbotron"] = $jumbotronArray;
         }
+
+        $galeriaPreview = $this->galeriaHome();
+        if($galeriaPreview){
+            $content["galeria_preview"] = $galeriaPreview;
+        }
         
         $this->template->show("home.php", $content);
     }
@@ -39,6 +44,14 @@ class Home extends CI_Controller{
     }
     private function jumbotron(){
         $result = $this->Home_content->selectJumbotronData();
+        if($result){
+            return $result;
+        }else{
+            return false;
+        }
+    }
+    private function galeriaHome(){
+        $result = $this->Home_content->selectPreviewGaleria();
         if($result){
             return $result;
         }else{
