@@ -13,16 +13,36 @@ class Home extends CI_Controller{
 
     public function principal(){
         $content = array(
-            "styles" => array('carrossel.css', 'jumbotron.css', 'home.css'),
+            "styles" => array('carrossel.css', 'jumbotron.css', 'home.css', 'galeria-home.css'),
         );
-        $carrosselArray = $this->Home_content->selectCarrosselData();
+        
+        $carrosselArray = $this->carrossel();
         if($carrosselArray){
             $content["carrossel"] = $carrosselArray;
         }
-        $jumbotronArray = $this->Home_content->selectJumbotronData();
+        
+        $jumbotronArray = $this->jumbotron();
         if($jumbotronArray){
             $content["jumbotron"] = $jumbotronArray;
         }
+        
         $this->template->show("home.php", $content);
+    }
+
+    private function carrossel(){
+        $result = $this->Home_content->selectCarrosselData();
+        if($result){
+            return $result;
+        }else{
+            return false;
+        }
+    }
+    private function jumbotron(){
+        $result = $this->Home_content->selectJumbotronData();
+        if($result){
+            return $result;
+        }else{
+            return false;
+        }
     }
 }
