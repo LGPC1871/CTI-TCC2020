@@ -88,6 +88,100 @@ $diretorio = base_url();
         </div>
     </div>
     <!--Preview da galeria AQUI-->
+
+
+    <div id="mdb-lightbox-ui"></div>
+
+    <div class="mdb-lightbox no-margin">
+     <div class="row">                           
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(121).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(121).jpg"
+            class="img-fluid">
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(96).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(96).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(104).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(104).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+     </div>
+     <div class="row">
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(45).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(45).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(122).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(122).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(115).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+     </div>
+     <div class="row">
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(125).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(125).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(115).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-3">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(119).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(119).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Desc da foto</h3>
+        </a>
+      </figure>
+     </div>
+
+    </div>
+
+  </div>
+</div>
     
 </div>
 </main>
