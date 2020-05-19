@@ -21,6 +21,14 @@ class Home_content extends CI_Model{
             $this->jumbotron_subtitulo = 'HB_subtitulo';
             $this->jumbotron_texto = 'HB_texto';
             $this->jumbotron_textobotao = 'HB_textobotao';
+
+        $this->galeria = 'GA_galeria';
+            $this->galeria_id = 'GA_id';
+            $this->galeria_midia = 'GA_midia';
+            $this->galeria_titulo = 'GA_titulo';
+            $this->galeria_subtitulo = 'GA_subtitulo';
+            $this->galeria_descricao = 'GA_descricao';
+            $this->galeria_data = 'GA_data';
     }
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +75,27 @@ class Home_content extends CI_Model{
                 "texto" => $data[$this->jumbotron_texto],
                 "textobotao" => $data[$this->jumbotron_textobotao],
             );
+            return $retorno;
+        }else{
+            return false;
+        }
+    }
+    function selectPreviewGaleria(){
+        $retorno = array();
+
+        $this->db->select($this->galeria_midia);
+        $this->db->from($this->galeria);
+        $this->db->limit(4);
+
+        $result = $this->db->get();
+        
+        if($result->num_rows() > 0){
+            foreach($result->result_array() as $row){
+                $rowArray = array(
+                    "imagem" => $row[$this->galeria_midia]
+                );
+                array_push($retorno, $rowArray);
+            }
             return $retorno;
         }else{
             return false;
