@@ -95,12 +95,14 @@ $diretorio = base_url();
     <hr>  
     <div class="row justify-content-center">                    
     
-    <?php if(isset($galeriaPreview)): ?>
-        
-        <figure class="col-md-2">
-            <?php echo ""?>
-        </figure>
+    <?php if(isset($galeria_preview)): ?>
+        <?php foreach($galeria_preview as $galeria): ?>
 
+            <figure class="col-md-2">          
+                <?php echo "<img src='data:image/jpg;base64,".base64_encode($galeria['imagem'])."'/>"; ?>
+            </figure>
+        
+        <?php endforeach ?>    
     <?php endif ?>
 
     </div>
