@@ -87,39 +87,22 @@ $diretorio = base_url();
             </div>
         </div>
     </div>
-    <!--Preview da galeria AQUI-->
-
+</div>
+<!--Preview da galeria AQUI-->
+<section id="galeria-home">
+    
     <h1 class="titulo-home">GALERIA</h1>
     <hr>  
-    <section id="galeria-home">
-     <div class="row justify-content-center">                    
-      <figure class="col-md-2">
-          <img alt="picture" src="../bd/scripts/testecarrossel/1.jpg"
-            class="img-fluid">
-      </figure>
+    <div class="row justify-content-center">                    
+    
+    <?php if(isset($galeriaPreview)): ?>
+        
+        <figure class="col-md-2">
+            <?php echo ""?>
+        </figure>
 
-      <figure class="col-md-2">
-          <img alt="picture" src="../bd/scripts/testecarrossel/2.jpg"
-            class="img-fluid" />
-      </figure>
-
-      <figure class="col-md-2">
-         <img alt="picture" src="../bd/scripts/testecarrossel/3.jpg"
-            class="img-fluid" />
-
-      </figure>
-      <figure class="col-md-2">
-          <img alt="picture" src="../bd/scripts/testecarrossel/4.jpg"
-            class="img-fluid" />
-      </figure>
-    </section>
-      
-     </div>
+    <?php endif ?>
 
     </div>
-
-  </div>
-</div>
-    
-</div>
+</section>
 </main>
