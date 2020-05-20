@@ -89,116 +89,28 @@ $diretorio = base_url();
     </div>
     <!--Preview da galeria AQUI-->
 
-<<<<<<< Updated upstream
-
-    <div id="mdb-lightbox-ui"></div>
-
-    <div class="mdb-lightbox no-margin">
-     <div class="row">                           
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-=======
     <h1 class="titulo-home">GALERIA</h1>
     <hr>  
     <section id="galeria-home">
      <div class="row justify-content-center">                    
       <figure class="col-md-2">
-        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(121).jpg"
->>>>>>> Stashed changes
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
+          <img alt="picture" src="../bd/scripts/testecarrossel/1.jpg"
             class="img-fluid">
-        </a>
       </figure>
 
-<<<<<<< Updated upstream
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-=======
       <figure class="col-md-2">
-        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(96).jpg"
->>>>>>> Stashed changes
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
+          <img alt="picture" src="../bd/scripts/testecarrossel/2.jpg"
             class="img-fluid" />
-        </a>
       </figure>
 
-<<<<<<< Updated upstream
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-=======
       <figure class="col-md-2">
-        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(104).jpg"
->>>>>>> Stashed changes
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
+         <img alt="picture" src="../bd/scripts/testecarrossel/3.jpg"
             class="img-fluid" />
-        </a>
+
       </figure>
-<<<<<<< Updated upstream
-     </div>
-     <div class="row">
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-=======
       <figure class="col-md-2">
-        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(45).jpg"
->>>>>>> Stashed changes
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
+          <img alt="picture" src="../bd/scripts/testecarrossel/4.jpg"
             class="img-fluid" />
-<<<<<<< Updated upstream
-          <h3 class="text-center my-3">Desc da foto</h3>
-        </a>
-      </figure>
-
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
-            class="img-fluid" />
-          <h3 class="text-center my-3">Desc da foto</h3>
-        </a>
-      </figure>
-
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
-            class="img-fluid" />
-          <h3 class="text-center my-3">Desc da foto</h3>
-        </a>
-      </figure>
-     </div>
-     <div class="row">
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
-            class="img-fluid" />
-          <h3 class="text-center my-3">Desc da foto</h3>
-        </a>
-      </figure>
-
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
-            class="img-fluid" />
-          <h3 class="text-center my-3">Desc da foto</h3>
-        </a>
-      </figure>
-
-      <figure class="col-md-3">
-        <a class="black-text" href="caminho/ate/a/img.jpg"
-          data-size="1600x1067">
-          <img alt="picture" src="caminho/ate/a/img.jpg"
-            class="img-fluid" />
-          <h3 class="text-center my-3">Desc da foto</h3>
-=======
->>>>>>> Stashed changes
-        </a>
       </figure>
     </section>
       

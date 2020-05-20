@@ -4,3 +4,7 @@ LINKS EXTERNOS
 section#galeria-home>div>figure{
     padding: 0;
 }
+section#galeria-home>div>figure>img{
+    min-width: 100%;
+    min-height: 100%;
+}
