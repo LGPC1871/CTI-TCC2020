@@ -54,7 +54,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="cbAtivar" pref="36" max="32767" attributes="0"/>
+                  <Component id="cbAtivar" pref="33" max="32767" attributes="0"/>
                   <Component id="btnSalvar" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -85,10 +85,10 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtTexto" pref="294" max="32767" attributes="0"/>
                       <Component id="txtTitulo" max="32767" attributes="0"/>
                       <Component id="txtSubtitulo" max="32767" attributes="0"/>
                       <Component id="txtTextoBotao" max="32767" attributes="0"/>
+                      <Component id="txtTexto" pref="294" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -109,8 +109,8 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtTexto" min="-2" max="-2" attributes="0"/>
                       <Component id="lblTexto" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtTexto" min="-2" pref="99" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -142,21 +142,8 @@
             <Property name="text" type="java.lang.String" value="Texo:"/>
           </Properties>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="txtTexto">
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
-              <Properties>
-                <Property name="columns" type="int" value="20"/>
-                <Property name="rows" type="int" value="5"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
+        <Component class="javax.swing.JTextField" name="txtTexto">
+        </Component>
         <Component class="javax.swing.JLabel" name="lblTextoBotao">
           <Properties>
             <Property name="text" type="java.lang.String" value="Bot&#xe3;o:"/>
@@ -177,6 +164,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="SALVAR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JCheckBox" name="cbAtivar">
       <Properties>

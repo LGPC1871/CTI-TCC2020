@@ -22,10 +22,10 @@ public class Login{
         int userId = 0;
         
         /*
-        *Instanciando classes admin
+        * Instanciando classes admin
         */
         AdminDAO adminDAO = new AdminDAO();
-        AdminModel admin = new AdminModel();
+        AdminModel admin;
         
         userId = adminDAO.userExist(usuario);
         if(userId != 0){
