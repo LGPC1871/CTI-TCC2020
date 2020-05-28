@@ -13,8 +13,7 @@ public class AdminModel {
     private int id;
     private String usuario;
     private String senha;
-    private String nome;
-
+    
     public int getId() {
         return id;
     }
@@ -38,13 +37,4 @@ public class AdminModel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
 }

@@ -4,32 +4,23 @@ $diretorio = base_url();
 ?>
 
 <main>
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class= "jumbotron jumbotron-fluid">
-            <div class="container">
-                <?php if (isset($jumbotron)): ?> 
-                    <h1 class="display-4"><?php echo $jumbotron['titulo'] ?></h1>
-                    <p class="lead"><?php echo $jumbotron['subtitulo'] ?></p>
-                    <hr class="my-4">
-                    <p><?php echo $jumbotron['texto'] ?></p>
-                    <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="#" role="button"><?php echo $jumbotron['textobotao'] ?></a>
-                    </p>
-            
-                <?php else: ?>
-                    <h1 class="display-4">Bem-vindo</h1>
-                    <p class="lead">teste</p>
-                    <hr class="my-4">
-                    <p>Texto teste</p>
-                    <p class="lead">
-                        <a class="btn btn-primary btn-lg" href="#" role="button">Texto botão teste</a>
-                    </p>
-                <?php endif ?>
+<?php if (isset($jumbotron)): ?> 
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class= "jumbotron jumbotron-fluid">
+                <div class="container">
+                        <h1 class="display-4"><?php echo $jumbotron['titulo'] ?></h1>
+                        <p class="lead"><?php echo $jumbotron['subtitulo'] ?></p>
+                        <hr class="my-4">
+                        <p><?php echo $jumbotron['texto'] ?></p>
+                        <p class="lead">
+                            <a class="btn btn-primary btn-lg" href="#" role="button"><?php echo $jumbotron['textobotao'] ?></a>
+                        </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+<?php endif ?>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12">

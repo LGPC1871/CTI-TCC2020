@@ -6,6 +6,7 @@
 package view;
 
 import control.Login;
+import control.Main;
 import model.domain.AdminModel;
 
 /**
@@ -19,6 +20,7 @@ public class ViewLogin extends javax.swing.JFrame {
      */
     public ViewLogin() {
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -142,13 +144,14 @@ public class ViewLogin extends javax.swing.JFrame {
             
         }else{
             
-            Boolean result = false;
             AdminModel userData = new AdminModel();
             userData = Login.validarInformacoes(usuario, senha);
             
-            if(result){
+            if(userData != null){
                 
                 this.dispose();
+                
+                new Main(userData);
                 
             }else{
                 passwordField.setText(null);

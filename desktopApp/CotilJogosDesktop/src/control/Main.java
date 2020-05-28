@@ -6,13 +6,16 @@
 package control;
 
 import model.domain.AdminModel;
+import view.ViewMain;
 
 /**
  *
  * @author lgpc1
  */
 public class Main {
-    public void loadMainView(AdminModel userData){
-        
+
+    public Main(AdminModel userData) {
+        ViewMain main = new ViewMain(userData);
+        userData = null;
     }
 }

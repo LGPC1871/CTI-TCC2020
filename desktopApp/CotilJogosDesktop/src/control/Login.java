@@ -39,7 +39,7 @@ public class Login{
             
             if(usuario.equals(admin.getUsuario()) && senhaCr.equals(admin.getSenha())){
                 adminDAO = null;
-                
+                admin.setSenha(null);
                 return admin;
             }
             
