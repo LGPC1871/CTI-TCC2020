@@ -27,6 +27,7 @@ public class HomeJumbotronDAO {
         ResultSet rs = null;
         
         try {
+            
             stmt = con.prepareStatement("SELECT * FROM HB_jumbotron WHERE HB_id = ?");
             stmt.setInt(1, 1);
             stmt.setMaxRows(1);

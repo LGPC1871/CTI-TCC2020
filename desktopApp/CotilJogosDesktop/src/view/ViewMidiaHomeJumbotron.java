@@ -23,6 +23,10 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
     public ViewMidiaHomeJumbotron() {
         initComponents();
         
+        loadJumbotronViewData();
+    }
+    
+    private void loadJumbotronViewData(){
         HomeJumbotronModel jumbotronData = HomeJumbotron.loadJumbotron();
         
         txtTitulo.setText(jumbotronData.getTitulo());
@@ -166,7 +170,9 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
 
+    
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         HomeJumbotronModel jumbotronData = HomeJumbotron.loadJumbotron();
         
@@ -185,9 +191,11 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
         
         if(result){
             JOptionPane.showMessageDialog(this, "Jumbotron salvo com sucesso.");
+            
         }else{
             JOptionPane.showMessageDialog(this, "Não foi possivel salvar.", "Erro.", JOptionPane.WARNING_MESSAGE);
         }
+        loadJumbotronViewData();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
 
