@@ -7,7 +7,6 @@ package view;
 
 import control.HomeJumbotron;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import model.domain.HomeJumbotronModel;
 
 /**
@@ -27,6 +26,7 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
     }
     
     private void loadJumbotronViewData(){
+        
         HomeJumbotronModel jumbotronData = HomeJumbotron.loadJumbotron();
         
         txtTitulo.setText(jumbotronData.getTitulo());
@@ -170,9 +170,7 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
 
-    
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         HomeJumbotronModel jumbotronData = HomeJumbotron.loadJumbotron();
         

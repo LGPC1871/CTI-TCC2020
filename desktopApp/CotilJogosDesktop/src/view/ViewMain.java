@@ -5,10 +5,6 @@
  */
 package view;
 
-import java.beans.PropertyVetoException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static javafx.application.Platform.exit;
 import javax.swing.Box;
 import model.domain.AdminModel;
 
