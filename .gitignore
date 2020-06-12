@@ -1,3 +1,9 @@
 documentacao/prototipo/
 Ordem de Serviço
-ignore
+/desktop/CotilJogosDesktop/nbproject/private/
+/desktop/CotilJogosDesktop/build/
+/desktop/teste/nbproject/private/
+/desktop/TesteBancoDados/build/
+/desktop/TesteBancoDados/nbproject/private/
+/desktop/teste/build/
+/desktop/CotilJogosDesktop/dist/

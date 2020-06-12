@@ -3,12 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $diretorio = base_url();
 ?>
 
-<div class="container-fluid">
-    <section id="jumbotron-home">
+<main>
+<?php if (isset($jumbotron)): ?> 
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class= "jumbotron jumbotron-fluid">
                 <div class="container">
-                    <?php if (isset($jumbotron)): ?> 
                         <h1 class="display-4"><?php echo $jumbotron['titulo'] ?></h1>
                         <p class="lead"><?php echo $jumbotron['subtitulo'] ?></p>
                         <hr class="my-4">
@@ -16,20 +16,12 @@ $diretorio = base_url();
                         <p class="lead">
                             <a class="btn btn-primary btn-lg" href="#" role="button"><?php echo $jumbotron['textobotao'] ?></a>
                         </p>
-                
-                    <?php else: ?>
-                        <h1 class="display-4">Bem-vindo</h1>
-                        <p class="lead">teste</p>
-                        <hr class="my-4">
-                        <p>Texto teste</p>
-                        <p class="lead">
-                            <a class="btn btn-primary btn-lg" href="#" role="button">Texto botão teste</a>
-                        </p>
-                    <?php endif ?>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+<?php endif ?>
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12">
             <h1 class="titulo-home">BEM VINDO!</h1>
