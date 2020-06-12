@@ -87,12 +87,6 @@ $diretorio = base_url();
                 </div>
             </div>
         </div>
-<<<<<<< Updated upstream
-    </div>
-
-</div>
-</main>
-=======
     </section>
     <section id="galeria-home">
         
@@ -113,4 +107,3 @@ $diretorio = base_url();
         </div>
     </section>
 </div>
->>>>>>> Stashed changes
