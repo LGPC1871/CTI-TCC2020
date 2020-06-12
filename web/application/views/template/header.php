@@ -17,10 +17,11 @@ $diretorio = base_url();
             <div class="navbar-nav">
             <a class="nav-item nav-link active" href="#">TESTE <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="#">TESTE</a>
-            <a class="nav-item nav-link" href="#">TESTE</a>
             <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">TESTE</a>
+            <a class="nav-item nav-link" href="<?=$diretorio?>user">ENTRAR</a>
             </div>
         </div>
     </nav>
     <div class="div-header"></div>
 </header>
+<main>

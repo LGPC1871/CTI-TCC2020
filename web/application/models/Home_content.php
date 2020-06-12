@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home_content extends CI_Model{
 
     function __construct(){
+
         parent::__construct();
 
         $this->carrossel = 'HA_carrossel';
@@ -13,7 +14,7 @@ class Home_content extends CI_Model{
             $this->carrossel_imagemalt = 'HA_imagemalt';
             $this->carrossel_legendatitulo = 'HA_legendatitulo';
             $this->carrossel_legendatexto = 'HA_legendatexto';
-        
+
         $this->jumbotron = 'HB_jumbotron';
             $this->jumbotron_id = 'HB_id';
             $this->jumbotron_status = 'HB_status';
@@ -29,6 +30,7 @@ class Home_content extends CI_Model{
             $this->galeria_subtitulo = 'GA_subtitulo';
             $this->galeria_descricao = 'GA_descricao';
             $this->galeria_data = 'GA_data';
+
     }
 /*
 |--------------------------------------------------------------------------
