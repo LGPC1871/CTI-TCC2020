@@ -24,4 +24,3 @@ $diretorio = base_url();
     </nav>
     <div class="div-header"></div>
 </header>
-<main>
