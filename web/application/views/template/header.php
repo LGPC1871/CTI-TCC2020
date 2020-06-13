@@ -6,7 +6,7 @@ $diretorio = base_url();
     <div class="d-flex flex-column">
         <div id="header" class="d-flex flex-column flex-sm-row">
             <div id="logo" class="p-2 mr-sm-auto d-flex align-items-center justify-content-center">
-                <img src="<?=$diretorio?>/public/images/cotiljogos.svg" alt="logo">
+                <img src="<?=$diretorio?>/public/images/logo.svg" alt="logo">
             </div>
             <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
                 <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
