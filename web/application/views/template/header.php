@@ -14,7 +14,7 @@ $diretorio = base_url();
                         <!--USUARIO LOGADO-->
                     <?php else:?>
                         <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
-                            <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
+                            <a href="<?=$diretorio?>user"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
                         </div>
                 <?php endif ?>
             </div>
@@ -28,13 +28,13 @@ $diretorio = base_url();
                             <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
                                 <ul class="navbar-nav text-center">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
+                                        <a class="nav-link" href="<?=$diretorio?>home">HOME <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">GALERIA</a>
+                                        <a class="nav-link" href="<?=$diretorio?>galeria">GALERIA</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">PARTICIPAR</a>
+                                        <a class="nav-link" href="<?=$diretorio?>participar">PARTICIPAR</a>
                                     </li>
                                 </ul>
                             </div>
