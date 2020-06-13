@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $diretorio = base_url();
-$templateStyles = array("body.css", "header.css");
+$templateStyles = array("body.css", "header.css", "footer.css");
 ?>
 <!DOCTYPE html>
 <html>
@@ -34,6 +34,3 @@ $templateStyles = array("body.css", "header.css");
     <title>COTIL Jogos</title>
 </head>
 <body>
-    
-<div class="container-fluid">
-

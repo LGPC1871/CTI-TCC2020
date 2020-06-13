@@ -1,12 +1,15 @@
+header{
+    width: 100%;
+}
 #header > div{
-    min-height: 5vh;
+    min-height: 10vh;
 }
 #logo > img{
-    min-width: 175px;
-    width: 40%;
+    min-width: 75px;
+    width: 50%;
 }
 #profile-header{
-    min-width: 20vw;
+    min-width: 25vw;
 }
 #profile-header > a{
     color: #343a40;

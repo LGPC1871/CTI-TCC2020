@@ -4,20 +4,10 @@
 }
 body{
     margin: 0;
-    
 }
-body > div{
-    background-color:white;
-    min-height:100vh
+#body-flex{
+    min-height: 100vh;
 }
-.container-fluid{
-    padding: 0;
-}
-.row{
-    padding: 0;
-    margin:0;
-}
-
 .test-div{
     background-color: lightgray;
     border-width: 1px;

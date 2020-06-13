@@ -1,0 +1,29 @@
+footer{
+    width: 100%;
+    min-height: 200px;
+}
+footer > div{
+    width: 100%;
+    max-width: 100%;
+    min-height: 200px;
+    max-height: 100%;
+}
+footer > div > hr{
+    width: 80%;
+    height: 1px;
+    background: radial-gradient(circle, rgba(152,33,33,1) 10%, rgba(0, 0, 0, 0) 100%);
+}
+
+#footer-logo > div > div > img{
+    width: 5vw; 
+    min-width: 50px
+}
+
+#footer-nomes > div > h5{
+    text-transform: uppercase;
+}
+.nomes{
+    font-size: 0.8rem;
+}
+#footer-contato{
+}
