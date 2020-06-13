@@ -2,18 +2,17 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $diretorio = base_url();
 ?>
-
-<div class="d-flex flex-column">
-    <div class="d-flex flex-column flex-sm-row">
-        <div id="logo" class="p-2 mr-sm-auto d-flex align-items-center justify-content-center" style="min-height: 10vh">
-            <img src="<?=$diretorio?>/public/images/cotiljogos.svg" alt="logo">
-        </div>
-        <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center" style="min-height: 10vh">
-            <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
-        </div>
-    </div>
+<header>
     <div class="d-flex flex-column">
-        <div>
+        <div id="header" class="d-flex flex-column flex-sm-row">
+            <div id="logo" class="p-2 mr-sm-auto d-flex align-items-center justify-content-center">
+                <img src="<?=$diretorio?>/public/images/cotiljogos.svg" alt="logo">
+            </div>
+            <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
+                <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
+            </div>
+        </div>
+        <div id="header-nav" class="d-flex flex-column">
             <nav class="col-12 navbar navbar-expand-md navbar-dark bg-dark">
                 <div class="container-fluid justify-content-center">
                     <div class="row justify-content-center">
@@ -38,9 +37,4 @@ $diretorio = base_url();
             </nav>
         </div>
     </div>
-</div>
-
-<!--
-    
-
--->
+</header>
