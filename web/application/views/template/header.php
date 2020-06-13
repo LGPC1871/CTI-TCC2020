@@ -1,31 +1,46 @@
-<div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </li>
-        </ul>
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+$diretorio = base_url();
+?>
+
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column flex-sm-row">
+        <div id="logo" class="p-2 mr-sm-auto d-flex align-items-center justify-content-center" style="min-height: 10vh">
+            <img src="<?=$diretorio?>/public/images/cotiljogos.svg" alt="logo">
+        </div>
+        <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center" style="min-height: 10vh">
+            <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
+        </div>
     </div>
-    </nav>
+    <div class="d-flex flex-column">
+        <div>
+            <nav class="col-12 navbar navbar-expand-md navbar-dark bg-dark">
+                <div class="container-fluid justify-content-center">
+                    <div class="row justify-content-center">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+                            <ul class="navbar-nav text-center">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#">HOME <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">GALERIA</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">PARTICIPAR</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
 </div>
+
+<!--
+    
+
+-->
