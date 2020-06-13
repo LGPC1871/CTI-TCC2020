@@ -61,6 +61,9 @@ $diretorio = base_url();
                             <small class="text-muted text-center">
                                 Colégio Técnico de Limeira
                             </small>
+                            <small class="text-muted text-center">
+                                Projeto COTIL Jogos
+                            </small>
                         </div>
                     </div>
                     <div id="footer-contato" class="col order-2 order-md-3 flex-md-fill p-2 d-flex flex-column justify-content-center mb-auto">
