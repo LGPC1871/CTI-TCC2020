@@ -10,9 +10,13 @@ $diretorio = base_url();
                 <div id="logo" class="p-2 mr-sm-auto d-flex align-items-center justify-content-center">
                     <img src="<?=$diretorio?>/public/images/logo.svg" alt="logo">
                 </div>
-                <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
-                    <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
-                </div>
+                <?php if($this->session->userdata("logged") == true): ?>
+                        <!--USUARIO LOGADO-->
+                    <?php else:?>
+                        <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
+                            <a href="#"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
+                        </div>
+                <?php endif ?>
             </div>
             <div id="header-nav" class="d-flex flex-column">
                 <nav class="col-12 navbar navbar-expand-md navbar-dark bg-dark">
