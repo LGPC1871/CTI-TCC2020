@@ -28,19 +28,19 @@ public class HomeJumbotronDAO {
         
         try {
             
-            stmt = con.prepareStatement("SELECT * FROM HB_jumbotron WHERE HB_id = ?");
+            stmt = con.prepareStatement("SELECT * FROM jumbotron WHERE id = ?");
             stmt.setInt(1, 1);
             stmt.setMaxRows(1);
             rs = stmt.executeQuery();
         
             if(rs.first()){
                 HomeJumbotronModel jumbotronData = new HomeJumbotronModel();
-                jumbotronData.setId(rs.getInt("HB_id"));
-                jumbotronData.setStatus(rs.getInt("HB_status"));
-                jumbotronData.setTitulo(rs.getString("HB_titulo"));
-                jumbotronData.setSubtitulo(rs.getString("HB_subtitulo"));
-                jumbotronData.setTexto(rs.getString("HB_texto"));
-                jumbotronData.setTextoBotao(rs.getString("HB_textobotao"));
+                jumbotronData.setId(rs.getInt("id"));
+                jumbotronData.setStatus(rs.getInt("status"));
+                jumbotronData.setTitulo(rs.getString("titulo"));
+                jumbotronData.setSubtitulo(rs.getString("subtitulo"));
+                jumbotronData.setTexto(rs.getString("texto"));
+                jumbotronData.setTextoBotao(rs.getString("textobotao"));
               
                 return jumbotronData;
             }
@@ -59,7 +59,7 @@ public class HomeJumbotronDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE HB_jumbotron SET HB_status = ?, HB_titulo = ?, HB_subtitulo = ?, HB_texto = ?, HB_textobotao = ? WHERE HB_id = ?");
+            stmt = con.prepareStatement("UPDATE jumbotron SET status = ?, titulo = ?, subtitulo = ?, texto = ?, textobotao = ? WHERE id = ?");
             stmt.setInt(1, jumbotronData.getStatus());
             stmt.setString(2, jumbotronData.getTitulo());
             stmt.setString(3, jumbotronData.getSubtitulo());
