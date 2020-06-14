@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$diretorio = base_url();
 ?>
 
 <main class="flex-fill d-flex">

@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$diretorio = base_url();
 ?>
 <div class="mt-auto">
     <footer>
@@ -29,14 +28,14 @@ $diretorio = base_url();
                                 <span class="badge ml-auto">Designer</span>
                             </li>
                             <li class="list-group-item p-1 d-flex align-items-center">
-                                <span class="badge badge-secondary badge-pill">19xxx</span>
+                                <span class="badge badge-secondary badge-pill">19464</span>
                                 &nbsp
                                 <span class="nomes text-uppercase">Julia</span>
                                 &nbsp
                                 <span class="badge ml-auto">Analista de Requisitos</span>
                             </li>
                             <li class="list-group-item p-1 d-flex align-items-center">
-                                <span class="badge badge-secondary badge-pill">19xxx</span>
+                                <span class="badge badge-secondary badge-pill">19467</span>
                                 &nbsp
                                 <span class="nomes text-uppercase">Lucas</span>
                                 &nbsp

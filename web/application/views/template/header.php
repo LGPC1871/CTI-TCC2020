@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$diretorio = base_url();
 ?>
 <div id="body-flex" class="d-flex flex-column">
 <div>
@@ -12,6 +11,16 @@ $diretorio = base_url();
                 </div>
                 <?php if($this->session->userdata("logged") == true): ?>
                         <!--USUARIO LOGADO-->
+                        <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
+                            <a href="<?=$diretorio?>user/profile">
+                                <?php if($userData->getPicture() == null):?>
+                                    <i class="far fa-user-circle fa-lg"></i> 
+                                <?php else :?>
+                                    <img class="rounded-circle" src="data:image/png;base64,<?=base64_encode($userData->getPicture())?>" alt="img-perfil">
+                                <?php endif ?>
+                                    <?=$userData->getNome()?>
+                            </a>
+                        </div>
                     <?php else:?>
                         <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
                             <a href="<?=$diretorio?>user"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
@@ -31,10 +40,10 @@ $diretorio = base_url();
                                         <a class="nav-link" href="<?=$diretorio?>home">HOME <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?=$diretorio?>galeria">GALERIA</a>
+                                        <a class="nav-link" href="<?=$diretorio?>indisponivel">GALERIA</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?=$diretorio?>participar">PARTICIPAR</a>
+                                        <a class="nav-link" href="<?=$diretorio?>indisponivel">PARTICIPAR</a>
                                     </li>
                                 </ul>
                             </div>

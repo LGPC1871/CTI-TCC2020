@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$diretorio = base_url();
 $templateStyles = array("body.css", "header.css", "footer.css", "main.css");
 ?>
 <!DOCTYPE html>
@@ -14,7 +13,7 @@ $templateStyles = array("body.css", "header.css", "footer.css", "main.css");
     <script type="text/javascript" src="<?=$diretorio?>vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<?=$diretorio?>vendor/twbs/bootstrap/dist/css/bootstrap.css" />
     <!--Font Awesome-->
-    <link rel="stylesheet" href="vendor/fortawesome/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="<?=$diretorio?>vendor/fortawesome/font-awesome/css/all.css" />
     <!--Google-->
     <meta name="google-signin-client_id" content="544652754685-1o7osjenug1k22f4fhvvahnodb6k0lnr.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -27,7 +26,7 @@ $templateStyles = array("body.css", "header.css", "footer.css", "main.css");
     <?php endif ?>
     <?php if(isset($styles)): ?>
         <?php foreach($styles as $style_name): ?>
-            <?php $href =$diretorio . "public/css/" . $style_name ?>
+            <?php $href =$diretorio . "public/css/custom/" . $style_name ?>
             <link href="<?=$href?>" rel="stylesheet" />
         <?php endforeach ?>
     <?php endif ?>

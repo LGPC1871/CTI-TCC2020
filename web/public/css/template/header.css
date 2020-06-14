@@ -10,11 +10,15 @@ header{
 }
 #profile-header{
     min-width: 25vw;
+    text-transform: uppercase;
 }
 #profile-header > a{
     color: #343a40;
     font-weight: bold;
     padding: 0.5rem;
+}
+#profile-header > a > img{
+    height: 2rem;
 }
 #profile-header > a:hover{
     text-decoration: none;
