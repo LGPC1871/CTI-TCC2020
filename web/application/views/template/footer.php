@@ -15,14 +15,14 @@ $diretorio = base_url();
                         </h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item p-1 d-flex align-items-center">
-                                <span class="badge badge-secondary badge-pill">19xxx</span>
+                                <span class="badge badge-secondary badge-pill">19449</span>
                                 &nbsp
                                 <span class="nomes text-uppercase">Carlos</span>
                                 &nbsp
                                 <span class="badge ml-auto">Programador Front-end</span>
                             </li>
                             <li class="list-group-item p-1 d-flex align-items-center">
-                                <span class="badge badge-secondary badge-pill">19xxx</span>
+                                <span class="badge badge-secondary badge-pill">19452</span>
                                 &nbsp
                                 <span class="nomes text-uppercase">Edilson</span>
                                 &nbsp
