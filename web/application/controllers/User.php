@@ -81,6 +81,8 @@ class User extends CI_Controller{
             $inputArray = array(
                 "email" => $this->input->post("email"),
                 "usuario" => $this->input->post("usuario"),
+                "nome" => $this->input->post("nome"),
+                "sobrenome" => $this->input->post("sobrenome"),
                 "senha" => $this->input->post("senha"),
                 "senhaConfirma" => $this->input->post("senhaConfirma"),
             );
@@ -118,6 +120,20 @@ class User extends CI_Controller{
             return password_verify($password, $userPassword);
         }
 
+        private function validateInputRegex($pattern, $inputArray = array()){
+
+            $status = true;
+            $resultArray = array("error_list" => array());
+            
+            foreach($inputArray as $key => $value){
+                if(preg_match($pattern, $value)){
+                    $status = false;
+                    array_push($resultArray["error_list"], $key);
+                }
+            }
+            return $status ? false : $resultArray;
+        }
+
     /*
     |--------------------------------------------------------------------------
     | Login
@@ -146,8 +162,8 @@ class User extends CI_Controller{
             | se nao, retorna usuario ou senha invalidas
             */
 
-                $userExist = $this->userDAO->selectUserExist($inputInfo["usuario"]);
-                
+                $userExist = $this->userDAO->selectExist("id","usuario","ra", $inputInfo["usuario"]);
+
                 if($userExist){
                     $userId = $userExist;
 
@@ -190,7 +206,7 @@ class User extends CI_Controller{
         private function userRegister($inputInfo = array()){
             /*
             | Retorno
-            | 
+            | empty email user_invalid user_exist name password database
             */
             /* 
             | Verificar se as entradas são válidas, sem espaços e != vazio
@@ -202,7 +218,78 @@ class User extends CI_Controller{
                 $hasEmpty["error_type"] = "empty";
                 return $hasEmpty;
             }
+
+            /*
+            | Validar Email
+            */
+
+            $inputInfo["email"] = filter_var($inputInfo["email"], FILTER_SANITIZE_EMAIL);
+            $userExist = $this->userDAO->selectExist("id","usuario","email", $inputInfo["email"]);
+
+            if(!filter_var($inputInfo["email"], FILTER_VALIDATE_EMAIL) || $userExist){
+                $response = array("error_type" => "email", "error_list" => array("email"));
+                return $response;
+            }
+
+            /*
+            | Validar Usuário
+            */
+            $pattern = '/^[0-9]*$/';
+
+            $validRa = $this->validateInputRegex($pattern, array("usuario"=>$inputInfo["usuario"]));
+            if(!$validRa){
+                $validRa["error_type"] = "user_invalid";
+                $validRa["error_list"] = array("usuario");
+                return $validRa;
+            }
+            $userExist = $this->userDAO->selectExist("id","usuario","ra", $inputInfo["usuario"]);
+            if($userExist){
+                $validRa["error_type"] = "user_exist";
+                $validRa["error_list"] = array("usuario");
+                return $validRa;
+            }
+            /*
+            | Validar nome e sobrenome
+            | Só pode ser composto por letras
+            */
+
+            $pattern = '/[^a-zA-Z ]/';
+            $invalidName = $this->validateInputRegex($pattern, array("nome"=>$inputInfo["nome"], "sobrenome"=>$inputInfo["sobrenome"]));
+            if($invalidName){
+                $invalidName["error_type"] = "name";
+                return $invalidName;
+            }
+
+            /*
+            |   Validar Senha e Criptografar
+            */
+            if($inputInfo["senha"] == $inputInfo["senhaConfirma"]){
+                $senhaHash = password_hash($inputInfo["senha"], PASSWORD_DEFAULT);
+                $inputInfo["senha"] = null;
+                $inputInfo["senhaConfirma"] = null;
+            }else{
+                $response["error_type"] = "password";
+                $response["error_list"] = array("senha", "senhaConfirma");
+                return $response;
+            }
+            /*
+            |   Criar objeto do usuário e inserir no banco de dados
+            */
+            $userData = new UsuarioModel();
+
+            $userData->setRA($inputInfo["usuario"]);
+            $userData->setEmail($inputInfo["email"]);
+            $userData->setNome($inputInfo["nome"]);
+            $userData->setSobrenome($inputInfo["sobrenome"]);
             
+            $result = $this->userDAO->insertNewUser($userData, $senhaHash);
+            
+            if(!$result){
+                $response = array();
+                $response["error_type"] = "database";
+                return $response;
+            }
+
             return true;
         }
     /*

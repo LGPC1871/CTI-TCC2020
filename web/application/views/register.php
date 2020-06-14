@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-group col-md-6">
                         <label for="email">Email</label>
                         <div class="input-group-prepend">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Insira seu Email">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Insira seu email">
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -29,6 +29,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Digite seu RA">
                         </div>
                     </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="nome">Nome</label>
+                        <div class="input-group-prepend">
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Insira seu nome">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="sobrenome">Sobrenome</label>
+                        <div class="input-group-prepend">
+                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Insira seu sobrenome">
+                        </div>
+                    </div>
+     
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">

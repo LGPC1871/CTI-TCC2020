@@ -11,14 +11,14 @@ class UserDAO extends CI_Model{
     |--------------------------------------------------------------------------
     | Todas as funções select
     */
-        public function selectUserExist($ra){
+        public function selectExist($select, $table, $where, $value){
             $this->db
-                ->select('id')
-                ->from('usuario')
-                ->where('ra', $ra);
+                ->select($select)
+                ->from($table)
+                ->where($where, $value);
             $result = $this->db->get();
 
-            return $result->num_rows() == 1 ? $result->row("id") : false;
+            return $result->num_rows() == 1 ? $result->row($select) : false;
         }
 
         public function selectPassword($userId){
@@ -52,4 +52,53 @@ class UserDAO extends CI_Model{
             }
             return false;
         }
+
+    /*
+    |--------------------------------------------------------------------------
+    | INSERT
+    |--------------------------------------------------------------------------
+    | Todas as funções insert
+    */
+        function insertNewUser($userData, $passwordHash){
+            $newUserId = $this->insertUser($userData);
+            if($newUserId){
+                $pwInsert = $this->insertPassword($newUserId, $passwordHash);
+                if(!$pwInsert){
+                    $this->deleteNewUser($newUserId);
+                    return false;
+                }
+                return true;
+            }else{
+                return false;
+            }
+        }
+        private function insertUser($userData){
+            $time = date("Y-m-d H:i:s");
+    
+            $this->db->set("ra", $userData->getRa());
+            $this->db->set("email", $userData->getEmail());
+            $this->db->set("nome", $userData->getNome());
+            $this->db->set("sobrenome", $userData->getSobrenome());
+            $this->db->set("created", $time);
+            $this->db->set("updated", $time);
+    
+            return $this->db->insert('usuario') ? $this->db->insert_id() : false;
+        }
+        private function insertPassword($id, $passwordHash){
+            $this->db->set("usuario_id", $id);
+            $this->db->set("senha", $passwordHash);
+            return $this->db->insert('senha') ? true : false;
+        }
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE
+    |--------------------------------------------------------------------------
+    | Todas as funções delete
+    */
+
+        function deleteNewUser($id){
+            $this->db->where('id', $id);
+            $this->db->delete('usuario');
+        }
+    
 }

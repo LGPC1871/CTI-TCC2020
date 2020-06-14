@@ -19,7 +19,7 @@ if(caso){
 inputErrors(caso, inputArray);
 }
 
-function inputErrors(caso, inputArray){
+function inputErrors(caso, inputArray = []){
 inputArray.forEach(element => {
     caso ? $("#" + element).parent().addClass("has-error") : $("#" + element).parent().removeClass("has-error") 
 });
