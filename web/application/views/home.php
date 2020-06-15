@@ -37,8 +37,10 @@ $diretorio = base_url();
             class="img-fluid" alt="Responsive image">
        </figure>
        <figure class="col-xs-3">
+       <a href="#">
        <img alt="picture" src="../../public/images/home/carousel/img3.jpg" 
             class="img-fluid" alt="Responsive image">
+        </a>
        </figure>
        </section>
 

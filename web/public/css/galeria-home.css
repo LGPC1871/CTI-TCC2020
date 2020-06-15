@@ -1,15 +1,17 @@
 /*
 LINKS EXTERNOS
 */
+
 section#galeria-home>div>figure{
     padding: 0;
+    
 }
 section#galeria-home>div>figure>img{
-    max-width: 180px;
-    max-height: 120px;
-}
-img#img-galeria{
     width: 180px;
-    height: 120px;    
+    height: 120px;
 }
-  
+section#galeria-home>div>figure>a>img{
+    width: 180px;
+    height: 120px;
+}
+
