@@ -309,5 +309,30 @@ class User extends CI_Controller{
         public function endSession(){
             $this->session->sess_destroy();
             redirect('user');
-        }    
+        }
+    /*
+    |--------------------------------------------------------------------------
+    | Sessão
+    |--------------------------------------------------------------------------
+    | Todas as funções relacionadas a sessão do usuário
+    */
+        public function sendEmail($email="lgpc1871@gmail.com"){
+
+            $htmlContent = '<h1>TESTE</h1>';
+
+            $this->email->from($this->config->item('smtp_user'), 'COTIL Jogos');
+            $this->email->to($email);
+
+            $this->email->subject('Redefinir Senha');
+            $this->email->message($htmlContent);    
+
+            $result = $this->email->send();
+
+            if($result){
+                echo "FUNCIONOU!";
+            }else{
+                $retorno = $this->email->print_debugger();
+                echo var_dump($retorno);
+            }
+        } 
 }

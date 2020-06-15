@@ -23,7 +23,7 @@ $(function(){
                 if(response === true){
                     /* CADASTRO EFETUADO COM SUCESSO */
                     infoBlockLoading("sucesso");
-                    //window.location = `${BASE_URL}user/login`;
+                    window.location = `${BASE_URL}user/login`;
                 }else{
                     formEnabled(true);
                     let mensagem;
@@ -42,7 +42,7 @@ $(function(){
                     if(response["error_type"] == "name"){
                         mensagem = "nome inválido"
                     }
-                    if(response["error_type"] == "senha"){
+                    if(response["error_type"] == "password"){
                         mensagem = "senha inválida"
                     }
                     if(response["error_type"] == "database"){
