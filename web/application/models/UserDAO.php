@@ -53,6 +53,29 @@ class UserDAO extends CI_Model{
             return false;
         }
 
+        function selectResetPassword($selector, $currentDate){
+            $this->db->select('*');
+            $this->db->from("senha_reset");
+            $this->db->where("selector", $selector);
+            //$this->db->where($this->senhareset_expires . '>=', $currentDate);
+    
+            $result = $this->db->get();
+    
+            if($result->num_rows() == 1){
+                $data = $result->row_array();
+
+                $retorno = new PasswordTokenModel();
+                $retorno->setUsuarioId($result->row("usuario_id"));
+                $retorno->setSelector($result->row("selector"));
+                $retorno->setToken($result->row("token"));
+                $retorno->setExpire($result->row("expires"));
+
+                return $retorno;
+            }else{
+                return false;
+            }
+        }
+
     /*
     |--------------------------------------------------------------------------
     | INSERT
@@ -89,6 +112,15 @@ class UserDAO extends CI_Model{
             $this->db->set("senha", $passwordHash);
             return $this->db->insert('senha') ? true : false;
         }
+
+        public function insertPasswordResetToken($userId, $tokenModel){
+            $this->db->set("usuario_id", $userId);
+            $this->db->set("selector", $tokenModel->getSelector());
+            $this->db->set("token", $tokenModel->getToken());
+            $this->db->set("expire", $tokenModel->getExpire());
+
+            return $this->db->insert('senha_reset') ? true : false;
+        }
     /*
     |--------------------------------------------------------------------------
     | DELETE
@@ -100,5 +132,21 @@ class UserDAO extends CI_Model{
             $this->db->where('id', $id);
             $this->db->delete('usuario');
         }
-    
+
+        function deletePasswordToken($userId){
+            $this->db->where("usuario_id", $userId);
+            $this->db->delete("senha_reset");
+        }
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    | Todas as funções update
+    */
+        function updateUserPassword($userId, $password){
+            $this->db->set("senha", $password);
+            $this->db->where("usuario_id", $userId);
+            $this->db->update("senha");
+            return $this->db->affected_rows();
+        }
 }
