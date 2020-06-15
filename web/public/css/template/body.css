@@ -16,9 +16,44 @@ body{
 }
 
 .img{
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 2px;
     margin-bottom: 4px;
     border-radius: 7px;
-    height:400px;
-    width:550px;
+    height: 400px;
+    width: 550px;
+}
+
+@media(max-width:575px) {
+        .img{
+            height: 300px;
+            width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2px;
+            margin-bottom: 4px;
+            display: block;
+}
+
+@media(max-width:465px) {
+        .img{
+            height: 200px;
+            width: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2px;
+            margin-bottom: 4px;
+            display: block;
+}
+
+@media(max-width:370px) {
+        .img{
+            height: 200px;
+            width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2px;
+            margin-bottom: 4px;
+            display: block;
 }
