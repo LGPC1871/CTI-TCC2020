@@ -18,55 +18,6 @@ CREATE SCHEMA IF NOT EXISTS `cl19467` DEFAULT CHARACTER SET utf8 ;
 USE `cl19467` ;
 
 -- -----------------------------------------------------
--- Table `cl19467`.`HA_carrossel`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cl19467`.`HA_carrossel` ;
-
-CREATE TABLE IF NOT EXISTS `cl19467`.`HA_carrossel` (
-  `HA_id` INT NOT NULL AUTO_INCREMENT,
-  `HA_status` TINYINT NOT NULL DEFAULT 0,
-  `HA_imagem` LONGBLOB NULL,
-  `HA_imagemalt` VARCHAR(45) NULL,
-  `HA_legendatitulo` VARCHAR(100) NULL,
-  `HA_legendatexto` MEDIUMTEXT NULL,
-  PRIMARY KEY (`HA_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `cl19467`.`HB_jumbotron`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cl19467`.`HB_jumbotron` ;
-
-CREATE TABLE IF NOT EXISTS `cl19467`.`HB_jumbotron` (
-  `HB_id` INT NOT NULL,
-  `HB_status` TINYINT(1) NULL DEFAULT 1,
-  `HB_titulo` VARCHAR(45) NULL DEFAULT NULL,
-  `HB_subtitulo` VARCHAR(256) NULL DEFAULT NULL,
-  `HB_texto` MEDIUMTEXT NULL DEFAULT NULL,
-  `HB_textobotao` VARCHAR(25) NULL DEFAULT NULL,
-  PRIMARY KEY (`HB_id`),
-  UNIQUE INDEX `HB_status_UNIQUE` (`HB_status` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `cl19467`.`GA_galeria`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cl19467`.`GA_galeria` ;
-
-CREATE TABLE IF NOT EXISTS `cl19467`.`GA_galeria` (
-  `GA_id` INT NOT NULL AUTO_INCREMENT,
-  `GA_midia` LONGBLOB NULL,
-  `GA_titulo` VARCHAR(45) NULL,
-  `GA_subtitulo` VARCHAR(256) NULL,
-  `GA_descricao` MEDIUMTEXT NULL,
-  `GA_data` DATE NULL,
-  PRIMARY KEY (`GA_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `cl19467`.`admin`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cl19467`.`admin` ;
@@ -88,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`turma` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) VISIBLE)
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC))
 ENGINE = InnoDB;
 
 
@@ -108,9 +59,9 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`usuario` (
   `updated` VARCHAR(45) NOT NULL,
   `turma_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ra_UNIQUE` (`ra` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  INDEX `fk_usuario_turma1_idx` (`turma_id` ASC) VISIBLE,
+  UNIQUE INDEX `ra_UNIQUE` (`ra` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `fk_usuario_turma1_idx` (`turma_id` ASC),
   CONSTRAINT `fk_usuario_turma1`
     FOREIGN KEY (`turma_id`)
     REFERENCES `cl19467`.`turma` (`id`)
@@ -158,9 +109,9 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`usuario_terceiro` (
   `usuario_id` INT NOT NULL,
   `id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`terceiro_id`, `usuario_id`),
-  INDEX `fk_pessoa_terceiro_terceiro1_idx` (`terceiro_id` ASC) VISIBLE,
-  INDEX `fk_pessoa_terceiro_usuario1_idx` (`usuario_id` ASC) VISIBLE,
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `fk_pessoa_terceiro_terceiro1_idx` (`terceiro_id` ASC),
+  INDEX `fk_pessoa_terceiro_usuario1_idx` (`usuario_id` ASC),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   CONSTRAINT `fk_pessoa_terceiro_terceiro1`
     FOREIGN KEY (`terceiro_id`)
     REFERENCES `cl19467`.`terceiro` (`id`)
