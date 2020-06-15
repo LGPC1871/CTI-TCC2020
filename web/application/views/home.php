@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </a>
                         </div>
                     </div>
+</div>
            
 
         <!--Galeria-->
@@ -58,22 +59,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      <section id="galeria-home">
      <div class="row justify-content-center">                    
        <figure class="col-xs-3">
-        <img id="img-galeria" alt="picture" src="../../public/images/home/carousel/img3.jpg";
-            class="img-fluid" alt="Responsive image" 
-         >
+        <img alt="picture" src="../../public/images/home/carousel/img3.jpg";
+            class="img-fluid" alt="Responsive image">
        </figure>
        <figure class="col-xs-3">
         <img alt="picture" src="../../public/images/home/carousel/img2.jpg"
-            class="img-fluid" alt="Responsive image">
+            class="img-fluid" alt="Responsive image"  >
        </figure>
        <figure class="col-xs-3">
        <img alt="picture" src="../../public/images/home/carousel/img1.jpg" 
-            class="img-fluid" alt="Responsive image">
+            class="img-fluid" alt="Responsive image" style="width: 180px; height: 120px;" >
        </figure>
        <figure class="col-xs-3">
        <a href="#">
        <img alt="picture" src="../../public/images/home/carousel/img3.jpg" 
-            class="img-fluid" alt="Responsive image">
+            class="img-fluid" alt="Responsive image" style="width: 180px; height: 120px;" >
         </a>
        </figure>
        </section>
