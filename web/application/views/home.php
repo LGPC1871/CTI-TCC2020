@@ -20,6 +20,37 @@ $diretorio = base_url();
         </div>
 
         <!--Galeria-->
+        <h1 class="display-4" style="text-align:center">Galeria</h1>
+     <section id="galeria-home">
+     <div class="row justify-content-center">                    
+       <figure class="col-xs-3">
+        <img id="img-galeria" alt="picture" src="../../public/images/home/carousel/img3.jpg";
+            class="img-fluid" alt="Responsive image" 
+         >
+       </figure>
+       <figure class="col-xs-3">
+        <img alt="picture" src="../../public/images/home/carousel/img2.jpg"
+            class="img-fluid" alt="Responsive image">
+       </figure>
+       <figure class="col-xs-3">
+       <img alt="picture" src="../../public/images/home/carousel/img1.jpg" 
+            class="img-fluid" alt="Responsive image">
+       </figure>
+       <figure class="col-xs-3">
+       <img alt="picture" src="../../public/images/home/carousel/img3.jpg" 
+            class="img-fluid" alt="Responsive image">
+       </figure>
+       </section>
+
+
+
+
+
+
+
+
+
+
     </div>
 
 </main>

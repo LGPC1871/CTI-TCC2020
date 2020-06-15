@@ -14,3 +14,13 @@ body{
     border-color: grey;
     border-style: solid;
 }
+section#galeria-home>div>figure{
+    padding: 0;
+}
+section#galeria-home>div>figure>img{
+    width: 180px;
+    height: 120px;
+}
+
+
+  
