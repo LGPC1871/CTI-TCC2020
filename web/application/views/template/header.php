@@ -13,10 +13,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <!--USUARIO LOGADO-->
                         <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
                             <a href="<?=$diretorio?>user/profile">
-                                <?php if($userData->getPicture() == null):?>
-                                    <i class="far fa-user-circle fa-lg"></i> 
+                                <?php if($userData->getPicture()):?>
+                                    <img class="rounded-circle" src="" alt="img-perfil">
                                 <?php else :?>
-                                    <img class="rounded-circle" src="data:image/png;base64,<?=base64_encode($userData->getPicture())?>" alt="img-perfil">
+                                    <i class="far fa-user-circle fa-lg"></i> 
                                 <?php endif ?>
                                     <?=$userData->getNome()?>
                             </a>

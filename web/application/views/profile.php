@@ -9,9 +9,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
                 <hr class="w-100 border-gray">
             <div class="d-flex flex-wrap flex-row">
-                <div class="d-flex flex-wrap  text-center">
-                    <div class="align-self-center p-2">
-                        <img class="rounded-circle" src="data:image/png;base64,<?=base64_encode($userData->getPicture())?>" alt="img-perfil" style="width: 100px">
+                <div class="d-flex flex-wrap text-center">
+                    <div class="align-self-center d-flex flex-column justify-content-center p-2">
+                        <?php if($userData->getPicture()):?>
+                        <?php else: ?>
+                            <img class="rounded-circle" src="../src/data/img/user/default.jpg" alt="img-perfil" style="width: 8vw; min-width: 100px;">
+                        <?php endif?>
+                            <a href="#" class="btn btn-primary">Trocar Foto</a>
                     </div>
                 </div>
                 <div class="d-flex flex-wrap flex-column text-center">
