@@ -13,12 +13,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a class="btn btn-success btn-lg" href="#" role="button">Clique aqui</a>
         </div>
         <!--Carousel-->
-        <div class="bg-dark d-flex flex-row justify-content-center" style="height: 50vh">
-            <div class="bg-light" style="height: 100%">
-            </div>
+        <div class="bg-dark ">
+            <div class="bg-light" >
         </div>
 
+                    <div id="carouselExampleIndicators" class="carousel slide img " data-ride="carousel">
+
+                        <ol class="carousel-indicators">
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        </ol>
+
+                        <div class="img carousel-inner" role="listbox">
+
+                            <div class="img carousel-item active">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img1.jpg" >
+                            </div>
+                            <div class="img carousel-item ">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img2.jpg">
+                            </div>
+                            <div class="img carousel-item ">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img3.jpg">
+                            </div>
+                            <div class="img carousel-item ">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img4.jpg">
+                            </div>
+                            <a class="carousel-control-prev " href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" ></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" ></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+           
+
         <!--Galeria-->
-    </div>
+    
 
 </main>
