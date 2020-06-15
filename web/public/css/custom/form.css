@@ -1,0 +1,26 @@
+#info-block{
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+
+    padding: 5px;
+    display: inline-block;
+    
+    font-size: 0.8rem;
+    text-transform: lowercase;
+}
+#info-block.no-error{
+    border-color: darkgreen;
+    background-color: #A7EAA0;
+    color: darkgreen;
+}
+.input-group-prepend.has-error > div,
+.input-group-prepend.has-error > input,
+#info-block.has-error{
+    border-color: darkred;
+    background-color: #FFE5E5;
+    color: darkred;
+}
+.input-group-prepend.has-error > input::placeholder{
+    color: #FF9090; 
+}
