@@ -73,24 +73,59 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => '143.106.241.3:3306',
-	'username' => 'cl19467',
-	'password' => 'cl*07082003',
-	'database' => 'cl19467',
-	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
-	'pconnect' => FALSE,
-	'db_debug' => (ENVIRONMENT !== 'production'),
-	'cache_on' => FALSE,
-	'cachedir' => '',
-	'char_set' => 'utf8',
-	'dbcollat' => 'utf8_general_ci',
-	'swap_pre' => '',
-	'encrypt' => FALSE,
-	'compress' => FALSE,
-	'stricton' => FALSE,
-	'failover' => array(),
-	'save_queries' => TRUE
-);
+
+/*
+|--------------------------------------------------------------------------
+| COTIL
+|--------------------------------------------------------------------------
+| database do COTIL(Lucas Avelino)
+
+	$db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => '143.106.241.3:3306',
+		'username' => 'cl19467',
+		'password' => 'cl*07082003',
+		'database' => 'cl19467',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE
+	);*/
+
+/*
+|--------------------------------------------------------------------------
+| LOCAL
+|--------------------------------------------------------------------------
+| database local
+*/
+	$db['default'] = array(
+		'dsn'	=> '',
+		'hostname' => '127.0.0.1:3308',
+		'username' => 'tcc',
+		'password' => 'OpRC$g%vXUjmeDq!teWg@&bd@xhs4B',
+		'database' => 'cl19467',
+		'dbdriver' => 'mysqli',
+		'dbprefix' => '',
+		'pconnect' => FALSE,
+		'db_debug' => (ENVIRONMENT !== 'production'),
+		'cache_on' => FALSE,
+		'cachedir' => '',
+		'char_set' => 'utf8',
+		'dbcollat' => 'utf8_general_ci',
+		'swap_pre' => '',
+		'encrypt' => FALSE,
+		'compress' => FALSE,
+		'stricton' => FALSE,
+		'failover' => array(),
+		'save_queries' => TRUE
+	);
