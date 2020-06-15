@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
                             <a href="<?=$diretorio?>user/profile">
                                 <?php if($userData->getPicture()):?>
-                                    <img class="rounded-circle" src="" alt="img-perfil">
+                                    <img class="rounded-circle" src="<?=$diretorio?>src/data/img/user/<?=$userData->getRa()?>.jpg" alt="img-perfil">
                                 <?php else :?>
                                     <i class="far fa-user-circle fa-lg"></i> 
                                 <?php endif ?>

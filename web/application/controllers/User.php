@@ -8,6 +8,7 @@ class User extends CI_Controller{
 
         //REQUIRES\\
         require_once(APPPATH . 'libraries/model/UsuarioModel.php');
+        require_once(APPPATH . 'libraries/model/PasswordTokenModel.php');
         $this->load->model('UserDAO', 'userDAO');
         $this->load->library('session');
 
@@ -55,6 +56,28 @@ class User extends CI_Controller{
                 redirect('user');
             }
         }
+        public function forgot_password(){
+            if($this->session->userdata("logged")){
+                $this->template->show('profile.php');
+            }else{
+                $content = array(
+                    "styles" => array("form.css"),
+                    "scripts" => array("form.js", "passwordForgot.js")
+                );
+                $this->template->show('password_send_email.php', $content);
+            }
+        }
+
+        public function password_reset(){
+            if($this->session->userdata("logged")){
+                $this->session->sess_destroy();
+            }
+            $content = array(
+                "styles" => array("form.css"),
+                "scripts" => array("form.js", "passwordReset.js")
+            );
+            $this->template->show('password_reset.php', $content);
+        }
     /*
     |--------------------------------------------------------------------------
     | AJAX
@@ -88,6 +111,38 @@ class User extends CI_Controller{
             );
 
             $response = $this->userRegister($inputArray);
+
+            echo json_encode($response);
+        }
+        public function ajaxPasswordForgot(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+
+            $inputArray = array(
+                "email" => $this->input->post("email"),
+            );
+
+            $response = $this->passwordForgot($inputArray);
+
+            echo json_encode($response);
+        }
+
+        public function ajaxPasswordReset(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+
+            $inputArray = array(
+                "senha" => $this->input->post("senha"),
+                "confirma" => $this->input->post("confirma")
+            );
+            $tokenData = array(
+                "selector" => $this->input->post("selector"),
+                "validator" => $this->input->post("validator")
+            );
+
+            $response = $this->passwordReset($inputArray, $tokenData);
 
             echo json_encode($response);
         }
@@ -309,5 +364,137 @@ class User extends CI_Controller{
         public function endSession(){
             $this->session->sess_destroy();
             redirect('user');
-        }    
+        }
+    /*
+    |--------------------------------------------------------------------------
+    | Senha
+    |--------------------------------------------------------------------------
+    | Todas as funções relacionadas a senha
+    */
+        
+        private function passwordForgot($inputInfo){
+            /* 
+            | Verificar se as entradas são válidas, sem espaços e != vazio
+            */
+
+            $hasEmpty = $this->checkInputEmpty($inputInfo);   //deve retornar FALSE
+                
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
+            
+            /*
+            | Verificar existencia do usuário e senha
+            */
+            $userId = $this->userDAO->selectExist("id","usuario","email", $inputInfo["email"]);
+            $userHasPassword = $this->userDAO->selectExist("usuario_id", "senha", "usuario_id", $userId);
+            if(!$userId || !$userHasPassword){
+                return true;
+            }
+
+            /*
+            | Select informacoes do usuario
+            */
+            $userData = $this->userDAO->selectUserData($userId);
+
+            /*
+            | Deletar Token de segurança ativo
+            */
+            $this->userDAO->deletePasswordToken($userId);
+            /*
+            | Gerar novo Token de segurança
+            */
+            $selector = bin2hex(random_bytes(8));
+            $token = random_bytes(32);
+            $tokenHash = password_hash($token, PASSWORD_DEFAULT);
+            $expires = date("U") + 1800;
+            $url = base_url() . 'user/password_reset?selector=' . $selector . '&validator=' .bin2hex($token);
+
+            $newToken = new PasswordTokenModel();
+            $newToken->setUsuarioId($userId);
+            $newToken->setSelector($selector);
+            $newToken->setToken($tokenHash);
+            $newToken->setExpire($expires);
+
+            $result = $this->userDAO->insertPasswordResetToken($userId, $newToken);
+
+            if(!$result){
+                return false;
+            }
+            $result = $this->sendPasswordResetEmail($userData, $url);
+            return $result;
+        }
+
+        private function sendPasswordResetEmail($userData, $url){
+            $htmlContent = '<h1>Redefinir Senha</h1>';
+            $htmlContent .= '<p>Olá '. $userData->getNome() . " " . $userData->getSobrenome() .'</p>';
+            $htmlContent .= '<p>usuário:'. $userData->getRa() .'</p>';
+            $htmlContent .= '<p>Para redefinir sua senha <a href="' . $url . '">clique aqui</a></p>';
+            
+            $this->email->from($this->config->item('smtp_user'), 'COTIL Jogos');
+            $this->email->to($userData->getEmail());
+
+            $this->email->subject('Redefinir Senha');
+            $this->email->message($htmlContent);    
+
+            $result = $this->email->send();
+
+            if($result){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
+        private function passwordReset($inputInfo, $tokenData){
+            /*
+            |   Retorna
+            |   empty validation senha database
+            */
+            
+            /* 
+            | Verificar se as entradas são válidas, sem espaços e != vazio
+            */
+
+            $hasEmpty = $this->checkInputEmpty($inputInfo);   //deve retornar FALSE
+                
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
+
+            $time = date("U");
+
+            $resetData = $this->userDAO->selectResetPassword($tokenData["selector"], $time);
+
+            if(!$resetData){
+                $resetData["error_type"] = "validation";
+                return $resetData;
+            }
+
+            $tokenBin = hex2bin($tokenData["validator"]);
+
+            if(!password_verify($tokenBin, $resetData->getToken())){
+                $response["error_type"] = "validation";
+                return $response;
+            }
+
+            if($inputInfo["senha"] != $inputInfo["confirma"]){
+                $response["error_type"] = "senha";
+                return $response;
+            }else{
+                $newPassword = password_hash($inputInfo["senha"], PASSWORD_DEFAULT);
+            }
+
+            $result = $this->userDAO->updateUserPassword($resetData->getUsuarioId(), $newPassword);
+
+            if(!$result){
+                $response["error_type"] = "database";
+                return $response;
+            }
+            $this->userDAO->deletePasswordToken($resetData->getUsuarioId());
+            
+            return true;
+        }
 }
