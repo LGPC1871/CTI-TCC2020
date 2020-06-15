@@ -29,14 +29,14 @@ public class AdminDAO {
         
         try {
             
-            stmt = con.prepareStatement("SELECT DA_id FROM DA_admin WHERE DA_usuario = ?");
+            stmt = con.prepareStatement("SELECT id FROM admin WHERE usuario = ?");
             stmt.setString(1, usuario);
             stmt.setMaxRows(1);
             rs = stmt.executeQuery();
             
             if(rs.first()){
                 
-                return rs.getInt("DA_id");
+                return rs.getInt("id");
                 
             }
             
@@ -60,7 +60,7 @@ public class AdminDAO {
         
         try {
             
-            stmt = con.prepareStatement("SELECT * FROM DA_admin WHERE DA_id = ?");
+            stmt = con.prepareStatement("SELECT * FROM admin WHERE id = ?");
             stmt.setInt(1, id);
             stmt.setMaxRows(1);
             rs = stmt.executeQuery();
@@ -69,8 +69,8 @@ public class AdminDAO {
                 
                 AdminModel adminData = new AdminModel();
                 adminData.setId(id);
-                adminData.setUsuario(rs.getString("DA_usuario"));
-                adminData.setSenha(rs.getString("DA_senha"));
+                adminData.setUsuario(rs.getString("usuario"));
+                adminData.setSenha(rs.getString("senha"));
                 
                 return adminData;
                 

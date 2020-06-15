@@ -79,7 +79,7 @@ $query_builder = TRUE;
 | COTIL
 |--------------------------------------------------------------------------
 | database do COTIL(Lucas Avelino)
-
+*/
 	$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => '143.106.241.3:3306',
@@ -100,7 +100,7 @@ $query_builder = TRUE;
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE
-	);*/
+	);
 
 /*
 |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ $query_builder = TRUE;
 |--------------------------------------------------------------------------
 | database local
 */
-	$db['default'] = array(
+	/*$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => '127.0.0.1:3308',
 		'username' => 'tcc',
@@ -128,4 +128,4 @@ $query_builder = TRUE;
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE
-	);
+	);*/
