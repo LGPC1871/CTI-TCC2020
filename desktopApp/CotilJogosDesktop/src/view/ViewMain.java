@@ -58,6 +58,9 @@ public class ViewMain extends javax.swing.JFrame {
         midiaHomeJumbotron = new javax.swing.JMenuItem();
         midiaHomeCarrossel = new javax.swing.JMenuItem();
         midiaHomeGaleria = new javax.swing.JMenuItem();
+        menuCadastrar = new javax.swing.JMenu();
+        menuCadastrarAdministrador = new javax.swing.JMenuItem();
+        menuCadastrarAluno = new javax.swing.JMenuItem();
         menuUsuario = new javax.swing.JMenu();
         menuUsuarioConta = new javax.swing.JMenu();
         menuUsuarioSair = new javax.swing.JMenuItem();
@@ -88,6 +91,26 @@ public class ViewMain extends javax.swing.JFrame {
         menuMidia.add(menuMidiaHome);
 
         menuBar.add(menuMidia);
+
+        menuCadastrar.setText("Cadastrar");
+        menuCadastrar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                menuCadastrarItemStateChanged(evt);
+            }
+        });
+
+        menuCadastrarAdministrador.setText("Administrador");
+        menuCadastrarAdministrador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCadastrarAdministradorActionPerformed(evt);
+            }
+        });
+        menuCadastrar.add(menuCadastrarAdministrador);
+
+        menuCadastrarAluno.setText("Aluno");
+        menuCadastrar.add(menuCadastrarAluno);
+
+        menuBar.add(menuCadastrar);
 
         menuUsuario.setText("User");
         menuUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -129,18 +152,16 @@ public class ViewMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuUsuarioSairActionPerformed
 
     private void midiaHomeJumbotronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midiaHomeJumbotronActionPerformed
-            if(viewJumbotron == null || viewJumbotron.isClosed()){
-                
-                viewJumbotron = new ViewMidiaHomeJumbotron();
-                this.desktopPane.add(viewJumbotron);
-                viewJumbotron.setVisible(true);
-                
-            }else{
-                
-                viewJumbotron.toFront();
-                
-            }
+            new ViewMidiaHomeJumbotron().setVisible(true);
     }//GEN-LAST:event_midiaHomeJumbotronActionPerformed
+
+    private void menuCadastrarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_menuCadastrarItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCadastrarItemStateChanged
+
+    private void menuCadastrarAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastrarAdministradorActionPerformed
+    new ViewCadastrarAdministrador().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCadastrarAdministradorActionPerformed
     
 
     /**
@@ -182,6 +203,9 @@ public class ViewMain extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu menuCadastrar;
+    private javax.swing.JMenuItem menuCadastrarAdministrador;
+    private javax.swing.JMenuItem menuCadastrarAluno;
     private javax.swing.JMenu menuMidia;
     private javax.swing.JMenu menuMidiaHome;
     private javax.swing.JMenu menuUsuario;
