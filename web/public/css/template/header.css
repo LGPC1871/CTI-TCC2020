@@ -1,56 +1,36 @@
 header{
     width: 100%;
-    max-width: 100%;
 }
-    header > nav{
-        width: 100%;
-        max-width: 100%;
+#header > div{
+    min-height: 10vh;
+}
+#logo > img{
+    min-width: 75px;
+    width: 50%;
+}
+#profile-header{
+    min-width: 25vw;
+    text-transform: uppercase;
+}
+#profile-header > a{
+    color: #343a40;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+#profile-header > a > img{
+    height: 2rem;
+}
+#profile-header > a:hover{
+    text-decoration: none;
+    background-color: #E9E9E9;
+}
+#profile-header > a:active{
+    color: grey;
+}
+nav{
+    box-shadow: 0px 10px 5px 2px rgba(0,0,0,0.75);
+}
 
-        box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.75);
-    }
-        nav.navbar{
-            min-height: 10vh;
-        }
-        .navbar>.container{
-            height: 100%;
-            max-height: 100%;
-        }
-        .navbar>.container>.navbar-brand{
-            margin: 0;
-            width: 30%;
-            height: 100%;
-        }
-            .navbar-brand>img{
-                height: 100%;
-                width: 100%;
-            }
-    header > .div-header{
-        height: 2vh;
-        min-height: 1rem;
 
-        background-color: brown;
-    }
+        
 
-
-    @media(min-width: 768px){
-        .navbar>.container>.navbar-brand{
-            width: 25%;
-        }
-    }
-    @media(min-width: 992px){
-        .navbar>.container>.navbar-brand{
-            width: 20%;
-        }
-    }
-    @media(max-width: 600px){
-        .navbar > .container{
-            display: flex;
-            flex-direction: column;
-        }
-        .navbar>.container>.navbar-brand{
-            width: 50%;
-        }
-            .nav-item{
-                text-align: center;
-            }
-    }

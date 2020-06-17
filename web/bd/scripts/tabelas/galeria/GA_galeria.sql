@@ -1,9 +1,0 @@
-CREATE TABLE IF NOT EXISTS `GA_galeria` (
-  `GA_id` INT NOT NULL AUTO_INCREMENT,
-  `GA_midia` LONGBLOB NULL,
-  `GA_titulo` VARCHAR(45) NULL,
-  `GA_subtitulo` VARCHAR(256) NULL,
-  `GA_descricao` MEDIUMTEXT NULL,
-  `GA_data` DATE NULL,
-  PRIMARY KEY (`GA_id`))
-ENGINE = InnoDB

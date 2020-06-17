@@ -1,101 +1,92 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$diretorio = base_url();
 ?>
 
-<main>
-<?php if (isset($jumbotron)): ?> 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class= "jumbotron jumbotron-fluid">
-                <div class="container">
-                        <h1 class="display-4"><?php echo $jumbotron['titulo'] ?></h1>
-                        <p class="lead"><?php echo $jumbotron['subtitulo'] ?></p>
-                        <hr class="my-4">
-                        <p><?php echo $jumbotron['texto'] ?></p>
-                        <p class="lead">
-                            <a class="btn btn-primary btn-lg" href="#" role="button"><?php echo $jumbotron['textobotao'] ?></a>
-                        </p>
-                </div>
-            </div>
+<main class="flex-fill d-flex">
+    <div class="flex-fill d-flex flex-column">
+        <!--Jumbotron-->
+        <div class="jumbotron w-100 mb-0">
+            <h1 class="display-4">Bem Vindo!</h1>
+            <p class="lead">Este é o site do projeto COTIL Jogos, toda a parte web do projeto está visível aqui.</p>
+            <hr class="my-4">
+            <p>Este Jumbotron é editavel através da aplicação desktop!</p>
+            <a class="btn btn-success btn-lg" href="#" role="button">Clique aqui</a>
         </div>
-    </div>
-<?php endif ?>
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12">
-            <h1 class="titulo-home">BEM VINDO!</h1>
-            <hr>
+        <!--Carousel-->
+        <div class="bg-dark ">
+            <div class="bg-light" >
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-xl-7 col-lg-9 col-md-10 col-sm-12 carrossel-div">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <?php if(isset($carrossel)):?>
-                        <?php $cont = 0; ?>
-                        <?php foreach($carrossel as $item): ?>
-                            <?php if($cont == 0):?>
-                                <li data-target="#myCarousel" data-slide-to="<?= $cont ?>" class="active"></li>
-                            <?php else: ?>
-                                <li data-target="#myCarousel" data-slide-to="<?= $cont ?>"></li>
-                            <?php endif ?>
-                        <?php $cont++; ?>
-                        <?php endforeach ?>
-                    <?php endif ?>
-                </ol>
 
-                <div class="carousel-inner">
-                    <?php if(isset($carrossel)):?>
-                        <?php $cont = 1; ?>
-                        <?php foreach($carrossel as $arrayCarrossel): ?>
+                    <div id="carouselExampleIndicators" class="carousel slide img " data-ride="carousel">
 
-                            <?php if($cont == 1):?>
-                                <div class="carousel-item active">
-                            <?php else: ?>
-                                <div class="carousel-item">
-                            <?php endif ?>
+                        <ol class="carousel-indicators">
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li  data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        </ol>
 
-                            <?php echo "<img src='data:image/jpg;base64,".base64_encode($arrayCarrossel['imagem'])."' alt=$arrayCarrossel[imagemalt] class='carrossel-img' />"; ?>
-                            <div class="carousel-caption">
-                                <h5><?php echo $arrayCarrossel['legendatitulo'] ?></h5>
-                                <p><?php echo $arrayCarrossel['legendatexto'] ?></p>
+                        <div class="img carousel-inner" role="listbox">
+
+                            <div class="img carousel-item active">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img1.jpg" >
                             </div>
+                            <div class="img carousel-item ">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img2.jpg">
+                            </div>
+                            <div class="img carousel-item ">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img3.jpg">
+                            </div>
+                            <div class="img carousel-item ">
+                                <img class="img" src="<?=$diretorio?>\public\images\home\carousel\img4.jpg">
+                            </div>
+                            <a class="carousel-control-prev " href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" ></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" ></span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </div>
-                        <?php $cont++; ?>
-                        <?php endforeach ?>
-                    <?php endif ?>
-                </div>
+                    </div>
+           
 
-                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"><i class="fas fa-arrow-circle-right"></i></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
+        <!--Galeria-->
+        <h1 class="display-4" style="text-align:center">Galeria</h1>
+     <section id="galeria-home">
+     <div class="row justify-content-center">                    
+       <figure class="col-xs-3">
+        <img id="img-galeria" alt="picture" src="../../public/images/home/carousel/img3.jpg";
+            class="img-fluid" alt="Responsive image" 
+         >
+       </figure>
+       <figure class="col-xs-3">
+        <img alt="picture" src="../../public/images/home/carousel/img2.jpg"
+            class="img-fluid" alt="Responsive image">
+       </figure>
+       <figure class="col-xs-3">
+       <img alt="picture" src="../../public/images/home/carousel/img1.jpg" 
+            class="img-fluid" alt="Responsive image">
+       </figure>
+       <figure class="col-xs-3">
+       <a href="#">
+       <img alt="picture" src="../../public/images/home/carousel/img3.jpg" 
+            class="img-fluid" alt="Responsive image">
+        </a>
+       </figure>
+       </section>
+
+
+
+
+
+
+
+
+
+
     </div>
-</div>
-<!--Preview da galeria AQUI-->
-<section id="galeria-home">
-    
-    <h1 class="titulo-home">GALERIA</h1>
-    <hr>  
-    <div class="row justify-content-center">                    
-    
-    <?php if(isset($galeria_preview)): ?>
-        <?php foreach($galeria_preview as $galeria): ?>
 
-            <figure class="col-md-2">          
-                <?php echo "<img src='data:image/jpg;base64,".base64_encode($galeria['imagem'])."'/>"; ?>
-            </figure>
-        
-        <?php endforeach ?>    
-    <?php endif ?>
-
-    </div>
-</section>
 </main>
