@@ -61,9 +61,7 @@ public class HomeJumbotronDAO {
             
             return jumbotron;
             
-        } catch (IOException ex) {
-            Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (JSONException ex) {
+        } catch (IOException | JSONException ex) {
             Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

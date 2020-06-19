@@ -116,7 +116,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="desktopPane" pref="542" max="32767" attributes="0"/>
+          <Component id="desktopPane" alignment="1" pref="540" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

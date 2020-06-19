@@ -74,14 +74,25 @@ class Home extends CI_Controller{
     | Funcoes da classe
     */
         private function setJumbotron($jumbotron){
-            $json = array(
-                "status" => $jumbotron->getStatus(),
-                "titulo" => $jumbotron->getTitulo(),
-                "subtitulo" => $jumbotron->getSubtitulo(),
-                "texto" => $jumbotron->getTexto(),
-                "botao" => $jumbotron->getBotao(),
-                "botaoStatus" => $jumbotron->getBotaoStatus()
-            );
+            if($jumbotron){
+                $json = array(
+                    "status" => $jumbotron->getStatus(),
+                    "titulo" => $jumbotron->getTitulo(),
+                    "subtitulo" => $jumbotron->getSubtitulo(),
+                    "texto" => $jumbotron->getTexto(),
+                    "botao" => $jumbotron->getBotao(),
+                    "botaoStatus" => $jumbotron->getBotaoStatus()
+                );
+            }else{
+                $json = array(
+                    "status" => "0",
+                    "titulo" => " ",
+                    "subtitulo" => " ",
+                    "texto" => " ",
+                    "botao" => " ",
+                    "botaoStatus" => "0"
+                );
+            }
 
             $result = write_file("assets/home/jumbotron.json", json_encode($json));
             return $result;
@@ -89,6 +100,9 @@ class Home extends CI_Controller{
 
         private function getJumbotron(){
             $json = read_file('assets/home/jumbotron.json');
+            if(!$json){
+                $this->setJumbotron(false);
+            }
             $jsonDecoded = json_decode($json);
             
             $jumbotron = new Jumbotron;
