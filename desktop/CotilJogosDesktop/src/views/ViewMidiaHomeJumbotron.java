@@ -7,6 +7,7 @@ package views;
 
 import control.HomeJumbotron;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import model.domain.HomeJumbotronModel;
 
 /**
@@ -190,7 +191,23 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        HomeJumbotronModel jumbotron = new HomeJumbotronModel();
         
+        jumbotron.setStatus(this.cbJumbotronStatus.isSelected() ? 1 : 0);
+        jumbotron.setTitulo(this.txtTitulo.getText());
+        jumbotron.setSubtitulo(this.txtSubtitulo.getText());
+        jumbotron.setTexto(this.txtTexto.getText());
+        jumbotron.setStatusBotao(this.cbBotaoStatus.isSelected() ? 1 : 0);
+        jumbotron.setTextoBotao(this.txtTextoBotao.getText());
+        
+        Boolean result = HomeJumbotron.saveJumbotron(jumbotron);
+        
+        if(result){
+            JOptionPane.showMessageDialog(this, "Jumbotron alterado com sucesso!", "Mensagem", WIDTH);
+        }else{
+            JOptionPane.showMessageDialog(this, "Falha ao alterar jumbotron", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        loadJumbotronViewData();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
 

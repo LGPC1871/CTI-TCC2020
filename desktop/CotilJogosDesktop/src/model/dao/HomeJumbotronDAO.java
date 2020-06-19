@@ -28,7 +28,7 @@ import org.json.JSONObject;
  */
 public class HomeJumbotronDAO {
     
-    public HomeJumbotronModel getJumbotronData(){
+    public static HomeJumbotronModel getJumbotronData(){
         /*
         * Corpo da Requisição
         */
@@ -69,7 +69,37 @@ public class HomeJumbotronDAO {
         return null;
     }
     
-    public Boolean saveJumbotronData(HomeJumbotronModel jumbotronData){
-        return null;
+    public static Boolean setJumbotron(HomeJumbotronModel jumbotron){
+        String json;
+        
+        json = "status=" + jumbotron.getStatus();
+        json += "&";
+        json += "titulo=" + jumbotron.getTitulo();
+        json += "&";
+        json += "subtitulo=" + jumbotron.getSubtitulo();
+        json += "&";
+        json += "texto=" + jumbotron.getTexto();
+        json += "&";
+        json += "botao=" + jumbotron.getTextoBotao();
+        json += "&";
+        json += "botaoStatus=" + jumbotron.getStatusBotao();
+        
+        OkHttpClient client = new OkHttpClient().newBuilder()
+            .build();
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, json);
+        Request request = new Request.Builder()
+            .url("http://localhost:80/home/desktopSetJumbotron")
+            .method("POST", body)
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .build();
+        
+        try {
+            Response response = client.newCall(request).execute();
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 }
