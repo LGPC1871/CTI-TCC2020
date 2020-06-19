@@ -6,7 +6,7 @@
 package control;
 
 import model.domain.AdminModel;
-import view.ViewMain;
+import views.ViewMain;
 
 /**
  *

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package views;
 
 import control.HomeJumbotron;
-import javax.swing.JOptionPane;
+import java.awt.Color;
 import model.domain.HomeJumbotronModel;
 
 /**
@@ -26,24 +26,27 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
     }
     
     private void loadJumbotronViewData(){
+        HomeJumbotronModel jumbotron = HomeJumbotron.loadJumbotron();
         
-        HomeJumbotronModel jumbotronData = HomeJumbotron.loadJumbotron();
-        
-        txtTitulo.setText(jumbotronData.getTitulo());
-        txtSubtitulo.setText(jumbotronData.getSubtitulo());
-        txtTexto.setText(jumbotronData.getTexto());
-        txtTextoBotao.setText(jumbotronData.getTextoBotao());
-        
-        if(jumbotronData.getStatus() == 1){
-            
-            cbAtivar.setSelected(true);
-            status.setText("Ativo");
-            
+        this.txtTitulo.setText(jumbotron.getTitulo());
+        this.txtSubtitulo.setText(jumbotron.getSubtitulo());
+        this.txtTexto.setText(jumbotron.getTexto());
+        this.txtTextoBotao.setText(jumbotron.getTextoBotao());
+       
+        if(jumbotron.getStatus() == 1){
+            this.status.setText("Ativo.");
+            this.status.setForeground(Color.green);
+            this.cbJumbotronStatus.setSelected(true);
         }else{
-            
-            cbAtivar.setSelected(false);
-            status.setText("Desativado");
-            
+            this.status.setText("Desativado.");
+            this.status.setForeground(Color.red);
+            this.cbJumbotronStatus.setSelected(false);
+        }
+        
+        if(jumbotron.getStatusBotao() == 1){
+            this.cbBotaoStatus.setSelected(true);
+        }else{
+            this.cbBotaoStatus.setSelected(false);
         }
     }
     /**
@@ -61,13 +64,15 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
         lblSubtitulo = new javax.swing.JLabel();
         txtSubtitulo = new javax.swing.JTextField();
         lblTexto = new javax.swing.JLabel();
-        txtTexto = new javax.swing.JTextField();
+        txtScrollPanel = new javax.swing.JScrollPane();
+        txtTexto = new javax.swing.JTextArea();
         lblTextoBotao = new javax.swing.JLabel();
         txtTextoBotao = new javax.swing.JTextField();
+        cbBotaoStatus = new javax.swing.JCheckBox();
         lblStatus = new javax.swing.JLabel();
         status = new javax.swing.JLabel();
+        cbJumbotronStatus = new javax.swing.JCheckBox();
         btnSalvar = new javax.swing.JButton();
-        cbAtivar = new javax.swing.JCheckBox();
 
         setClosable(true);
 
@@ -79,7 +84,13 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
 
         lblTexto.setText("Texo:");
 
+        txtTexto.setColumns(20);
+        txtTexto.setRows(5);
+        txtScrollPanel.setViewportView(txtTexto);
+
         lblTextoBotao.setText("Botão:");
+
+        cbBotaoStatus.setText("Botão Ativo");
 
         javax.swing.GroupLayout pnlEditarJumbotronLayout = new javax.swing.GroupLayout(pnlEditarJumbotron);
         pnlEditarJumbotron.setLayout(pnlEditarJumbotronLayout);
@@ -93,12 +104,18 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
                     .addComponent(lblSubtitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlEditarJumbotronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTitulo)
-                    .addComponent(txtSubtitulo)
-                    .addComponent(txtTextoBotao)
-                    .addComponent(txtTexto, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlEditarJumbotronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlEditarJumbotronLayout.createSequentialGroup()
+                        .addGroup(pnlEditarJumbotronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                            .addComponent(txtSubtitulo)
+                            .addComponent(txtScrollPanel))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlEditarJumbotronLayout.createSequentialGroup()
+                        .addComponent(txtTextoBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cbBotaoStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlEditarJumbotronLayout.setVerticalGroup(
             pnlEditarJumbotronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,15 +131,18 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlEditarJumbotronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTexto)
-                    .addComponent(txtTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(pnlEditarJumbotronLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTextoBotao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTextoBotao))
+                    .addComponent(lblTextoBotao)
+                    .addComponent(cbBotaoStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
         lblStatus.setText("Jumbotron status:");
+
+        cbJumbotronStatus.setText("Jumbotron Ativo");
 
         btnSalvar.setText("SALVAR");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -130,8 +150,6 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
                 btnSalvarActionPerformed(evt);
             }
         });
-
-        cbAtivar.setText("Jumbotron Ativo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +161,7 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                        .addComponent(cbAtivar, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbJumbotronStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlEditarJumbotron, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblStatus)
@@ -163,7 +181,7 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
                     .addComponent(status))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbAtivar, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(cbJumbotronStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -172,34 +190,14 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        HomeJumbotronModel jumbotronData = HomeJumbotron.loadJumbotron();
         
-        jumbotronData.setTitulo(txtTitulo.getText());
-        jumbotronData.setSubtitulo(txtSubtitulo.getText());
-        jumbotronData.setTexto(txtTexto.getText());
-        jumbotronData.setTextoBotao(txtTextoBotao.getText());
-        
-        if(cbAtivar.isSelected()){
-            jumbotronData.setStatus(1);
-        }else{
-            jumbotronData.setStatus(0);
-        }
-        
-        Boolean result = HomeJumbotron.saveJumbotron(jumbotronData);
-        
-        if(result){
-            JOptionPane.showMessageDialog(this, "Jumbotron salvo com sucesso.");
-            
-        }else{
-            JOptionPane.showMessageDialog(this, "Não foi possivel salvar.", "Erro.", JOptionPane.WARNING_MESSAGE);
-        }
-        loadJumbotronViewData();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JCheckBox cbAtivar;
+    private javax.swing.JCheckBox cbBotaoStatus;
+    private javax.swing.JCheckBox cbJumbotronStatus;
     private javax.swing.JLabel lblStatus;
     private javax.swing.JLabel lblSubtitulo;
     private javax.swing.JLabel lblTexto;
@@ -207,8 +205,9 @@ public class ViewMidiaHomeJumbotron extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPanel pnlEditarJumbotron;
     private javax.swing.JLabel status;
+    private javax.swing.JScrollPane txtScrollPanel;
     private javax.swing.JTextField txtSubtitulo;
-    private javax.swing.JTextField txtTexto;
+    private javax.swing.JTextArea txtTexto;
     private javax.swing.JTextField txtTextoBotao;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables

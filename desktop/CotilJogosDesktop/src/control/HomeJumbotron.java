@@ -21,7 +21,7 @@ public class HomeJumbotron {
         HomeJumbotronDAO jumbotronDAO = new HomeJumbotronDAO();
         HomeJumbotronModel jumbotron;
         
-        jumbotron = jumbotronDAO.selectJumbotronData();
+        jumbotron = jumbotronDAO.getJumbotronData();
         
         return jumbotron;
     }
