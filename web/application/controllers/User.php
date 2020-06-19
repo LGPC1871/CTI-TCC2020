@@ -67,7 +67,6 @@ class User extends CI_Controller{
                 $this->template->show('password_send_email.php', $content);
             }
         }
-
         public function password_reset(){
             if($this->session->userdata("logged")){
                 $this->session->sess_destroy();
@@ -146,6 +145,7 @@ class User extends CI_Controller{
 
             echo json_encode($response);
         }
+
     /*
     |--------------------------------------------------------------------------
     | Private
