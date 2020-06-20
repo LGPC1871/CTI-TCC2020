@@ -7,19 +7,18 @@ package model.domain;
 
 /**
  *
- * @author lgpc1
+ * @author 55199
  */
-public class AdminModel {
-    private int id;
+public class Administrador {
     private String usuario;
     private String senha;
     
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Administrador(){}
+    
+    public Administrador(String usuario, String senha)
+    {
+        this.usuario = usuario;
+        this.senha = senha;
     }
 
     public String getUsuario() {
@@ -37,4 +36,6 @@ public class AdminModel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    
+    public void cadastrarAdministrador(Administrador administrador){}
 }

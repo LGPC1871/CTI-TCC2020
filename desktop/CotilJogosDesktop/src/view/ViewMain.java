@@ -108,11 +108,6 @@ public class ViewMain extends javax.swing.JFrame {
         menuCadastrar.add(menuCadastrarAdministrador);
 
         menuCadastrarAluno.setText("Aluno");
-        menuCadastrarAluno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCadastrarAlunoActionPerformed(evt);
-            }
-        });
         menuCadastrar.add(menuCadastrarAluno);
 
         menuBar.add(menuCadastrar);
@@ -165,12 +160,8 @@ public class ViewMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCadastrarItemStateChanged
 
     private void menuCadastrarAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastrarAdministradorActionPerformed
-       // TODO add your handling code here:
+    new ViewCadastrarAdministrador().setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_menuCadastrarAdministradorActionPerformed
-
-    private void menuCadastrarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastrarAlunoActionPerformed
-        new ViewCadastroAluno().setVisible(true); 
-    }//GEN-LAST:event_menuCadastrarAlunoActionPerformed
     
 
     /**
