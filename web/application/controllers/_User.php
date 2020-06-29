@@ -359,7 +359,7 @@ class User extends CI_Controller{
     |--------------------------------------------------------------------------
     | Todas as funções relacionadas a sessão do usuário
     */
-        private function startSession($userData, $thirdInfo = array()){  
+        private function _startSession($userData, $thirdInfo = array()){  
                 
             $this->session->set_userdata("logged", true);
             $this->session->set_userdata("userData", serialize($userData));
@@ -367,7 +367,7 @@ class User extends CI_Controller{
             return true;
         }
 
-        public function endSession(){
+        public function _endSession(){
             $this->session->sess_destroy();
             redirect('user');
         }

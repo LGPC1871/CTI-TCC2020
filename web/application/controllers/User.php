@@ -9,11 +9,13 @@ class User extends CI_Controller{
         //REQUIRES\\
         require_once(APPPATH . 'libraries/model/UsuarioModel.php');
         require_once(APPPATH . 'libraries/model/SenhaModel.php');
+        require_once(APPPATH . 'libraries/model/SenhaResetModel.php');
         
         //LOADS\\
         $this->load->model('UserDAO', 'userDAO');
         $this->load->model('dao/UsuarioDAO', 'usuarioDAO');
         $this->load->model('dao/SenhaDAO', 'senhaDAO');
+        $this->load->model('dao/SenhaResetDAO', 'senhaResetDAO');
 
         $this->load->library('Util', 'util');
     }
@@ -89,9 +91,9 @@ class User extends CI_Controller{
          * @return error_type
          */
         public function ajaxLogin(){
-            /*if (!$this->input->is_ajax_request()) {
+            if (!$this->input->is_ajax_request()) {
             exit("Nenhum acesso de script direto permitido!");
-            }*/
+            }
 
             $inputArray = array(
                 "usuario" => $this->input->post("usuario"),
@@ -125,6 +127,28 @@ class User extends CI_Controller{
             );
 
             $response = $this->userRegister($inputArray);
+
+            echo json_encode($response);
+        }
+
+        /**
+         * Requisição para enviar token de senha
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
+        public function ajaxPasswordForgot(){
+            /*if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }*/
+
+            $inputArray = array(
+                "email" => $this->input->post("email"),
+            );
+
+            $response = $this->userResetPassword($inputArray);
 
             echo json_encode($response);
         }
@@ -304,6 +328,82 @@ class User extends CI_Controller{
             }
 
             return true;
+        }
+
+        /**
+         * Função forgotPassword
+         * Gera token para resetar a senha do usuário e
+         * envia por email
+         * @param Email
+         * @return boolean
+         */
+        private function userResetPassword($input = array()){
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
+                
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
+
+            //verificar existencia de usuário e senha
+            $options = array(
+                'select' => array('id'),
+                'where' => array(
+                    'email' => $input['email']
+                )
+            );
+            $userIdModel = $this->usuarioDAO->getUser($options);
+            $userId = $userIdModel->getId();
+            $userHasPassword = $this->senhaDAO->getPassword($userId);
+            if(!$userId || !$userHasPassword){
+                return true;
+            }
+
+            //recolher userdata
+            $options = array(
+                'where' => array(
+                    'id' => $userId
+                )
+            );
+            $usuario = $this->usuarioDAO->getUser($options);
+
+            //apagar tokens antigos
+            $this->senhaResetDAO->removeToken($userId);
+
+            //gerar token
+            $selector = bin2hex(random_bytes(8));
+            $token = random_bytes(32);
+            $tokenHash = password_hash($token, PASSWORD_DEFAULT);
+            $expires = date("U") + 1800;
+            $url = base_url() . 'user/password_reset?selector=' . $selector . '&validator=' .bin2hex($token);
+
+            $newToken = new SenhaResetModel();
+            $newToken->setUsuarioId($userId);
+            $newToken->setSelector($selector);
+            $newToken->setToken($tokenHash);
+            $newToken->setExpire($expires);
+
+            $insert = array('senhaResetModel' => $newToken);
+
+            if(!$this->senhaResetDAO->addToken($insert)) return false;
+
+            //enviar email
+            /* SUBSTITUIR POR VIEW */
+            $htmlContent = '<h1>Redefinir Senha</h1>';
+            $htmlContent .= '<p>Olá '. $usuario->getNome() . " " . $usuario->getSobrenome() .'</p>';
+            $htmlContent .= '<p>usuário:'. $usuario->getRa() .'</p>';
+            $htmlContent .= '<p>Para redefinir sua senha <a href="' . $url . '">clique aqui</a></p>';
+            
+            $this->email->from($this->config->item('smtp_user'), 'COTIL Jogos');
+            $this->email->to($usuario->getEmail());
+
+            $this->email->subject('Redefinir Senha');
+            $this->email->message($htmlContent);    
+
+            $result = $this->email->send();
+
+            return $result;
         }
 
     /*
