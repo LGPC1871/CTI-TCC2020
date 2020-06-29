@@ -102,7 +102,7 @@ class DAO extends CI_Model{
                 'from'
             );
             if(!$this->_required($required, $options, 1)) return false;
-
+            
             $defaultOptions = array(
                 'select' => array('*'),
                 'where' => array(0 => 0),
@@ -111,12 +111,12 @@ class DAO extends CI_Model{
                 'join' => null /*array(0 => array())*/
             );
             $options = $this->_default($defaultOptions, $options);
-
+            
             $select = $options['select'];
             $from = $options['from'];
             $where = $options['where'];
             $like = $options['like'];
-
+            
             foreach($where as $campo=>$valor){
                 $this->db->where($campo, $valor);
             }
@@ -133,7 +133,7 @@ class DAO extends CI_Model{
                 }
             }
             $this->db->from($from);
-
+            
             $result = $this->db->get();
             
             //@return

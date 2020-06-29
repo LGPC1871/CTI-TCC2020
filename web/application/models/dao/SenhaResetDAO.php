@@ -56,6 +56,42 @@ class SenhaResetDAO extends DAO{
         }
 
         /**
+         * Método getSenhaReset
+         * retorna um objeto contendo o token para resetar a senha
+         * retorna false se a operacao falhar
+         * retorna false se o usuário não existe
+         * @param array $options
+         * @return UsuarioModel
+         * @return false
+         */
+        public function getSenhaReset($selector){
+            if(!$selector) return false;
+
+            $options = array(
+                'from' => 'senha_reset',
+                'where' => array(
+                    'selector' => $selector
+                    )
+                );
+                
+            $result = $this->read($options);
+            
+            if(!$result) return false;
+            
+            if(!isset($result->usuario_id)) return false;
+            if(!isset($result->selector)) return false;
+            if(!isset($result->token)) return false;
+            if(!isset($result->expire)) return false;
+            
+            $senhaReset = new SenhaResetModel();
+            $senhaReset->setUsuarioId($result->usuario_id);
+            $senhaReset->setSelector($result->selector);
+            $senhaReset->setToken($result->token);
+            $senhaReset->setExpire($result->expire);
+            
+            return $senhaReset;
+        }
+        /**
          * Método removeToken
          * remove um registro da tabela @usuario
          * retorna false se o delete falhar

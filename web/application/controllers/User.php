@@ -148,7 +148,32 @@ class User extends CI_Controller{
                 "email" => $this->input->post("email"),
             );
 
-            $response = $this->userResetPassword($inputArray);
+            $response = $this->userPasswordForgot($inputArray);
+
+            echo json_encode($response);
+        }
+
+        /**
+         * Requisição para resetar a senha
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
+        public function ajaxPasswordReset(){
+            /*if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }*/
+
+            $inputArray = array(
+                "senha" => $this->input->post("senha"),
+                "confirma" => $this->input->post("confirma"),
+                "selector" => $this->input->post("selector"),
+                "validator" => $this->input->post("validator")
+            );
+
+            $response = $this->userPasswordReset($inputArray);
 
             echo json_encode($response);
         }
@@ -331,13 +356,13 @@ class User extends CI_Controller{
         }
 
         /**
-         * Função forgotPassword
+         * Função PasswordForgot
          * Gera token para resetar a senha do usuário e
          * envia por email
          * @param Email
          * @return boolean
          */
-        private function userResetPassword($input = array()){
+        private function userPasswordForgot($input = array()){
             //empty
             $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
                 
@@ -404,6 +429,53 @@ class User extends CI_Controller{
             $result = $this->email->send();
 
             return $result;
+        }
+
+        /**
+         * Função PasswordReset
+         * verifica token e reseta a senha do usuário
+         * envia por email
+         * @param Email
+         * @return boolean
+         */
+
+        private function userPasswordReset($input = array()){
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
+                
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
+            //input check
+            if($input["senha"] != $input["confirma"]){
+                $response["error_type"] = "senha";
+                return $response;
+            }
+
+            //get senhaReset
+            $senhaReset = $this->senhaResetDAO->getSenhaReset($input['selector']);
+            if(!$senhaReset) return false;
+            $time = date("U");
+
+            //validate token
+            if($time > $senhaReset->getExpire()){
+                $response["error_type"] = "validation";
+                return $response;
+            }
+            
+            $token = hex2bin($input["validator"]);
+
+            if(!password_verify($token, $senhaReset->getToken())){
+                $response["error_type"] = "validation";
+                return $response;
+            }
+            
+            $newPassword = password_hash($input["senha"], PASSWORD_DEFAULT);
+
+            $result = $this->senhaDAO->updatePassword($newPassword, $senhaReset->getUsuarioId());
+            if(!$result)return false;
+            return true;
         }
 
     /*

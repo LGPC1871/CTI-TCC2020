@@ -11,9 +11,9 @@ class SenhaDAO extends DAO{
     |--------------------------------------------------------------------------
     | Funções do acesso de dados da classe
     */
-    /**
-         * Método getUser
-         * retorna um objeto de um único usuário
+        /**
+         * Método getPassword
+         * retorna senha do usuario
          * retorna false se a operacao falhar
          * retorna false se o usuário não existe
          * @param array $options
@@ -54,6 +54,29 @@ class SenhaDAO extends DAO{
                 'values' => $atributos
             );
             $this->create($options);
+
+            return true;
+        }
+        /**
+         * Método updatePassword
+         * atualiza senha do usuário
+         * retorna false se a operacao falhar
+         * retorna false se o usuário não existe
+         * @param array $options
+         * @return SenhaModel
+         * @return false
+         */
+        public function updatePassword($userId, $password){
+            if(!$userId || !$password) return false;
+            $atributos = array(
+                'usuario_id' => $userId,
+                'senha' => $password
+            );
+            $options = array(
+                'table' => 'senha',
+                'values' => $atributos
+            );
+            $this->update($options);
 
             return true;
         }
