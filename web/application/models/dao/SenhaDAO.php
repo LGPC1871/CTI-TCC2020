@@ -69,15 +69,16 @@ class SenhaDAO extends DAO{
         public function updatePassword($userId, $password){
             if(!$userId || !$password) return false;
             $atributos = array(
-                'usuario_id' => $userId,
                 'senha' => $password
             );
             $options = array(
                 'table' => 'senha',
+                'where' => array(
+                    'usuario_id' => $userId
+                ),
                 'values' => $atributos
             );
-            $this->update($options);
 
-            return true;
+            return $this->update($options);
         }
     }

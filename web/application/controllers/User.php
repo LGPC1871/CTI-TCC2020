@@ -22,9 +22,9 @@ class User extends CI_Controller{
 
     public function index(){
         if($this->session->userdata("logged")){
-            redirect('user/profile');
+            redirect('Profile');
         }else{
-            redirect('profile');
+            redirect('user/login');
         }
     }
     /*
@@ -34,14 +34,14 @@ class User extends CI_Controller{
     | Todas as funções que chamam view`s
     */
         public function login(){
-            if(!$this->session->userdata("logged")){
+            if($this->session->userdata("logged")){
+                redirect('user');
+            }else{
                 $content = array(
                     "styles" => array("form.css"),
                     "scripts" => array("login.js", "form.js")
                 );
                 $this->template->show('login.php', $content);
-            }else{
-                redirect('user');
             }
         }
         public function register(){
@@ -455,7 +455,10 @@ class User extends CI_Controller{
 
             //get senhaReset
             $senhaReset = $this->senhaResetDAO->getSenhaReset($input['selector']);
-            if(!$senhaReset) return false;
+            if(!$senhaReset) {
+                $response["error_type"] = "validation";
+                return $response;
+            }
             $time = date("U");
 
             //validate token
@@ -470,10 +473,11 @@ class User extends CI_Controller{
                 $response["error_type"] = "validation";
                 return $response;
             }
-            
+            //$this->senhaResetDAO->removeToken($senhaReset->getUsuarioId());
+
             $newPassword = password_hash($input["senha"], PASSWORD_DEFAULT);
 
-            $result = $this->senhaDAO->updatePassword($newPassword, $senhaReset->getUsuarioId());
+            $result = $this->senhaDAO->updatePassword($senhaReset->getUsuarioId(), $newPassword);
             if(!$result)return false;
             return true;
         }

@@ -163,7 +163,7 @@ class DAO extends CI_Model{
                 'values'
             );
             if(!$this->_required($required, $options, 1)) return false;
-
+            
             $table = $options['table'];
             $where = $options['where'];
             $values = $options['values'];
