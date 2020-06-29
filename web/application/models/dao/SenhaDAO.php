@@ -35,4 +35,26 @@ class SenhaDAO extends DAO{
             
             return $senha;
         }
+
+        /**
+         * Add password
+         * @param userId
+         * @param password
+         * @return bool
+         */
+        public function addPassword($userId, $password){
+            if(!$userId || !$password) return false;
+
+            $atributos = array(
+                'usuario_id' => $userId,
+                'senha' => $password
+            );
+            $options = array(
+                'table' => 'senha',
+                'values' => $atributos
+            );
+            $this->create($options);
+
+            return true;
+        }
     }

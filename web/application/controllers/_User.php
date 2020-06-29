@@ -258,75 +258,13 @@ class User extends CI_Controller{
             return true;
         }
 
-        /**
-         * Função login da aplicação
-         * valida as informações necessárias para iniciar uma
-         * sessão
-         * @param array
-         * @return true
-         * @return array $string[error_type]
-         */
-        private function userLogin($input = array()){
-            //verificar se existe valor nao preenchido
-            $hasEmpty = $this->checkInputEmpty($input);   //deve retornar FALSE
-                
-            if($hasEmpty){
-                $hasEmpty["error_type"] = "empty";
-                return $hasEmpty;
-            }
-
-            //verificar se o usuário existe
-            $options = array(
-                'select' => array(
-                    'id'
-                ),
-                'where' => array(
-                    'ra' => $input['usuario']
-                ),
-            );
-            $userExist = $this->usuarioDAO->getUser($options);
-
-                if($userExist){
-                    $userId = $userExist;
-
-                    $userAuth = $this->validatePassword($userId, $input["senha"]);
-                }
-                if(!$userExist || !$userAuth){
-                    $result["error_list"] = array();
-                    foreach($input as $key => $value){
-                        array_push($result["error_list"], $key);
-                    }
-                    $result["error_type"] = "validation";
-                    
-                    return $result;
-                }
-                $input = null;
-            
-            //Select userdata
-            $options = array(
-                'where' => array(
-                    'id' => $userId
-                )
-            );
-            $userData = $this->usuarioDAO->getUser($options);
-
-            if(!$userData){
-                $response = array();
-                $response["error_type"] = "database";
-                return $response;
-            }
-
-            $this->startSession($userData);
-            return true;
-        }
-
     /*
     |--------------------------------------------------------------------------
     | Register
     |--------------------------------------------------------------------------
     | Funções de cadastro do usuário
     */
-        private function userRegister($inputInfo = array()){
+        private function _userRegister($inputInfo = array()){
             /*
             | Retorno
             | empty email user_invalid user_exist name password database

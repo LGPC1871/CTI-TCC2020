@@ -40,6 +40,7 @@ class UsuarioDAO extends DAO{
             //preparar options para o insert
             $time = date("Y-m-d H:i:s");
             $atributos = array(
+                'ra' => $usuario->getRa(),
                 'email' => $usuario->getEmail(),
                 'nome' => $usuario->getNome(),
                 'sobrenome' => $usuario->getSobrenome(),

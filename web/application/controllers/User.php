@@ -101,6 +101,33 @@ class User extends CI_Controller{
             $response = $this->userLogin($inputArray);
             echo json_encode($response);
         }
+
+        /**
+         * Requisição para efetuar o cadastro
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
+        public function ajaxRegister(){
+            /*if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }*/
+
+            $inputArray = array(
+                "email" => $this->input->post("email"),
+                "usuario" => $this->input->post("usuario"),
+                "nome" => $this->input->post("nome"),
+                "sobrenome" => $this->input->post("sobrenome"),
+                "senha" => $this->input->post("senha"),
+                "senhaConfirma" => $this->input->post("senhaConfirma"),
+            );
+
+            $response = $this->userRegister($inputArray);
+
+            echo json_encode($response);
+        }
     /*
     |--------------------------------------------------------------------------
     | Private
@@ -167,10 +194,118 @@ class User extends CI_Controller{
             }
             
             $result = $this->startSession($userData);
-            
+
             return $result;
         }
-    
+        
+        /**
+         * Função register da aplicação
+         * valida as informações necessárias para cadastrar um novo usuário
+         * @param array
+         * @return true
+         * @return array $string[error_type]
+         */
+        private function userRegister($input = array()){
+            
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE    
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
+
+            //email
+            $input["email"] = filter_var($input["email"], FILTER_SANITIZE_EMAIL);
+            $options = array(
+                'select' => array(
+                    'id'
+                ),
+                'where' => array(
+                    'email' => $input['email']
+                ),
+            );
+            $userExist = $this->usuarioDAO->getUser($options);
+
+            if(!filter_var($input["email"], FILTER_VALIDATE_EMAIL) || $userExist){
+                $response = array("error_type" => "email", "error_list" => array("email"));
+                return $response;
+            }
+
+            //usuario
+            $pattern = '/^[0-9]*$/';
+
+            $validRa = $this->util->validateInputRegex($pattern, array("usuario"=>$input["usuario"]));
+            if(!$validRa){
+                $validRa["error_type"] = "user_invalid";
+                $validRa["error_list"] = array("usuario");
+                return $validRa;
+            }
+            $options = array(
+                'select' => array(
+                    'id'
+                ),
+                'where' => array(
+                    'ra' => $input['usuario']
+                ),
+            );
+            $userExist = $this->usuarioDAO->getUser($options);
+            if($userExist){
+                $validRa["error_type"] = "user_exist";
+                $validRa["error_list"] = array("usuario");
+                return $validRa;
+            }
+
+            //nome e sobrenome
+            $pattern = '/[^a-zA-Z ]/';
+            $invalidName = $this->util->validateInputRegex($pattern, array("nome"=>$input["nome"], "sobrenome"=>$input["sobrenome"]));
+            if($invalidName){
+                $invalidName["error_type"] = "name";
+                return $invalidName;
+            }
+
+            //senha
+            if($input["senha"] == $input["senhaConfirma"]){
+                $senhaHash = password_hash($input["senha"], PASSWORD_DEFAULT);
+                $input["senha"] = null;
+                $input["senhaConfirma"] = null;
+            }else{
+                $response["error_type"] = "password";
+                $response["error_list"] = array("senha", "senhaConfirma");
+                return $response;
+            }
+
+            //cadastrar
+            $usuario = new UsuarioModel();
+
+            $usuario->setRA($input["usuario"]);
+            $usuario->setEmail($input["email"]);
+            $usuario->setNome($input["nome"]);
+            $usuario->setSobrenome($input["sobrenome"]);
+            
+            $result = $this->usuarioDAO->addUser(array('usuarioModel' => $usuario));
+            
+            if(!$result){
+                $response = array();
+                $response["error_type"] = "database";
+                return $response;
+            }
+            if(!$this->senhaDAO->addPassword($result, $senhaHash)){
+                $where = array(
+                    'id' => $result
+                );
+                $options = array(
+                    'where' => $where
+                );
+                $this->usuarioDAO->removeUser($options);
+                
+                $response = array();
+                $response["error_type"] = "database";
+                return $response;
+            }
+
+            return true;
+        }
+
     /*
     |--------------------------------------------------------------------------
     | Sessão
