@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package views;
 
 import javax.swing.Box;
 import model.domain.AdminModel;
@@ -53,18 +53,31 @@ public class ViewMain extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
+        menuCadatrar = new javax.swing.JMenu();
+        menuCadastrarAdministrador = new javax.swing.JMenuItem();
+        menuCadastrarUsuario = new javax.swing.JMenuItem();
         menuMidia = new javax.swing.JMenu();
         menuMidiaHome = new javax.swing.JMenu();
         midiaHomeJumbotron = new javax.swing.JMenuItem();
         midiaHomeCarrossel = new javax.swing.JMenuItem();
         midiaHomeGaleria = new javax.swing.JMenuItem();
         menuUsuario = new javax.swing.JMenu();
-        menuUsuarioConta = new javax.swing.JMenu();
-        menuUsuarioSair = new javax.swing.JMenuItem();
+        menuAdminConta = new javax.swing.JMenu();
+        menuAdminSair = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        menuCadatrar.setText("Cadastrar");
+
+        menuCadastrarAdministrador.setText("Administrador");
+        menuCadatrar.add(menuCadastrarAdministrador);
+
+        menuCadastrarUsuario.setText("Usuário");
+        menuCadatrar.add(menuCadastrarUsuario);
+
+        menuBar.add(menuCadatrar);
 
         menuMidia.setMnemonic('f');
         menuMidia.setText("Mídia");
@@ -93,16 +106,16 @@ public class ViewMain extends javax.swing.JFrame {
         menuUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        menuUsuarioConta.setText("Conta");
-        menuUsuario.add(menuUsuarioConta);
+        menuAdminConta.setText("Conta");
+        menuUsuario.add(menuAdminConta);
 
-        menuUsuarioSair.setText("Sair");
-        menuUsuarioSair.addActionListener(new java.awt.event.ActionListener() {
+        menuAdminSair.setText("Sair");
+        menuAdminSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuUsuarioSairActionPerformed(evt);
+                menuAdminSairActionPerformed(evt);
             }
         });
-        menuUsuario.add(menuUsuarioSair);
+        menuUsuario.add(menuAdminSair);
 
         menuBar.add(menuUsuario);
 
@@ -116,17 +129,17 @@ public class ViewMain extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addComponent(desktopPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
 
         setSize(new java.awt.Dimension(800, 600));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuUsuarioSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuUsuarioSairActionPerformed
+    private void menuAdminSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAdminSairActionPerformed
         dispose();
         new ViewLogin();
-    }//GEN-LAST:event_menuUsuarioSairActionPerformed
+    }//GEN-LAST:event_menuAdminSairActionPerformed
 
     private void midiaHomeJumbotronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midiaHomeJumbotronActionPerformed
             if(viewJumbotron == null || viewJumbotron.isClosed()){
@@ -181,12 +194,15 @@ public class ViewMain extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenu menuAdminConta;
+    private javax.swing.JMenuItem menuAdminSair;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menuCadastrarAdministrador;
+    private javax.swing.JMenuItem menuCadastrarUsuario;
+    private javax.swing.JMenu menuCadatrar;
     private javax.swing.JMenu menuMidia;
     private javax.swing.JMenu menuMidiaHome;
     private javax.swing.JMenu menuUsuario;
-    private javax.swing.JMenu menuUsuarioConta;
-    private javax.swing.JMenuItem menuUsuarioSair;
     private javax.swing.JMenuItem midiaHomeCarrossel;
     private javax.swing.JMenuItem midiaHomeGaleria;
     private javax.swing.JMenuItem midiaHomeJumbotron;

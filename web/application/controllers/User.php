@@ -5,18 +5,24 @@ class User extends CI_Controller{
     
     public function __construct(){
         parent::__construct();
-
+        
         //REQUIRES\\
         require_once(APPPATH . 'libraries/model/UsuarioModel.php');
-        require_once(APPPATH . 'libraries/model/PasswordTokenModel.php');
+        require_once(APPPATH . 'libraries/model/SenhaModel.php');
+        require_once(APPPATH . 'libraries/model/SenhaResetModel.php');
+        
+        //LOADS\\
         $this->load->model('UserDAO', 'userDAO');
-        $this->load->library('session');
+        $this->load->model('dao/UsuarioDAO', 'usuarioDAO');
+        $this->load->model('dao/SenhaDAO', 'senhaDAO');
+        $this->load->model('dao/SenhaResetDAO', 'senhaResetDAO');
 
+        $this->load->library('Util', 'util');
     }
 
     public function index(){
-        if($this->session->userdata("logged") == true){
-            redirect('user/profile');
+        if($this->session->userdata("logged")){
+            redirect('Profile');
         }else{
             redirect('user/login');
         }
@@ -28,14 +34,14 @@ class User extends CI_Controller{
     | Todas as funções que chamam view`s
     */
         public function login(){
-            if(!$this->session->userdata("logged")){
+            if($this->session->userdata("logged")){
+                redirect('user');
+            }else{
                 $content = array(
                     "styles" => array("form.css"),
                     "scripts" => array("login.js", "form.js")
                 );
                 $this->template->show('login.php', $content);
-            }else{
-                redirect('user');
             }
         }
         public function register(){
@@ -45,13 +51,6 @@ class User extends CI_Controller{
                     "scripts" => array("form.js", "register.js")
                 );
                 $this->template->show('register.php', $content);
-            }else{
-                redirect('user');
-            }
-        }
-        public function profile(){
-            if($this->session->userdata("logged")){
-                $this->template->show('profile.php');
             }else{
                 redirect('user');
             }
@@ -67,7 +66,6 @@ class User extends CI_Controller{
                 $this->template->show('password_send_email.php', $content);
             }
         }
-
         public function password_reset(){
             if($this->session->userdata("logged")){
                 $this->session->sess_destroy();
@@ -84,10 +82,19 @@ class User extends CI_Controller{
     |--------------------------------------------------------------------------
     | Requisicoes Ajax
     */
+        /**
+         * Requisição para efetuar o login
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
         public function ajaxLogin(){
             if (!$this->input->is_ajax_request()) {
-                exit("Nenhum acesso de script direto permitido!");
+            exit("Nenhum acesso de script direto permitido!");
             }
+
             $inputArray = array(
                 "usuario" => $this->input->post("usuario"),
                 "senha" => $this->input->post("senha")
@@ -96,10 +103,19 @@ class User extends CI_Controller{
             $response = $this->userLogin($inputArray);
             echo json_encode($response);
         }
+
+        /**
+         * Requisição para efetuar o cadastro
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
         public function ajaxRegister(){
-            if (!$this->input->is_ajax_request()) {
+            /*if (!$this->input->is_ajax_request()) {
                 exit("Nenhum acesso de script direto permitido!");
-            }
+            }*/
 
             $inputArray = array(
                 "email" => $this->input->post("email"),
@@ -114,35 +130,50 @@ class User extends CI_Controller{
 
             echo json_encode($response);
         }
+
+        /**
+         * Requisição para enviar token de senha
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
         public function ajaxPasswordForgot(){
-            if (!$this->input->is_ajax_request()) {
+            /*if (!$this->input->is_ajax_request()) {
                 exit("Nenhum acesso de script direto permitido!");
-            }
+            }*/
 
             $inputArray = array(
                 "email" => $this->input->post("email"),
             );
 
-            $response = $this->passwordForgot($inputArray);
+            $response = $this->userPasswordForgot($inputArray);
 
             echo json_encode($response);
         }
 
+        /**
+         * Requisição para resetar a senha
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
         public function ajaxPasswordReset(){
-            if (!$this->input->is_ajax_request()) {
+            /*if (!$this->input->is_ajax_request()) {
                 exit("Nenhum acesso de script direto permitido!");
-            }
+            }*/
 
             $inputArray = array(
                 "senha" => $this->input->post("senha"),
-                "confirma" => $this->input->post("confirma")
-            );
-            $tokenData = array(
+                "confirma" => $this->input->post("confirma"),
                 "selector" => $this->input->post("selector"),
                 "validator" => $this->input->post("validator")
             );
 
-            $response = $this->passwordReset($inputArray, $tokenData);
+            $response = $this->userPasswordReset($inputArray);
 
             echo json_encode($response);
         }
@@ -150,196 +181,172 @@ class User extends CI_Controller{
     |--------------------------------------------------------------------------
     | Private
     |--------------------------------------------------------------------------
-    | Funções private
+    | Funções da classe
     */
-
-        private function checkInputEmpty($inputArray = array()){
-            $status = true;
-            $resultArray = array("error_list" => array());
-            foreach($inputArray as $key => $value){
-                if(empty($value) || ctype_space($value)){
-                    $status = false;
-                    array_push($resultArray["error_list"], $key);
-                }
-            }
-            return $status ? false : $resultArray;
-        }
-
-        private function validatePassword($userId, $password){
-            $userPassword = $this->userDAO->selectPassword($userId);
-
-            if(!$userPassword){
-                return false;
-            }
-
-            return password_verify($password, $userPassword);
-        }
-
-        private function validateInputRegex($pattern, $inputArray = array()){
-
-            $status = true;
-            $resultArray = array("error_list" => array());
-            
-            foreach($inputArray as $key => $value){
-                if(preg_match($pattern, $value)){
-                    $status = false;
-                    array_push($resultArray["error_list"], $key);
-                }
-            }
-            return $status ? false : $resultArray;
-        }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Login
-    |--------------------------------------------------------------------------
-    | Funções de login próprio
-    */
-        private function userLogin($inputInfo = array()){
-            /*
-            | Retorno
-            | empty, validation, database
-            */
-            /* 
-            | Verificar se as entradas são válidas, sem espaços e != vazio
-            */
-
-                $hasEmpty = $this->checkInputEmpty($inputInfo);   //deve retornar FALSE
-                
-                if($hasEmpty){
-                    $hasEmpty["error_type"] = "empty";
-                    return $hasEmpty;
-                }
-
-            /* 
-            | Verificar se o usuário informado existe, 
-            | se sim retorna a id do mesmo e verifica senha
-            | se nao, retorna usuario ou senha invalidas
-            */
-
-                $userExist = $this->userDAO->selectExist("id","usuario","ra", $inputInfo["usuario"]);
-
-                if($userExist){
-                    $userId = $userExist;
-
-                    $userAuth = $this->validatePassword($userId, $inputInfo["senha"]);
-
-                }
-                if(!$userExist || !$userAuth){
-                    $result["error_list"] = array();
-                    foreach($inputInfo as $key => $value){
-                        array_push($result["error_list"], $key);
-                    }
-                    $result["error_type"] = "validation";
-                    
-                    return $result;
-                }
-                $inputInfo = null;
-            /*
-            | Após a validação, cria-se um objeto contendo 
-            | as informaçoes do usuario autenticado
-            | e inicia-se uma sessão
-            */
-                $userData = $this->userDAO->selectUserData($userId);
-
-                if(!$userData){
-                    $response = array();
-                    $response["error_type"] = "database";
-                    return $response;
-                }
-
-                $this->startSession($userData);
-            return true;
-        }
-
-    /*
-    |--------------------------------------------------------------------------
-    | Register
-    |--------------------------------------------------------------------------
-    | Funções de cadastro do usuário
-    */
-        private function userRegister($inputInfo = array()){
-            /*
-            | Retorno
-            | empty email user_invalid user_exist name password database
-            */
-            /* 
-            | Verificar se as entradas são válidas, sem espaços e != vazio
-            */
-
-            $hasEmpty = $this->checkInputEmpty($inputInfo);   //deve retornar FALSE
+        /**
+         * Função login da aplicação
+         * valida as informações necessárias para iniciar uma
+         * sessão
+         * @param array
+         * @return true
+         * @return array $string[error_type]
+         */
+        private function userLogin($input = array()){
+            //verificar se existe valor nao preenchido
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
                 
             if($hasEmpty){
                 $hasEmpty["error_type"] = "empty";
                 return $hasEmpty;
             }
 
-            /*
-            | Validar Email
-            */
+            //verificar se o usuário existe
+            $options = array(
+                'select' => array(
+                    'id'
+                ),
+                'where' => array(
+                    'ra' => $input['usuario']
+                ),
+            );
+            $userExist = $this->usuarioDAO->getUser($options);
+            if($userExist){
+                $userId = $userExist->getId();
+                //verificar senha
+                $userPassword = $this->senhaDAO->getPassword($userId);
+                $userAuth = password_verify($input["senha"], $userPassword->getSenha());
+                
+            }
+            if(!$userExist || !$userAuth){
+                $result["error_list"] = array();
+                foreach($input as $key => $value){
+                    array_push($result["error_list"], $key);
+                }
+                $result["error_type"] = "validation";
+                
+                return $result;
+            }
+            $input = null;
+            
+            //Select userdata
+            $options = array(
+                'where' => array(
+                    'id' => $userId
+                    )
+                );
+                $userData = $this->usuarioDAO->getUser($options);
+                
+            if(!$userData){
+                $response = array();
+                $response["error_type"] = "database";
+                return $response;
+            }
+            
+            $result = $this->startSession($userData);
 
-            $inputInfo["email"] = filter_var($inputInfo["email"], FILTER_SANITIZE_EMAIL);
-            $userExist = $this->userDAO->selectExist("id","usuario","email", $inputInfo["email"]);
+            return $result;
+        }
+        
+        /**
+         * Função register da aplicação
+         * valida as informações necessárias para cadastrar um novo usuário
+         * @param array
+         * @return true
+         * @return array $string[error_type]
+         */
+        private function userRegister($input = array()){
+            
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE    
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
 
-            if(!filter_var($inputInfo["email"], FILTER_VALIDATE_EMAIL) || $userExist){
+            //email
+            $input["email"] = filter_var($input["email"], FILTER_SANITIZE_EMAIL);
+            $options = array(
+                'select' => array(
+                    'id'
+                ),
+                'where' => array(
+                    'email' => $input['email']
+                ),
+            );
+            $userExist = $this->usuarioDAO->getUser($options);
+
+            if(!filter_var($input["email"], FILTER_VALIDATE_EMAIL) || $userExist){
                 $response = array("error_type" => "email", "error_list" => array("email"));
                 return $response;
             }
 
-            /*
-            | Validar Usuário
-            */
+            //usuario
             $pattern = '/^[0-9]*$/';
 
-            $validRa = $this->validateInputRegex($pattern, array("usuario"=>$inputInfo["usuario"]));
+            $validRa = $this->util->validateInputRegex($pattern, array("usuario"=>$input["usuario"]));
             if(!$validRa){
                 $validRa["error_type"] = "user_invalid";
                 $validRa["error_list"] = array("usuario");
                 return $validRa;
             }
-            $userExist = $this->userDAO->selectExist("id","usuario","ra", $inputInfo["usuario"]);
+            $options = array(
+                'select' => array(
+                    'id'
+                ),
+                'where' => array(
+                    'ra' => $input['usuario']
+                ),
+            );
+            $userExist = $this->usuarioDAO->getUser($options);
             if($userExist){
                 $validRa["error_type"] = "user_exist";
                 $validRa["error_list"] = array("usuario");
                 return $validRa;
             }
-            /*
-            | Validar nome e sobrenome
-            | Só pode ser composto por letras
-            */
 
+            //nome e sobrenome
             $pattern = '/[^a-zA-Z ]/';
-            $invalidName = $this->validateInputRegex($pattern, array("nome"=>$inputInfo["nome"], "sobrenome"=>$inputInfo["sobrenome"]));
+            $invalidName = $this->util->validateInputRegex($pattern, array("nome"=>$input["nome"], "sobrenome"=>$input["sobrenome"]));
             if($invalidName){
                 $invalidName["error_type"] = "name";
                 return $invalidName;
             }
 
-            /*
-            |   Validar Senha e Criptografar
-            */
-            if($inputInfo["senha"] == $inputInfo["senhaConfirma"]){
-                $senhaHash = password_hash($inputInfo["senha"], PASSWORD_DEFAULT);
-                $inputInfo["senha"] = null;
-                $inputInfo["senhaConfirma"] = null;
+            //senha
+            if($input["senha"] == $input["senhaConfirma"]){
+                $senhaHash = password_hash($input["senha"], PASSWORD_DEFAULT);
+                $input["senha"] = null;
+                $input["senhaConfirma"] = null;
             }else{
                 $response["error_type"] = "password";
                 $response["error_list"] = array("senha", "senhaConfirma");
                 return $response;
             }
-            /*
-            |   Criar objeto do usuário e inserir no banco de dados
-            */
-            $userData = new UsuarioModel();
 
-            $userData->setRA($inputInfo["usuario"]);
-            $userData->setEmail($inputInfo["email"]);
-            $userData->setNome($inputInfo["nome"]);
-            $userData->setSobrenome($inputInfo["sobrenome"]);
+            //cadastrar
+            $usuario = new UsuarioModel();
+
+            $usuario->setRA($input["usuario"]);
+            $usuario->setEmail($input["email"]);
+            $usuario->setNome($input["nome"]);
+            $usuario->setSobrenome($input["sobrenome"]);
             
-            $result = $this->userDAO->insertNewUser($userData, $senhaHash);
+            $result = $this->usuarioDAO->addUser(array('usuarioModel' => $usuario));
             
             if(!$result){
+                $response = array();
+                $response["error_type"] = "database";
+                return $response;
+            }
+            if(!$this->senhaDAO->addPassword($result, $senhaHash)){
+                $where = array(
+                    'id' => $result
+                );
+                $options = array(
+                    'where' => $where
+                );
+                $this->usuarioDAO->removeUser($options);
+                
                 $response = array();
                 $response["error_type"] = "database";
                 return $response;
@@ -347,154 +354,153 @@ class User extends CI_Controller{
 
             return true;
         }
-    /*
-    |--------------------------------------------------------------------------
-    | Sessão
-    |--------------------------------------------------------------------------
-    | Todas as funções relacionadas a sessão do usuário
-    */
-        private function startSession($userData, $thirdInfo = array()){  
-                
-            $this->session->set_userdata("logged", true);
-            $this->session->set_userdata("userData", serialize($userData));
-            $this->session->set_userdata("thirdInfo", $thirdInfo);
-            return true;
-        }
 
-        public function endSession(){
-            $this->session->sess_destroy();
-            redirect('user');
-        }
-    /*
-    |--------------------------------------------------------------------------
-    | Senha
-    |--------------------------------------------------------------------------
-    | Todas as funções relacionadas a senha
-    */
-        
-        private function passwordForgot($inputInfo){
-            /* 
-            | Verificar se as entradas são válidas, sem espaços e != vazio
-            */
-
-            $hasEmpty = $this->checkInputEmpty($inputInfo);   //deve retornar FALSE
+        /**
+         * Função PasswordForgot
+         * Gera token para resetar a senha do usuário e
+         * envia por email
+         * @param Email
+         * @return boolean
+         */
+        private function userPasswordForgot($input = array()){
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
                 
             if($hasEmpty){
                 $hasEmpty["error_type"] = "empty";
                 return $hasEmpty;
             }
-            
-            /*
-            | Verificar existencia do usuário e senha
-            */
-            $userId = $this->userDAO->selectExist("id","usuario","email", $inputInfo["email"]);
-            $userHasPassword = $this->userDAO->selectExist("usuario_id", "senha", "usuario_id", $userId);
+
+            //verificar existencia de usuário e senha
+            $options = array(
+                'select' => array('id'),
+                'where' => array(
+                    'email' => $input['email']
+                )
+            );
+            $userIdModel = $this->usuarioDAO->getUser($options);
+            $userId = $userIdModel->getId();
+            $userHasPassword = $this->senhaDAO->getPassword($userId);
             if(!$userId || !$userHasPassword){
                 return true;
             }
 
-            /*
-            | Select informacoes do usuario
-            */
-            $userData = $this->userDAO->selectUserData($userId);
+            //recolher userdata
+            $options = array(
+                'where' => array(
+                    'id' => $userId
+                )
+            );
+            $usuario = $this->usuarioDAO->getUser($options);
 
-            /*
-            | Deletar Token de segurança ativo
-            */
-            $this->userDAO->deletePasswordToken($userId);
-            /*
-            | Gerar novo Token de segurança
-            */
+            //apagar tokens antigos
+            $this->senhaResetDAO->removeToken($userId);
+
+            //gerar token
             $selector = bin2hex(random_bytes(8));
             $token = random_bytes(32);
             $tokenHash = password_hash($token, PASSWORD_DEFAULT);
             $expires = date("U") + 1800;
             $url = base_url() . 'user/password_reset?selector=' . $selector . '&validator=' .bin2hex($token);
 
-            $newToken = new PasswordTokenModel();
+            $newToken = new SenhaResetModel();
             $newToken->setUsuarioId($userId);
             $newToken->setSelector($selector);
             $newToken->setToken($tokenHash);
             $newToken->setExpire($expires);
 
-            $result = $this->userDAO->insertPasswordResetToken($userId, $newToken);
+            $insert = array('senhaResetModel' => $newToken);
 
-            if(!$result){
-                return false;
-            }
-            $result = $this->sendPasswordResetEmail($userData, $url);
-            return $result;
-        }
+            if(!$this->senhaResetDAO->addToken($insert)) return false;
 
-        private function sendPasswordResetEmail($userData, $url){
+            //enviar email
+            /* SUBSTITUIR POR VIEW */
             $htmlContent = '<h1>Redefinir Senha</h1>';
-            $htmlContent .= '<p>Olá '. $userData->getNome() . " " . $userData->getSobrenome() .'</p>';
-            $htmlContent .= '<p>usuário:'. $userData->getRa() .'</p>';
+            $htmlContent .= '<p>Olá '. $usuario->getNome() . " " . $usuario->getSobrenome() .'</p>';
+            $htmlContent .= '<p>usuário:'. $usuario->getRa() .'</p>';
             $htmlContent .= '<p>Para redefinir sua senha <a href="' . $url . '">clique aqui</a></p>';
             
             $this->email->from($this->config->item('smtp_user'), 'COTIL Jogos');
-            $this->email->to($userData->getEmail());
+            $this->email->to($usuario->getEmail());
 
             $this->email->subject('Redefinir Senha');
             $this->email->message($htmlContent);    
 
             $result = $this->email->send();
 
-            if($result){
-                return true;
-            }else{
-                return false;
-            }
+            return $result;
         }
 
-        private function passwordReset($inputInfo, $tokenData){
-            /*
-            |   Retorna
-            |   empty validation senha database
-            */
-            
-            /* 
-            | Verificar se as entradas são válidas, sem espaços e != vazio
-            */
+        /**
+         * Função PasswordReset
+         * verifica token e reseta a senha do usuário
+         * envia por email
+         * @param Email
+         * @return boolean
+         */
 
-            $hasEmpty = $this->checkInputEmpty($inputInfo);   //deve retornar FALSE
+        private function userPasswordReset($input = array()){
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
                 
             if($hasEmpty){
                 $hasEmpty["error_type"] = "empty";
                 return $hasEmpty;
             }
-
-            $time = date("U");
-
-            $resetData = $this->userDAO->selectResetPassword($tokenData["selector"], $time);
-
-            if(!$resetData){
-                $resetData["error_type"] = "validation";
-                return $resetData;
+            //input check
+            if($input["senha"] != $input["confirma"]){
+                $response["error_type"] = "senha";
+                return $response;
             }
 
-            $tokenBin = hex2bin($tokenData["validator"]);
-
-            if(!password_verify($tokenBin, $resetData->getToken())){
+            //get senhaReset
+            $senhaReset = $this->senhaResetDAO->getSenhaReset($input['selector']);
+            if(!$senhaReset) {
                 $response["error_type"] = "validation";
                 return $response;
             }
+            $time = date("U");
 
-            if($inputInfo["senha"] != $inputInfo["confirma"]){
-                $response["error_type"] = "senha";
-                return $response;
-            }else{
-                $newPassword = password_hash($inputInfo["senha"], PASSWORD_DEFAULT);
-            }
-
-            $result = $this->userDAO->updateUserPassword($resetData->getUsuarioId(), $newPassword);
-
-            if(!$result){
-                $response["error_type"] = "database";
+            //validate token
+            if($time > $senhaReset->getExpire()){
+                $response["error_type"] = "validation";
                 return $response;
             }
-            $this->userDAO->deletePasswordToken($resetData->getUsuarioId());
             
+            $token = hex2bin($input["validator"]);
+
+            if(!password_verify($token, $senhaReset->getToken())){
+                $response["error_type"] = "validation";
+                return $response;
+            }
+            //$this->senhaResetDAO->removeToken($senhaReset->getUsuarioId());
+
+            $newPassword = password_hash($input["senha"], PASSWORD_DEFAULT);
+
+            $result = $this->senhaDAO->updatePassword($senhaReset->getUsuarioId(), $newPassword);
+            if(!$result)return false;
             return true;
         }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sessão
+    |--------------------------------------------------------------------------
+    | Todas as funções relacionadas a sessão do usuário
+    */
+    private function startSession($userData, $thirdData = array()){  
+                
+        $this->session->set_userdata("logged", true);
+        $this->session->set_userdata("id", $userData->getId());
+        $this->session->set_userdata("ra", $userData->getRa());
+        $this->session->set_userdata("nome", $userData->getNome());
+        $this->session->set_userdata("sobrenome", $userData->getSobrenome());
+        $this->session->set_userdata("email", $userData->getEmail());
+        $this->session->set_userdata("thirdData", $thirdData);
+        return true;
+    }
+    public function endSession(){
+        $this->session->sess_destroy();
+        redirect('user');
+    }
 }

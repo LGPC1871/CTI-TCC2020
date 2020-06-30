@@ -9,6 +9,23 @@
     </Component>
     <Menu class="javax.swing.JMenuBar" name="menuBar">
       <SubComponents>
+        <Menu class="javax.swing.JMenu" name="menuCadatrar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Cadastrar"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuCadastrarAdministrador">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Administrador"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuCadastrarUsuario">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="menuMidia">
           <Properties>
             <Property name="mnemonic" type="int" value="102"/>
@@ -51,17 +68,17 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="menuUsuarioConta">
+            <Menu class="javax.swing.JMenu" name="menuAdminConta">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Conta"/>
               </Properties>
             </Menu>
-            <MenuItem class="javax.swing.JMenuItem" name="menuUsuarioSair">
+            <MenuItem class="javax.swing.JMenuItem" name="menuAdminSair">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuUsuarioSairActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuAdminSairActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -99,7 +116,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="desktopPane" pref="279" max="32767" attributes="0"/>
+          <Component id="desktopPane" alignment="1" pref="540" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>

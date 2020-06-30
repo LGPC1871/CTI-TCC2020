@@ -6,13 +6,6 @@ class Template{
 		
 		$CI = & get_instance();
 
-		if($CI->session->userdata("logged") == true){
-			$data["session_data"] = $CI->session->userdata();
-			$data["userData"] = unserialize($data["session_data"]["userData"]);
-			if(isset($data["session_data"]["thirdInfo"])){
-				$data["thirdInfo"] = $data["session_data"]["thirdInfo"];
-			}
-		}
 		$data["diretorio"] = base_url();
 		
 		// Load head

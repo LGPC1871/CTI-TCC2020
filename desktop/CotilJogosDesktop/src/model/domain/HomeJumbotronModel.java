@@ -10,21 +10,22 @@ package model.domain;
  * @author lgpc1
  */
 public class HomeJumbotronModel {
-    private int id;
+
     private int status;
     private String titulo;
     private String subtitulo;
     private String texto;
+    private int statusBotao;
     private String textoBotao;
 
-    public int getId() {
-        return id;
+    public int getStatusBotao() {
+        return statusBotao;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStatusBotao(int statusBotao) {
+        this.statusBotao = statusBotao;
     }
-
+    
     public int getStatus() {
         return status;
     }

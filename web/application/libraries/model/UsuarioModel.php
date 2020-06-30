@@ -13,7 +13,33 @@ class UsuarioModel{
 
     public function __construct(){
     }
-    
+    /*
+    |--------------------------------------------------------------------------
+    | PUBLIC
+    |--------------------------------------------------------------------------
+    | Todas as funções da classe
+    */
+
+        /**
+         * Método required, retorna quais atributos do objeto inserido
+         * NÃO são nulos
+         * @param object $pessoaModel
+         * @return array
+         */
+        public function _verifyObjectAttr(){
+            $response = array();
+            if($this->getId()) $response['id'] = true;
+            if($this->getRa()) $response['ra'] = true;
+            if($this->getEmail()) $response['email'] = true;
+            if($this->getNome()) $response['nome'] = true;
+            if($this->getSobrenome()) $response['sobrenome'] = true;
+            if($this->getSobrenome()) $response['picture'] = true;
+            if($this->getCreated()) $response['created'] = true;
+            if($this->getUpdated()) $response['updated'] = true;
+            if($this->getUpdated()) $response['turma_id'] = true;
+            
+            return $response;
+        }
     /*
     |--------------------------------------------------------------------------
     | Get Set
@@ -180,23 +206,23 @@ class UsuarioModel{
             return $this;
         }
 
-    /**
-     * Get the value of picture
-     */ 
-    public function getPicture()
-    {
-        return $this->picture;
-    }
+        /**
+         * Get the value of picture
+         */ 
+        public function getPicture()
+        {
+            return $this->picture;
+        }
 
-    /**
-     * Set the value of picture
-     *
-     * @return  self
-     */ 
-    public function setPicture($picture)
-    {
-        $this->picture = $picture;
+        /**
+         * Set the value of picture
+         *
+         * @return  self
+         */ 
+        public function setPicture($picture)
+        {
+            $this->picture = $picture;
 
-        return $this;
-    }
+            return $this;
+        }
 }
