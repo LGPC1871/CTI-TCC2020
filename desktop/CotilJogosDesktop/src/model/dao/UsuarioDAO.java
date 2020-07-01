@@ -6,6 +6,7 @@
 package model.dao;
 
 import connection.ConnectionFactory;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,13 +15,58 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.domain.UsuarioModel;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
+import util.Host;
 
 /**
  *
  * @author lgpc1
  */
 public class UsuarioDAO {
-    
+
+    /**
+     *
+     * @param usuario
+     * @return
+     */
+    public static String userRegister(UsuarioModel usuario){
+        String json;
+        
+        json = "usuario="+usuario.getRa()
+                + "&email="+usuario.getEmail()
+                + "&nome="+usuario.getNome()
+                + "&sobrenome="+usuario.getSobrenome();
+        
+        OkHttpClient client = new OkHttpClient().newBuilder()
+        .build();
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, json);
+        Request request = new Request.Builder()
+            .url(Host.getHost()+"user/desktopRegister")
+            .method("POST", body)
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .addHeader("Cookie", "ci_session=9uvbl14k2llnmki5t71jijq5pb8v2pam")
+            .build();
+       
+        try {
+            
+            Response response = client.newCall(request).execute();
+            String jsonString = response.body().string();
+            System.out.println(jsonString);
+            JSONObject jsonObject = new JSONObject(jsonString);
+            return jsonObject.getString("error_type");
+            
+        } catch (IOException | JSONException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
     /**
      *
      * @param where

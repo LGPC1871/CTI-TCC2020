@@ -8,6 +8,7 @@ package control;
 import java.util.ArrayList;
 import model.dao.UsuarioDAO;
 import model.domain.UsuarioModel;
+import okhttp3.Response;
 
 /**
  *
@@ -27,5 +28,7 @@ public class CadastroUsuario {
         }
         return null;
     }
-    
+    public static String cadastrarUsuario(UsuarioModel usuario){
+        return UsuarioDAO.userRegister(usuario);
+    }
 }

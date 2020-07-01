@@ -2,7 +2,7 @@ $(function(){
     $("form").submit(function(){
         $.ajax({
             type: "post",
-            url: `${BASE_URL}user/ajaxPasswordReset`,
+            url: `${BASE_URL}user/ajaxPasswordSet`,
             dataType: "json",
             data: $(this).serialize(),
 
@@ -14,7 +14,7 @@ $(function(){
             success: function(response){
                 console.log(response);
                 if(response === true){
-                    infoBlockMessage(false, "Senha redefinida");
+                    infoBlockMessage(false, "Senha definida");
                 }else{
                     let message;
                     if(response["error_type"] == "empty"){

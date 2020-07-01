@@ -76,6 +76,16 @@ class User extends CI_Controller{
             );
             $this->template->show('password_reset.php', $content);
         }
+        public function password_set(){
+            if($this->session->userdata("logged")){
+                $this->session->sess_destroy();
+            }
+            $content = array(
+                "styles" => array("form.css"),
+                "scripts" => array("form.js", "passwordSet.js")
+            );
+            $this->template->show('password_set.php', $content);
+        }
     /*
     |--------------------------------------------------------------------------
     | AJAX
@@ -92,7 +102,7 @@ class User extends CI_Controller{
          */
         public function ajaxLogin(){
             if (!$this->input->is_ajax_request()) {
-            exit("Nenhum acesso de script direto permitido!");
+                exit("Nenhum acesso de script direto permitido!");
             }
 
             $inputArray = array(
@@ -117,16 +127,22 @@ class User extends CI_Controller{
                 exit("Nenhum acesso de script direto permitido!");
             }*/
 
-            $inputArray = array(
+            $userInput = array(
                 "email" => $this->input->post("email"),
                 "usuario" => $this->input->post("usuario"),
                 "nome" => $this->input->post("nome"),
                 "sobrenome" => $this->input->post("sobrenome"),
+            );
+            $passwordInput = array(
                 "senha" => $this->input->post("senha"),
                 "senhaConfirma" => $this->input->post("senhaConfirma"),
             );
 
-            $response = $this->userRegister($inputArray);
+            $response = $this->userRegister($userInput);
+
+            if(is_int($response)){
+                $response = $this->insertPassword($response, $passwordInput);
+            }
 
             echo json_encode($response);
         }
@@ -177,6 +193,59 @@ class User extends CI_Controller{
 
             echo json_encode($response);
         }
+        /**
+         * Requisição para criar a senha
+         * deve ser ajax
+         * @param ajax
+         * @param form
+         * @return boolean
+         * @return error_type
+         */
+        public function ajaxPasswordSet(){
+            /*if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }*/
+
+            $inputArray = array(
+                "senha" => $this->input->post("senha"),
+                "confirma" => $this->input->post("confirma"),
+                "selector" => $this->input->post("selector"),
+                "validator" => $this->input->post("validator")
+            );
+
+            $response = $this->userPasswordSet($inputArray);
+
+            echo json_encode($response);
+        }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Desktop
+    |--------------------------------------------------------------------------
+    | Requisicoes da aplicacao desktop
+    | Seria necessário uma autenticacao para acessar esses métodos
+    | Por ser um projeto didático e pela falta de tempo, não será colocado
+    */
+    public function desktopRegister(){
+        $userInput = array(
+            "email" => $this->input->post("email"),
+            "usuario" => $this->input->post("usuario"),
+            "nome" => $this->input->post("nome"),
+            "sobrenome" => $this->input->post("sobrenome"),
+        );
+
+        $response = $this->userRegister($userInput);
+        if(!isset($response["error_type"])){
+            $response = $this->userPasswordCreate($response);
+        }
+        if($response === true){
+            $response = array(
+                "error_type" => "null"
+            );
+        }
+        echo json_encode($response);
+    }
+        
     /*
     |--------------------------------------------------------------------------
     | Private
@@ -312,17 +381,6 @@ class User extends CI_Controller{
                 return $invalidName;
             }
 
-            //senha
-            if($input["senha"] == $input["senhaConfirma"]){
-                $senhaHash = password_hash($input["senha"], PASSWORD_DEFAULT);
-                $input["senha"] = null;
-                $input["senhaConfirma"] = null;
-            }else{
-                $response["error_type"] = "password";
-                $response["error_list"] = array("senha", "senhaConfirma");
-                return $response;
-            }
-
             //cadastrar
             $usuario = new UsuarioModel();
 
@@ -338,9 +396,37 @@ class User extends CI_Controller{
                 $response["error_type"] = "database";
                 return $response;
             }
-            if(!$this->senhaDAO->addPassword($result, $senhaHash)){
+        
+            return $result;
+        }
+        /**
+         * Funcao insertPassword
+         * insere uma senha para o usuário
+         * @param array
+         * @return bool
+         */
+        private function insertPassword($userId, $input){
+            //senha
+            if($input["senha"] == $input["senhaConfirma"]){
+                $senhaHash = password_hash($input["senha"], PASSWORD_DEFAULT);
+                $input["senha"] = null;
+                $input["senhaConfirma"] = null;
+            }else{
+                $response["error_type"] = "password";
+                $response["error_list"] = array("senha", "senhaConfirma");
                 $where = array(
-                    'id' => $result
+                    'id' => $userId
+                );
+                $options = array(
+                    'where' => $where
+                );
+                $this->usuarioDAO->removeUser($options);
+                return $response;
+            }
+            
+            if(!$this->senhaDAO->addPassword($userId, $senhaHash)){
+                $where = array(
+                    'id' => $userId
                 );
                 $options = array(
                     'where' => $where
@@ -481,7 +567,110 @@ class User extends CI_Controller{
             if(!$result)return false;
             return true;
         }
+        /**
+         * Função PasswordReset
+         * verifica token e reseta a senha do usuário
+         * envia por email
+         * @param Email
+         * @return boolean
+         */
 
+        private function userPasswordSet($input = array()){
+            //empty
+            $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
+                
+            if($hasEmpty){
+                $hasEmpty["error_type"] = "empty";
+                return $hasEmpty;
+            }
+            //input check
+            if($input["senha"] != $input["confirma"]){
+                $response["error_type"] = "senha";
+                return $response;
+            }
+
+            //get senhaReset
+            $senhaReset = $this->senhaResetDAO->getSenhaReset($input['selector']);
+            if(!$senhaReset) {
+                $response["error_type"] = "validation";
+                return $response;
+            }
+            $time = date("U");
+
+            //validate token
+            if($time > $senhaReset->getExpire()){
+                $response["error_type"] = "validation";
+                return $response;
+            }
+            
+            $token = hex2bin($input["validator"]);
+
+            if(!password_verify($token, $senhaReset->getToken())){
+                $response["error_type"] = "validation";
+                return $response;
+            }
+            //$this->senhaResetDAO->removeToken($senhaReset->getUsuarioId());
+
+            $newPassword = password_hash($input["senha"], PASSWORD_DEFAULT);
+
+            $result = $this->senhaDAO->addPassword($senhaReset->getUsuarioId(), $newPassword);
+            if(!$result)return false;
+            return true;
+        }
+
+        /**
+         * Funcao userPasswordCreate
+         * insere uma senha para o usuario, através de um token
+         * enviado por email
+         * @param int $userId
+         * @return boolean
+         */
+        private function userPasswordCreate($userId){
+            //recolher userdata
+            $options = array(
+                'where' => array(
+                    'id' => $userId
+                )
+            );
+            $usuario = $this->usuarioDAO->getUser($options);
+
+            //apagar tokens antigos
+            $this->senhaResetDAO->removeToken($userId);
+
+            //gerar token
+            $selector = bin2hex(random_bytes(8));
+            $token = random_bytes(32);
+            $tokenHash = password_hash($token, PASSWORD_DEFAULT);
+            $expires = date("U") + 1800;
+            $url = base_url() . 'user/password_set?selector=' . $selector . '&validator=' .bin2hex($token);
+
+            $newToken = new SenhaResetModel();
+            $newToken->setUsuarioId($userId);
+            $newToken->setSelector($selector);
+            $newToken->setToken($tokenHash);
+            $newToken->setExpire($expires);
+
+            $insert = array('senhaResetModel' => $newToken);
+
+            if(!$this->senhaResetDAO->addToken($insert)) return false;
+
+            //enviar email
+            /* SUBSTITUIR POR VIEW */
+            $htmlContent = '<h1>Definir Senha</h1>';
+            $htmlContent .= '<p>Olá '. $usuario->getNome() . " " . $usuario->getSobrenome() .'</p>';
+            $htmlContent .= '<p>usuário:'. $usuario->getRa() .'</p>';
+            $htmlContent .= '<p>Para definir sua senha <a href="' . $url . '">clique aqui</a></p>';
+            
+            $this->email->from($this->config->item('smtp_user'), 'COTIL Jogos');
+            $this->email->to($usuario->getEmail());
+
+            $this->email->subject('Definir Senha');
+            $this->email->message($htmlContent);    
+
+            $result = $this->email->send();
+
+            return $result;
+        }
     /*
     |--------------------------------------------------------------------------
     | Sessão

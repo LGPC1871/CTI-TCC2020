@@ -6,7 +6,9 @@
 package views;
 
 import control.CadastroUsuario;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.domain.UsuarioModel;
 
@@ -95,6 +97,11 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         btnInsert.setText("Cadastrar");
         btnInsert.setMaximumSize(new java.awt.Dimension(80, 25));
         btnInsert.setMinimumSize(new java.awt.Dimension(80, 25));
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("Excluir");
         btnDelete.setMaximumSize(new java.awt.Dimension(80, 25));
@@ -247,6 +254,48 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         
         preencherCampos(usuarioSelecionado);
     }//GEN-LAST:event_tblUsuariosMouseClicked
+
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        UsuarioModel usuario = new UsuarioModel();
+        if("".equals(txtRa.getText())){
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        usuario.setRa(Integer.parseInt(txtRa.getText()));
+        usuario.setEmail(txtEmail.getText());
+        usuario.setNome(txtNome.getText());
+        usuario.setSobrenome(txtSobrenome.getText());
+        
+        String result = CadastroUsuario.cadastrarUsuario(usuario);
+        System.out.println(result);
+        if(result.equals("null")){
+            JOptionPane.showMessageDialog(this, "Sucesso!", "Mensagem", WIDTH);
+        }else {
+            String mensagem;
+            switch (result) {
+            case "empty":
+                mensagem = "Preencha todos os campos!";
+                break;
+            case "name":
+                mensagem = "Nome/Sobrenome inválido(s)!";
+                break;
+            case "email":
+                mensagem = "Email inválido ou já cadastrado!";
+                break;
+            case "user_invalid":
+                mensagem = "RA inválido!";
+                break;
+            case "user_exist":
+                mensagem = "Usuário já cadastrado";
+                break;
+            default:
+                mensagem = "ocorreu um erro";
+                break;
+            }
+            JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        preencheTabela("");
+    }//GEN-LAST:event_btnInsertActionPerformed
     private void preencherCampos(UsuarioModel usuario) {
         txtRa.setText(String.valueOf(usuario.getRa()));
         txtEmail.setText(usuario.getEmail());

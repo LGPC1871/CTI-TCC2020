@@ -5,11 +5,7 @@
  */
 package model.dao;
 
-import connection.ConnectionFactory;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.domain.HomeJumbotronModel;
@@ -20,6 +16,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import util.Host;
 
 
 /**
@@ -37,7 +34,7 @@ public class HomeJumbotronDAO {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         RequestBody body = RequestBody.create(mediaType, "");
         Request request = new Request.Builder()
-        .url("http://localhost:80/home/desktopGetJumbotron")
+        .url(Host.getHost()+"home/desktopGetJumbotron")
         .method("POST", body)
         .addHeader("Content-Type", "application/x-www-form-urlencoded")
         .build();
@@ -87,7 +84,7 @@ public class HomeJumbotronDAO {
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
         RequestBody body = RequestBody.create(mediaType, json);
         Request request = new Request.Builder()
-            .url("http://localhost:80/home/desktopSetJumbotron")
+            .url(Host.getHost()+"home/desktopSetJumbotron")
             .method("POST", body)
             .addHeader("Content-Type", "application/x-www-form-urlencoded")
             .build();
