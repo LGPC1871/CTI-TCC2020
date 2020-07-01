@@ -283,7 +283,11 @@ class User extends CI_Controller{
                 $userId = $userExist->getId();
                 //verificar senha
                 $userPassword = $this->senhaDAO->getPassword($userId);
-                $userAuth = password_verify($input["senha"], $userPassword->getSenha());
+                if($userPassword){
+                    $userAuth = password_verify($input["senha"], $userPassword->getSenha());
+                }else{
+                    $userAuth = false;
+                }
                 
             }
             if(!$userExist || !$userAuth){
