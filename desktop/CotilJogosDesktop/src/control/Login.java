@@ -5,8 +5,6 @@
  */
 package control;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import model.dao.AdminDAO;
 import model.domain.AdminModel;
 import util.CriptografarSenha;

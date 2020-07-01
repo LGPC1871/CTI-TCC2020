@@ -17,6 +17,7 @@ public class ViewMain extends javax.swing.JFrame {
     * Custom Variables
     */
     ViewMidiaHomeJumbotron viewJumbotron = null;
+    ViewCadastrarUsuario viewCadastrarUsuario = null;
     /**
      * Creates new form ViewMain
      */
@@ -75,6 +76,11 @@ public class ViewMain extends javax.swing.JFrame {
         menuCadatrar.add(menuCadastrarAdministrador);
 
         menuCadastrarUsuario.setText("Usuário");
+        menuCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCadastrarUsuarioActionPerformed(evt);
+            }
+        });
         menuCadatrar.add(menuCadastrarUsuario);
 
         menuBar.add(menuCadatrar);
@@ -104,7 +110,7 @@ public class ViewMain extends javax.swing.JFrame {
 
         menuUsuario.setText("User");
         menuUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        menuUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        menuUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         menuAdminConta.setText("Conta");
         menuUsuario.add(menuAdminConta);
@@ -154,6 +160,16 @@ public class ViewMain extends javax.swing.JFrame {
                 
             }
     }//GEN-LAST:event_midiaHomeJumbotronActionPerformed
+
+    private void menuCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastrarUsuarioActionPerformed
+        if(viewCadastrarUsuario == null || viewCadastrarUsuario.isClosed()){
+            viewCadastrarUsuario = new ViewCadastrarUsuario();
+            this.desktopPane.add(viewCadastrarUsuario);
+            viewCadastrarUsuario.setVisible(true);
+        }else{
+            viewCadastrarUsuario.toFront();
+        }
+    }//GEN-LAST:event_menuCadastrarUsuarioActionPerformed
     
 
     /**

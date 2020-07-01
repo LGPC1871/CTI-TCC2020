@@ -33,11 +33,9 @@ public class AdminDAO {
             stmt.setString(1, usuario);
             stmt.setMaxRows(1);
             rs = stmt.executeQuery();
-            
-            if(rs.first()){
+            if(rs.next()){
                 
                 return rs.getInt("id");
-                
             }
             
         } catch (SQLException ex) {
@@ -65,7 +63,7 @@ public class AdminDAO {
             stmt.setMaxRows(1);
             rs = stmt.executeQuery();
             
-            if(rs.first()){
+            if(rs.next()){
                 
                 AdminModel adminData = new AdminModel();
                 adminData.setId(id);
