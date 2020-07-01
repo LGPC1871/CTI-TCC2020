@@ -8,7 +8,6 @@ package control;
 import java.util.ArrayList;
 import model.dao.UsuarioDAO;
 import model.domain.UsuarioModel;
-import okhttp3.Response;
 
 /**
  *
@@ -33,5 +32,9 @@ public class CadastroUsuario {
     }
     public static Boolean removerUsuario(UsuarioModel usuario){
         return UsuarioDAO.deleteUser(usuario.getRa());
+    }
+
+    public static Boolean atualizarUsuario(UsuarioModel usuario) {
+        return UsuarioDAO.updateUser(usuario);
     }
 }

@@ -152,7 +152,6 @@ public class UsuarioDAO {
     }
     public static Boolean deleteUser(int where){
         UsuarioModel usuario = getUser(where);
-        System.out.println(usuario);
         if(usuario == null) return false;
         
         Connection con = ConnectionFactory.getConnection();
@@ -162,6 +161,37 @@ public class UsuarioDAO {
             
             stmt = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
             stmt.setInt(1, usuario.getId());      
+            stmt.execute();
+            return true;
+
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }finally{
+            
+            ConnectionFactory.closeConnection(con, stmt);
+            
+        }
+        return false;
+    }
+
+    public static Boolean updateUser(UsuarioModel usuario) {
+        UsuarioModel userId = getUser(usuario.getRa());
+        if(userId == null) return false;
+        
+        usuario.setId(userId.getId());
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            
+            stmt = con.prepareStatement("UPDATE usuario SET email=?, nome=?, sobrenome=? WHERE id=?");
+            stmt.setString(1, usuario.getEmail());      
+            stmt.setString(2, usuario.getNome());      
+            stmt.setString(3, usuario.getSobrenome());      
+            stmt.setInt(4, usuario.getId());      
             stmt.execute();
             return true;
 

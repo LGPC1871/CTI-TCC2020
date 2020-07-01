@@ -112,6 +112,11 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         });
 
         btnUpdate.setText("Salvar");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
@@ -317,6 +322,31 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         
         preencheTabela("");
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        UsuarioModel usuario = new UsuarioModel();
+        Boolean error = false;
+        if(txtRa.getText().isEmpty())error = true;
+        if(txtEmail.getText().isEmpty())error = true;
+        if(txtNome.getText().isEmpty())error = true;
+        if(txtSobrenome.getText().isEmpty())error = true;
+        if(error){
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        usuario.setRa(Integer.parseInt(txtRa.getText()));
+        usuario.setEmail(txtEmail.getText());
+        usuario.setNome(txtNome.getText());
+        usuario.setSobrenome(txtSobrenome.getText());
+        Boolean resultado = CadastroUsuario.atualizarUsuario(usuario);
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(this, "Sucesso!", "Mensagem", WIDTH);
+        }else{
+            JOptionPane.showMessageDialog(this, "Falha ao atualizar!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        preencheTabela("");
+    }//GEN-LAST:event_btnUpdateActionPerformed
     private void preencherCampos(UsuarioModel usuario) {
         txtRa.setText(String.valueOf(usuario.getRa()));
         txtEmail.setText(usuario.getEmail());
