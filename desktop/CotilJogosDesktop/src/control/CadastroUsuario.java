@@ -31,4 +31,7 @@ public class CadastroUsuario {
     public static String cadastrarUsuario(UsuarioModel usuario){
         return UsuarioDAO.userRegister(usuario);
     }
+    public static Boolean removerUsuario(UsuarioModel usuario){
+        return UsuarioDAO.deleteUser(usuario.getRa());
+    }
 }

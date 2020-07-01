@@ -58,7 +58,6 @@ public class UsuarioDAO {
             
             Response response = client.newCall(request).execute();
             String jsonString = response.body().string();
-            System.out.println(jsonString);
             JSONObject jsonObject = new JSONObject(jsonString);
             return jsonObject.getString("error_type");
             
@@ -117,5 +116,64 @@ public class UsuarioDAO {
             
         }
         return null;
+    }
+    
+    public static UsuarioModel getUser(int where){
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            
+            stmt = con.prepareStatement("SELECT * FROM usuario WHERE ra = ?");
+            stmt.setInt(1, where);
+            stmt.setMaxRows(1);         
+            rs = stmt.executeQuery();
+            if(rs.next()){
+                UsuarioModel usuario = new UsuarioModel();
+                usuario.setId(rs.getInt("id"));
+                usuario.setRa(rs.getInt("ra"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setSobrenome(rs.getString("sobrenome"));
+                
+                return usuario;
+            }
+
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }finally{
+            
+            ConnectionFactory.closeConnection(con, stmt);
+            
+        }
+        return null;
+    }
+    public static Boolean deleteUser(int where){
+        UsuarioModel usuario = getUser(where);
+        System.out.println(usuario);
+        if(usuario == null) return false;
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            
+            stmt = con.prepareStatement("DELETE FROM usuario WHERE id = ?");
+            stmt.setInt(1, usuario.getId());      
+            stmt.execute();
+            return true;
+
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(AdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }finally{
+            
+            ConnectionFactory.closeConnection(con, stmt);
+            
+        }
+        return false;
     }
 }

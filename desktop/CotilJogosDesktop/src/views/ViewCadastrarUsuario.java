@@ -73,7 +73,6 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         btnInsert = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
-        btnResetPassword = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
         lblProcurar = new javax.swing.JLabel();
@@ -106,10 +105,13 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         btnDelete.setText("Excluir");
         btnDelete.setMaximumSize(new java.awt.Dimension(80, 25));
         btnDelete.setMinimumSize(new java.awt.Dimension(80, 25));
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Salvar");
-
-        btnResetPassword.setText("Resetar Senha");
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
         pnlInfo.setLayout(pnlInfoLayout);
@@ -137,8 +139,6 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnResetPassword)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlInfoLayout.setVerticalGroup(
@@ -163,8 +163,7 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnResetPassword))
+                    .addComponent(btnUpdate))
                 .addContainerGap())
         );
 
@@ -296,6 +295,28 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
         }
         preencheTabela("");
     }//GEN-LAST:event_btnInsertActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        UsuarioModel usuario = new UsuarioModel();
+        if(txtRa.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "RA é necessário!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        usuario.setRa(Integer.parseInt(txtRa.getText()));
+        usuario.setEmail(txtEmail.getText());
+        usuario.setNome(txtNome.getText());
+        usuario.setSobrenome(txtSobrenome.getText());
+        
+        Boolean resultado = CadastroUsuario.removerUsuario(usuario);
+        
+        if(resultado){
+            JOptionPane.showMessageDialog(this, "Sucesso!", "Mensagem", WIDTH);
+        }else{
+            JOptionPane.showMessageDialog(this, "Falha ao excluir!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        preencheTabela("");
+    }//GEN-LAST:event_btnDeleteActionPerformed
     private void preencherCampos(UsuarioModel usuario) {
         txtRa.setText(String.valueOf(usuario.getRa()));
         txtEmail.setText(usuario.getEmail());
@@ -306,7 +327,6 @@ public final class ViewCadastrarUsuario extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JButton btnResetPassword;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblEmail;
