@@ -46,8 +46,8 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`usuario` (
   `created` VARCHAR(45) NOT NULL,
   `updated` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ra_UNIQUE` (`ra` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+  UNIQUE INDEX `ra_UNIQUE` (`ra` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
@@ -97,8 +97,8 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`time` (
   `nome` VARCHAR(45) NOT NULL,
   `usuario_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_usuario_idx` (`usuario_id` ASC) VISIBLE,
-  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) VISIBLE,
+  INDEX `fk_usuario_idx` (`usuario_id` ASC),
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC),
   CONSTRAINT `fk_usuario`
     FOREIGN KEY (`usuario_id`)
     REFERENCES `cl19467`.`usuario` (`id`)
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`usuario_time` (
   `usuario_id` INT NOT NULL,
   PRIMARY KEY (`time_id`, `usuario_id`),
   INDEX `fk_usuario_idx` (`usuario_id` ASC) INVISIBLE,
-  INDEX `fk_time_idx` (`time_id` ASC) VISIBLE,
+  INDEX `fk_time_idx` (`time_id` ASC),
   CONSTRAINT `fk_time`
     FOREIGN KEY (`time_id`)
     REFERENCES `cl19467`.`time` (`id`)
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`modalidade` (
   `nome` VARCHAR(45) NOT NULL,
   `descricao` TEXT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC) VISIBLE)
+  UNIQUE INDEX `nome_UNIQUE` (`nome` ASC))
 ENGINE = InnoDB;
 
 
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`edicao` (
   `ano_id` INT NOT NULL,
   `titulo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`, `ano_id`),
-  INDEX `fk_edicao_ano_idx` (`ano_id` ASC) VISIBLE,
+  INDEX `fk_edicao_ano_idx` (`ano_id` ASC),
   CONSTRAINT `fk_ano`
     FOREIGN KEY (`ano_id`)
     REFERENCES `cl19467`.`ano` (`id`)
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`modalidade_edicao` (
   PRIMARY KEY (`id`),
   INDEX `fk_edicao_idx` (`edicao_id` ASC) INVISIBLE,
   INDEX `fk_modalidade_idx` (`modalidade_id` ASC) INVISIBLE,
-  UNIQUE INDEX `fk_edicao_modalidade_unique` (`edicao_id` ASC, `modalidade_id` ASC) VISIBLE,
+  UNIQUE INDEX `fk_edicao_modalidade_unique` (`edicao_id` ASC, `modalidade_id` ASC),
   CONSTRAINT `fk_modalidade`
     FOREIGN KEY (`modalidade_id`)
     REFERENCES `cl19467`.`modalidade` (`id`)
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`partida` (
   `modalidade_edicao_id` INT NOT NULL,
   `data` DATE NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_partida_modalidade_edicao1_idx` (`modalidade_edicao_id` ASC) VISIBLE,
+  INDEX `fk_partida_modalidade_edicao1_idx` (`modalidade_edicao_id` ASC),
   CONSTRAINT `fk_partida_modalidade_edicao1`
     FOREIGN KEY (`modalidade_edicao_id`)
     REFERENCES `cl19467`.`modalidade_edicao` (`id`)
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`modalidade_edicao_time` (
   `ativo` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`modalidade_edicao_id`, `time_id`),
   INDEX `fk_modalidade_edicao_idx` (`time_id` ASC) INVISIBLE,
-  INDEX `fk_time_idx` (`modalidade_edicao_id` ASC) VISIBLE,
+  INDEX `fk_time_idx` (`modalidade_edicao_id` ASC),
   CONSTRAINT `fk_modalidade_edicao_has_time_modalidade_edicao1`
     FOREIGN KEY (`modalidade_edicao_id`)
     REFERENCES `cl19467`.`modalidade_edicao` (`id`)
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `cl19467`.`partida_times` (
   `pontuacao` INT NOT NULL DEFAULT 0,
   `modalidade_edicao_time_id` INT NOT NULL,
   PRIMARY KEY (`id`, `modalidade_edicao_time_id`),
-  INDEX `fk_modalidade_edicao_time_idx` (`modalidade_edicao_time_id` ASC) VISIBLE,
+  INDEX `fk_modalidade_edicao_time_idx` (`modalidade_edicao_time_id` ASC),
   CONSTRAINT `fk_partida`
     FOREIGN KEY (`partida_id`)
     REFERENCES `cl19467`.`partida` (`id`)
