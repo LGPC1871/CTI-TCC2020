@@ -34,6 +34,10 @@ public class ConnectionFactory {
     private static final String USER = "tcc";
     private static final String PASS = "123";
   */
+    /**
+     * 
+     * @return 
+     */
     public static Connection getConnection(){
         try {
             Class.forName(DRIVER);
