@@ -226,25 +226,25 @@ class User extends CI_Controller{
     | Seria necessário uma autenticacao para acessar esses métodos
     | Por ser um projeto didático e pela falta de tempo, não será colocado
     */
-    public function desktopRegister(){
-        $userInput = array(
-            "email" => $this->input->post("email"),
-            "usuario" => $this->input->post("usuario"),
-            "nome" => $this->input->post("nome"),
-            "sobrenome" => $this->input->post("sobrenome"),
-        );
-
-        $response = $this->userRegister($userInput);
-        if(!isset($response["error_type"])){
-            $response = $this->userPasswordCreate($response);
-        }
-        if($response === true){
-            $response = array(
-                "error_type" => "null"
+        public function desktopRegister(){
+            $userInput = array(
+                "email" => $this->input->post("email"),
+                "usuario" => $this->input->post("usuario"),
+                "nome" => $this->input->post("nome"),
+                "sobrenome" => $this->input->post("sobrenome"),
             );
+
+            $response = $this->userRegister($userInput);
+            if(!isset($response["error_type"])){
+                $response = $this->userPasswordCreate($response);
+            }
+            if($response === true){
+                $response = array(
+                    "error_type" => "null"
+                );
+            }
+            echo json_encode($response);
         }
-        echo json_encode($response);
-    }
         
     /*
     |--------------------------------------------------------------------------
@@ -403,6 +403,7 @@ class User extends CI_Controller{
         
             return $result;
         }
+
         /**
          * Funcao insertPassword
          * insere uma senha para o usuário
@@ -528,7 +529,6 @@ class User extends CI_Controller{
          * @param Email
          * @return boolean
          */
-
         private function userPasswordReset($input = array()){
             //empty
             $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
@@ -571,6 +571,7 @@ class User extends CI_Controller{
             if(!$result)return false;
             return true;
         }
+
         /**
          * Função PasswordReset
          * verifica token e reseta a senha do usuário
@@ -578,7 +579,6 @@ class User extends CI_Controller{
          * @param Email
          * @return boolean
          */
-
         private function userPasswordSet($input = array()){
             //empty
             $hasEmpty = $this->util->checkInputEmpty($input);   //deve retornar FALSE
@@ -675,6 +675,7 @@ class User extends CI_Controller{
 
             return $result;
         }
+        
     /*
     |--------------------------------------------------------------------------
     | Sessão
