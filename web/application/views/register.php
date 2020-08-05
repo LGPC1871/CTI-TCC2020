@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <main class="flex-fill d-flex">
     <div class="container">
         <div class="row justify-content-center">
-            <form class="d-flex flex-column border border-dark rounded col-12 col-md-8 col-lg-6 m-2 m-sm-3 m-md-5" action="#" method="post">
+            <form class="d-flex flex-column border border-dark rounded col-12 col-md-8 col-xl-5 m-2 m-sm-3 m-md-5" action="#" method="post">
                 <div class="form-group">
                     <div class="form-group text-center m-0 mt-2">
                         <h1>CRIAR PERFIL</h1>
@@ -59,7 +59,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <label for="sexo">Gênero</label>
                             <select class="custom-select" id="sexo" required>
                                 <option selected disabled value="">Selecionar...</option>
-                                <option>...</option>
+                                <?php if(isset($generos)): ?>
+                                    <?php foreach($generos as $genero):?>
+                                        <option name="<?=$genero->getId()?>"><?=$genero->getNome()?></option>
+                                    <?php endforeach ?>
+                                <?php endif?>
                             </select>
                         </div>
                     </div>
