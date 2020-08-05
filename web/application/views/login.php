@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="form-group m-0 text-center">
                     <small id="senhaHelp" class="form-text text-muted"><a href="<?=$diretorio?>user/forgot_password">Esqueci minha senha.</a></small>
-                    <small id="cadastroHelp" class="form-text text-muted">Não está cadastrado? <a href="<?=$diretorio?>user/register">clique aqui</a> </small>
+                    <small id="cadastroHelp" class="form-text text-muted">Não está cadastrado? <a href="<?=$diretorio?>register">clique aqui</a> </small>
                 </div>
             </form>
         </div>
