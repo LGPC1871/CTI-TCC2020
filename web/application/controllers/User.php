@@ -12,7 +12,6 @@ class User extends CI_Controller{
         require_once(APPPATH . 'libraries/model/SenhaResetModel.php');
         
         //LOADS\\
-        $this->load->model('UserDAO', 'userDAO');
         $this->load->model('dao/UsuarioDAO', 'usuarioDAO');
         $this->load->model('dao/SenhaDAO', 'senhaDAO');
         $this->load->model('dao/SenhaResetDAO', 'senhaResetDAO');
