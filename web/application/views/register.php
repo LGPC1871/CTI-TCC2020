@@ -11,53 +11,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <hr class="border-dark m-0 ml-5 mr-5">
                 </div>
+                <div class="form-group text-center m-0">
+                    <div id="info-block" class="no-error">
+                        <span><i class='fas fa-info-circle fa-lg'></i>&nbsp preencha os campos</span>
+                    </div>
+                </div>
                 <div class="form-group ml-5 mr-5">
                 
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Digite seu nome" required>
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu nome">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="nome">Nome</label>
-                            <input type="text" class="form-control" id="nome" placeholder="Digite seu nome" required>
+                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite seu nome">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="sobrenome">Sobrenome</label>
-                            <input type="text" class="form-control" id="sobrenome" placeholder="Digite seu sobrenome" required>
+                            <input type="text" class="form-control" name="sobrenome" id="sobrenome" placeholder="Digite seu sobrenome">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="senha">Senha</label>
-                            <input type="password" class="form-control" id="senha" placeholder="Digite uma senha" required>
+                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite uma senha">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="senhaConfirma">Confirme a Senha</label>
-                            <input type="password" class="form-control" id="senhaConfirma" placeholder="Confirme a senha" required>
+                            <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" placeholder="Confirme a senha">
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
                             <label for="ra">RA</label>
-                            <input type="text" class="form-control" id="ra" placeholder="Digite seu RA" required>
+                            <input type="text" class="form-control" name="ra" id="ra" placeholder="Digite seu RA">
                         </div>
                         <div class="col-md-4 mb-3">
                             <fieldset disabled>
                                 <label for="turma">Turma</label>
-                                <select id="turma" class="form-control">
+                                <select name="turma" id="turma" class="form-control">
                                     <option>Selecione uma turma</option>
                                 </select>
                             </fieldset>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="sexo">Gênero</label>
-                            <select class="custom-select" id="sexo" required>
+                            <select class="custom-select" name="sexo" id="sexo">
                                 <option selected disabled value="">Selecionar...</option>
                                 <?php if(isset($generos)): ?>
                                     <?php foreach($generos as $genero):?>

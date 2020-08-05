@@ -36,4 +36,28 @@ class SexoDAO extends DAO{
         }
         return $retorno;
     }
+
+    /**
+     * getSexo retorna uma linha da tabela
+     * @param $options
+     * @return row
+     */
+    public function getSexo($options = array()){
+        $required = array(
+            'where'
+        );
+        if(!$this->_required($required, $options, 1)) return false;
+
+        $options['from'] = 'sexo';
+
+        $result = $this->read($options);
+
+        if(!$result)return false;
+
+        $sexo = new SexoModel();
+        if(isset($result->id)) $sexo->setId($result->id);
+        if(isset($result->nome)) $sexo->setNome($result->nome);
+
+        return $sexo;
+    }
 }

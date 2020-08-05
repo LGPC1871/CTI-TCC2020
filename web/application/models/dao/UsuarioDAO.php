@@ -25,14 +25,14 @@ class UsuarioDAO extends DAO{
                 'usuarioModel',
             );
             if(!$this->_required($requiredInput, $input, 1)) return false;
-
             $usuario = $input['usuarioModel'];
-
+            
             //verificar se o objeto bate com os requisitos
             $requiredUsuario = array(
                 "ra",
                 "email",
                 "nome",
+                "sexo",
             );
             $usuarioAttr = $usuario->_verifyObjectAttr();
             if(!$this->_required($requiredUsuario, $usuarioAttr, 2)) return false;
@@ -44,6 +44,7 @@ class UsuarioDAO extends DAO{
                 'email' => $usuario->getEmail(),
                 'nome' => $usuario->getNome(),
                 'sobrenome' => $usuario->getSobrenome(),
+                'sexo_id' => $usuario->getSexo(),
                 'created' => $time,
                 'updated' => $time
             );
