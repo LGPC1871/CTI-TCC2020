@@ -21,55 +21,71 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="form-row">
                         <div class="col-md-12 mb-3">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu nome">
+                            <div class="input-group-prepend">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu nome">
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="nome">Nome</label>
-                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite seu nome">
+                            <div class="input-group-prepend">
+                                <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite seu nome">
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="sobrenome">Sobrenome</label>
-                            <input type="text" class="form-control" name="sobrenome" id="sobrenome" placeholder="Digite seu sobrenome">
+                            <div class="input-group-prepend">
+                                <input type="text" class="form-control" name="sobrenome" id="sobrenome" placeholder="Digite seu sobrenome">
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="senha">Senha</label>
-                            <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite uma senha">
+                            <div class="input-group-prepend">
+                                <input type="password" class="form-control" name="senha" id="senha" placeholder="Digite uma senha">
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="senhaConfirma">Confirme a Senha</label>
-                            <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" placeholder="Confirme a senha">
+                            <div class="input-group-prepend">
+                                <input type="password" class="form-control" name="senhaConfirma" id="senhaConfirma" placeholder="Confirme a senha">
+                            </div>
                         </div>
                     </div>
                     
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
                             <label for="ra">RA</label>
-                            <input type="text" class="form-control" name="ra" id="ra" placeholder="Digite seu RA">
+                            <div class="input-group-prepend">
+                                <input type="text" class="form-control" name="ra" id="ra" placeholder="Digite seu RA">
+                            </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <fieldset disabled>
                                 <label for="turma">Turma</label>
-                                <select name="turma" id="turma" class="form-control">
-                                    <option>Selecione uma turma</option>
-                                </select>
+                                <div class="input-group-prepend">
+                                    <select name="turma" id="turma" class="form-control">
+                                        <option>Selecione uma turma</option>
+                                    </select>
+                                </div>
                             </fieldset>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="sexo">Gênero</label>
-                            <select class="custom-select" name="sexo" id="sexo">
-                                <option selected disabled value="">Selecionar...</option>
-                                <?php if(isset($generos)): ?>
-                                    <?php foreach($generos as $genero):?>
-                                        <option name="<?=$genero->getId()?>"><?=$genero->getNome()?></option>
-                                    <?php endforeach ?>
-                                <?php endif?>
-                            </select>
+                            <div class="input-group-prepend">
+                                <select class="custom-select" name="sexo" id="sexo">
+                                    <option selected disabled value="">Selecionar...</option>
+                                    <?php if(isset($generos)): ?>
+                                        <?php foreach($generos as $genero):?>
+                                            <option name="<?=$genero->getId()?>"><?=$genero->getNome()?></option>
+                                        <?php endforeach ?>
+                                    <?php endif?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
