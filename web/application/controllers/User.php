@@ -521,6 +521,7 @@ class User extends CI_Controller{
         $this->session->set_userdata("ra", $userData->getRa());
         $this->session->set_userdata("nome", $userData->getNome());
         $this->session->set_userdata("sobrenome", $userData->getSobrenome());
+        $this->session->set_userdata("sexo", $userData->getSexo());
         $this->session->set_userdata("email", $userData->getEmail());
         $this->session->set_userdata("thirdData", $thirdData);
         return true;

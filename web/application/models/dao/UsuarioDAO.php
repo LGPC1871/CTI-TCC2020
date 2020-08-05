@@ -86,6 +86,7 @@ class UsuarioDAO extends DAO{
             if(isset($result->ra)) $usuario->setRa($result->ra);
             if(isset($result->email)) $usuario->setEmail($result->email);
             if(isset($result->nome)) $usuario->setNome($result->nome);
+            if(isset($result->sexo_id)) $usuario->setSexo($result->sexo_id);
             if(isset($result->sobrenome)) $usuario->setSobrenome($result->sobrenome);
             
             return $usuario;
