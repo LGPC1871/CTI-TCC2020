@@ -18,15 +18,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row justify-content-center">
                 <?php if(isset($modalidades)): ?>
                     <?php foreach($modalidades as $modalidade): ?> 
-                        <div class="card border border-dark m-3" style="width: 18rem">
-                            <img class="card-img-top" src="..." alt="Card image cap">
-                            <div class="card-body">
+                        <div class="card border-dark m-3" style="width: 18rem">
+                            <div class="card-header">
                                 <h5 class="card-title"><?=$modalidade->getNome()?></h5>
+                            </div>
+                            <?php if(false): ?>
+                                <img class="card-img-top" src="..." alt="Card image cap">
+                            <?php endif?>
+                            <div class="card-body">
                                 <?php if($modalidade->getDescricao()):?>
                                     <p class="card-text"><?=substr($modalidade->getDescricao(), 0, 100)."..."?></p>
                                 <?php endif ?>
                                 <?php $url = $diretorio."modalidades?id=".$modalidade->getId()."&nome=".$modalidade->getNome() ?>
                                 
+                            </div>
+                            <div class="card-footer">
                                 <div class="btn btn-primary align-bottom">
                                     <a href="<?=$url?>" class="text-light">Ver mais <i class="fas fa-arrow-right"></i></a>
                                 </div>
