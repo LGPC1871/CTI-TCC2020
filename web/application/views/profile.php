@@ -37,21 +37,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php endif ?>
             </div>
 
-            <div class="d-flex flex-column border border-dark rounded p-2 p-md-5 flex-md-row justify-content-center">
-                <div class="col-8 col-md-2">
-                    <div class="nav flex-column nav-pills text-center" id="tabs" role="tablist" aria-orientation="vertical">
+            <div class="d-flex flex-column rounded pl-2 pr-2 pl-md-5 pr-md-5 flex-xl-row justify-content-center">
+                <div class="card col-8 col-md-3">
+                    <h5 class="card-header text-center text-nowrap">
+                        <i class="fas fa-cog"></i>&nbsp Configurações
+                    </h5>
+                    <div class="nav flex-column nav-pills text-center mb-3 mt-3" id="tabs" role="tablist" aria-orientation="vertical">
                         <a class="nav-link text-nowrap" id="teste-tab" data-toggle="pill" href="#teste" role="tab" aria-controls="v-pills-settings" aria-selected="false">
                             <i class="fas fa-cog"></i>&nbsp TESTE
                         </a>
-                        <a class="nav-link active text-nowrap" id="configuracoes-tab" data-toggle="pill" href="#configuracoes" role="tab" aria-controls="v-pills-settings" aria-selected="true">
-                            <i class="fas fa-cog"></i>&nbsp Configurações
+                        <a class="nav-link text-nowrap active" id="perfil-tab" data-toggle="pill" href="#perfil" role="tab" aria-controls="v-pills-settings" aria-selected="false">
+                            <i class="far fa-user-circle"></i>&nbsp Perfil
                         </a>
                     </div>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-7 mt-2">
                     <div class="tab-content" id="tabContents">
-                        <div class="tab-pane fade show active" id="configuracoes" role="tabpanel" aria-labelledby="configuracoes-tab">...</div>
-                        <div class="tab-pane fade" id="teste" role="tabpanel" aria-labelledby="teste-tab">...</div>
+                        <div class="tab-pane fade" id="teste" role="tabpanel" aria-labelledby="teste-tab">
+                            <?php $this->load->view('template/loading.php')?>
+                        </div>
+                        <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
+                            <!--<?php $this->load->view('template/loading.php')?>-->
+                            <?php $this->load->view('content/profile/config_profile.php')?>
+                        </div>
                     </div>
                 </div>
             </div>
