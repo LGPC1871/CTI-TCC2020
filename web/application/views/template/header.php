@@ -47,7 +47,7 @@ if($this->session->userdata("logged")){
                                         <a class="nav-link" href="<?=$diretorio?>indisponivel">GALERIA</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="<?=$diretorio?>indisponivel">PARTICIPAR</a>
+                                        <a class="nav-link" href="<?=$diretorio?>modalidades">PARTICIPAR</a>
                                     </li>
                                 </ul>
                             </div>
