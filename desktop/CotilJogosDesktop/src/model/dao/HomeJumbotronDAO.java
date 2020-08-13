@@ -46,25 +46,6 @@ public class HomeJumbotronDAO {
             String jsonData = response.body().string();
             JSONObject jumbotronData = new JSONObject(jsonData);
             
-<<<<<<< HEAD
-            stmt = con.prepareStatement("SELECT * FROM jumbotron WHERE id = ?");
-            stmt.setInt(1, 1);
-            stmt.setMaxRows(1);
-            rs = stmt.executeQuery();
-        
-            if(rs.first()){
-                HomeJumbotronModel jumbotronData = new HomeJumbotronModel();
-                jumbotronData.setId(rs.getInt("id"));
-                jumbotronData.setStatus(rs.getInt("status"));
-                jumbotronData.setTitulo(rs.getString("titulo"));
-                jumbotronData.setSubtitulo(rs.getString("subtitulo"));
-                jumbotronData.setTexto(rs.getString("texto"));
-                jumbotronData.setTextoBotao(rs.getString("textobotao"));
-              
-                return jumbotronData;
-            }
-        } catch (SQLException ex) {
-=======
             HomeJumbotronModel jumbotron;
             jumbotron = new HomeJumbotronModel();
             
@@ -78,7 +59,6 @@ public class HomeJumbotronDAO {
             return jumbotron;
             
         } catch (IOException | JSONException ex) {
->>>>>>> origin/desktop
             Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -110,20 +90,7 @@ public class HomeJumbotronDAO {
             .build();
         
         try {
-<<<<<<< HEAD
-            stmt = con.prepareStatement("UPDATE jumbotron SET status = ?, titulo = ?, subtitulo = ?, texto = ?, textobotao = ? WHERE id = ?");
-            stmt.setInt(1, jumbotronData.getStatus());
-            stmt.setString(2, jumbotronData.getTitulo());
-            stmt.setString(3, jumbotronData.getSubtitulo());
-            stmt.setString(4, jumbotronData.getTexto());
-            stmt.setString(5, jumbotronData.getTextoBotao());
-            stmt.setInt(6, 1);
-            
-            stmt.executeUpdate();
-            
-=======
             Response response = client.newCall(request).execute();
->>>>>>> origin/desktop
             return true;
         } catch (IOException ex) {
             Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -68,9 +68,6 @@ public class ViewMain extends javax.swing.JFrame {
         midiaHomeJumbotron = new javax.swing.JMenuItem();
         midiaHomeCarrossel = new javax.swing.JMenuItem();
         midiaHomeGaleria = new javax.swing.JMenuItem();
-        menuCadastrar = new javax.swing.JMenu();
-        menuCadastrarAdministrador = new javax.swing.JMenuItem();
-        menuCadastrarAluno = new javax.swing.JMenuItem();
         menuUsuario = new javax.swing.JMenu();
         menuAdminConta = new javax.swing.JMenu();
         menuAdminSair = new javax.swing.JMenuItem();
@@ -141,26 +138,6 @@ public class ViewMain extends javax.swing.JFrame {
 
         menuBar.add(menuMidia);
 
-        menuCadastrar.setText("Cadastrar");
-        menuCadastrar.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                menuCadastrarItemStateChanged(evt);
-            }
-        });
-
-        menuCadastrarAdministrador.setText("Administrador");
-        menuCadastrarAdministrador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuCadastrarAdministradorActionPerformed(evt);
-            }
-        });
-        menuCadastrar.add(menuCadastrarAdministrador);
-
-        menuCadastrarAluno.setText("Aluno");
-        menuCadastrar.add(menuCadastrarAluno);
-
-        menuBar.add(menuCadastrar);
-
         menuUsuario.setText("User");
         menuUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         menuUsuario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -201,18 +178,19 @@ public class ViewMain extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAdminSairActionPerformed
 
     private void midiaHomeJumbotronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_midiaHomeJumbotronActionPerformed
-            new ViewMidiaHomeJumbotron().setVisible(true);
+            if(viewJumbotron == null || viewJumbotron.isClosed()){
+                
+                viewJumbotron = new ViewMidiaHomeJumbotron();
+                this.desktopPane.add(viewJumbotron);
+                viewJumbotron.setVisible(true);
+                
+            }else{
+                
+                viewJumbotron.toFront();
+                
+            }
     }//GEN-LAST:event_midiaHomeJumbotronActionPerformed
 
-<<<<<<< HEAD:desktop/CotilJogosDesktop/src/view/ViewMain.java
-    private void menuCadastrarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_menuCadastrarItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuCadastrarItemStateChanged
-
-    private void menuCadastrarAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastrarAdministradorActionPerformed
-    new ViewCadastrarAdministrador().setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_menuCadastrarAdministradorActionPerformed
-=======
     private void menuCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadastrarUsuarioActionPerformed
         if(viewCadastrarUsuario == null || viewCadastrarUsuario.isClosed()){
             viewCadastrarUsuario = new ViewCadastrarUsuario();
@@ -252,7 +230,6 @@ public class ViewMain extends javax.swing.JFrame {
             viewCadastrarTime.toFront();
         }
     }//GEN-LAST:event_menuCadastrarTimeActionPerformed
->>>>>>> origin/desktop:desktop/CotilJogosDesktop/src/views/ViewMain.java
     
 
     /**
@@ -296,18 +273,12 @@ public class ViewMain extends javax.swing.JFrame {
     private javax.swing.JMenu menuAdminConta;
     private javax.swing.JMenuItem menuAdminSair;
     private javax.swing.JMenuBar menuBar;
-<<<<<<< HEAD:desktop/CotilJogosDesktop/src/view/ViewMain.java
-    private javax.swing.JMenu menuCadastrar;
-    private javax.swing.JMenuItem menuCadastrarAdministrador;
-    private javax.swing.JMenuItem menuCadastrarAluno;
-=======
     private javax.swing.JMenuItem menuCadastrarAdministrador;
     private javax.swing.JMenuItem menuCadastrarAno;
     private javax.swing.JMenuItem menuCadastrarModalidade;
     private javax.swing.JMenuItem menuCadastrarTime;
     private javax.swing.JMenuItem menuCadastrarUsuario;
     private javax.swing.JMenu menuCadatrar;
->>>>>>> origin/desktop:desktop/CotilJogosDesktop/src/views/ViewMain.java
     private javax.swing.JMenu menuMidia;
     private javax.swing.JMenu menuMidiaHome;
     private javax.swing.JMenu menuUsuario;
