@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package views;
 
 import control.Login;
 import control.Main;
@@ -54,6 +54,8 @@ public class ViewLogin extends javax.swing.JFrame {
         lblUsuario.setLabelFor(txtUsuario);
         lblUsuario.setText("Usuário");
 
+        txtUsuario.setText("admin");
+
         lblSenha.setText("Senha");
 
         lblLoginStatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -65,6 +67,8 @@ public class ViewLogin extends javax.swing.JFrame {
                 btnEntrarActionPerformed(evt);
             }
         });
+
+        passwordField.setText("123");
 
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);

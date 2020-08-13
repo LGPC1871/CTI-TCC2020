@@ -16,12 +16,28 @@ import java.sql.SQLException;
  * @author lgpc1
  */
 public class ConnectionFactory {
+    /**
+     * BANCO DE DADOS DO COTIL
+     */
     
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String URL = "jdbc:mysql://143.106.241.3:3306/cl19467?zeroDateTimeBehavior=convertToNull";
     private static final String USER = "cl19467";
     private static final String PASS = "cl*07082003";
     
+    /**
+     * BANCO DE DADOS LOCAL
+     */
+    /*
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3308/cl19467?useTimezone=true&serverTimezone=UTC";
+    private static final String USER = "tcc";
+    private static final String PASS = "123";
+  */
+    /**
+     * 
+     * @return 
+     */
     public static Connection getConnection(){
         try {
             Class.forName(DRIVER);

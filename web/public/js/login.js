@@ -21,7 +21,7 @@ $(function(){
                 if(response === true){
                     /* LOGIN EFETUADO COM SUCESSO */
                     infoBlockLoading("entrando");
-                    window.location = `${BASE_URL}user/profile`
+                    window.location = `${BASE_URL}profile`
                 }else{
                     formEnabled(true);
                     let mensagem;

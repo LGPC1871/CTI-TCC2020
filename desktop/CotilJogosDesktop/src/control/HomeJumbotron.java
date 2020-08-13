@@ -18,17 +18,16 @@ public class HomeJumbotron {
         /*
         * Instanciar Classes Model
         */
-        HomeJumbotronDAO jumbotronDAO = new HomeJumbotronDAO();
         HomeJumbotronModel jumbotron;
         
-        jumbotron = jumbotronDAO.selectJumbotronData();
+        jumbotron = HomeJumbotronDAO.getJumbotronData();
         
         return jumbotron;
     }
     
-    public static Boolean saveJumbotron(HomeJumbotronModel jumbotronData){
-        HomeJumbotronDAO jumbotronDAO = new HomeJumbotronDAO();
+    public static Boolean saveJumbotron(HomeJumbotronModel jumbotron){
+        Boolean result = HomeJumbotronDAO.setJumbotron(jumbotron);
         
-        return jumbotronDAO.saveJumbotronData(jumbotronData);
+        return result; 
     }
 }

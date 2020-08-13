@@ -80,7 +80,7 @@ $query_builder = TRUE;
 |--------------------------------------------------------------------------
 | database do COTIL(Lucas Avelino)
 */
-	$db['default'] = array(
+	/*$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => '143.106.241.3:3306',
 		'username' => 'cl19467',
@@ -100,7 +100,7 @@ $query_builder = TRUE;
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE
-	);
+	);*/
 
 /*
 |--------------------------------------------------------------------------
@@ -108,11 +108,11 @@ $query_builder = TRUE;
 |--------------------------------------------------------------------------
 | database local
 */
-	/*$db['default'] = array(
+	$db['default'] = array(
 		'dsn'	=> '',
 		'hostname' => '127.0.0.1:3308',
 		'username' => 'tcc',
-		'password' => 'OpRC$g%vXUjmeDq!teWg@&bd@xhs4B',
+		'password' => '123',
 		'database' => 'cl19467',
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
@@ -128,4 +128,4 @@ $query_builder = TRUE;
 		'stricton' => FALSE,
 		'failover' => array(),
 		'save_queries' => TRUE
-	);*/
+	);

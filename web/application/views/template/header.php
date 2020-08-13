@@ -1,5 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+if($this->session->userdata("logged")){
+    $cabecalho = array(
+        'nome' => $this->session->userdata("nome"),
+    );
+}
 ?>
 <div id="body-flex" class="d-flex flex-column">
 <div>
@@ -9,23 +14,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div id="logo" class="p-2 mr-sm-auto d-flex align-items-center justify-content-center">
                     <img src="<?=$diretorio?>/public/images/logo.svg" alt="logo">
                 </div>
-                <?php if($this->session->userdata("logged") == true): ?>
+                <div id="profile-header" class="p-2 d-flex justify-content-center align-self-center align-items-center ml-sm-auto">
+                    <?php if(isset($cabecalho)): ?>
                         <!--USUARIO LOGADO-->
-                        <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
-                            <a href="<?=$diretorio?>user/profile">
-                                <?php if($userData->getPicture()):?>
-                                    <img class="rounded-circle" src="<?=$diretorio?>src/data/img/user/<?=$userData->getRa()?>.jpg" alt="img-perfil">
-                                <?php else :?>
-                                    <i class="far fa-user-circle fa-lg"></i> 
-                                <?php endif ?>
-                                    <?=$userData->getNome()?>
-                            </a>
-                        </div>
+                        <a class="d-flex align-items-center"href="<?=$diretorio?>profile">
+                            <?php if(isset($cabecalho['foto'])): ?>
+                                <img class="rounded-circle" src="<?=$cabecalho['foto']?>" alt="">
+                            <?php else: ?>
+                                <i class="far fa-user-circle fa-lg"></i>
+                            <?php endif ?>
+                            &nbsp
+                            <span><?=$cabecalho['nome']?></span>
+                        </a>
                     <?php else:?>
-                        <div id="profile-header" class="p-2 d-flex align-items-center justify-content-center">
-                            <a href="<?=$diretorio?>user"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
-                        </div>
-                <?php endif ?>
+                        <a href="<?=$diretorio?>user/login"><i class="far fa-user-circle fa-lg"></i>&nbsp ENTRAR</a>
+                    <?php endif ?>
+                </div>
             </div>
             <div id="header-nav" class="d-flex flex-column">
                 <nav class="col-12 navbar navbar-expand-md navbar-dark bg-dark">

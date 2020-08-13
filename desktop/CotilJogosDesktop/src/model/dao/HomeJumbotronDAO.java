@@ -5,14 +5,19 @@
  */
 package model.dao;
 
-import connection.ConnectionFactory;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.domain.HomeJumbotronModel;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import org.json.JSONException;
+import org.json.JSONObject;
+import util.Host;
+
 
 /**
  *
@@ -20,14 +25,28 @@ import model.domain.HomeJumbotronModel;
  */
 public class HomeJumbotronDAO {
     
-    public HomeJumbotronModel selectJumbotronData(){
+    public static HomeJumbotronModel getJumbotronData(){
+        /*
+        * Corpo da Requisição
+        */
+        OkHttpClient client = new OkHttpClient().newBuilder()
+        .build();
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, "");
+        Request request = new Request.Builder()
+        .url(Host.getHost()+"home/desktopGetJumbotron")
+        .method("POST", body)
+        .addHeader("Content-Type", "application/x-www-form-urlencoded")
+        .build();
         
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
+        Response response = null;
         
         try {
+            response = client.newCall(request).execute();   
+            String jsonData = response.body().string();
+            JSONObject jumbotronData = new JSONObject(jsonData);
             
+<<<<<<< HEAD
             stmt = con.prepareStatement("SELECT * FROM jumbotron WHERE id = ?");
             stmt.setInt(1, 1);
             stmt.setMaxRows(1);
@@ -45,20 +64,53 @@ public class HomeJumbotronDAO {
                 return jumbotronData;
             }
         } catch (SQLException ex) {
+=======
+            HomeJumbotronModel jumbotron;
+            jumbotron = new HomeJumbotronModel();
+            
+            jumbotron.setStatus(jumbotronData.getInt("status"));
+            jumbotron.setTitulo(jumbotronData.getString("titulo"));
+            jumbotron.setSubtitulo(jumbotronData.getString("subtitulo"));
+            jumbotron.setTexto(jumbotronData.getString("texto"));
+            jumbotron.setStatusBotao(jumbotronData.getInt("botaoStatus"));
+            jumbotron.setTextoBotao(jumbotronData.getString("botao"));
+            
+            return jumbotron;
+            
+        } catch (IOException | JSONException ex) {
+>>>>>>> origin/desktop
             Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{    
-            ConnectionFactory.closeConnection(con, stmt, rs);
         }
- 
         return null;
     }
     
-    public Boolean saveJumbotronData(HomeJumbotronModel jumbotronData){
+    public static Boolean setJumbotron(HomeJumbotronModel jumbotron){
+        String json;
         
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
+        json = "status=" + jumbotron.getStatus();
+        json += "&";
+        json += "titulo=" + jumbotron.getTitulo();
+        json += "&";
+        json += "subtitulo=" + jumbotron.getSubtitulo();
+        json += "&";
+        json += "texto=" + jumbotron.getTexto();
+        json += "&";
+        json += "botao=" + jumbotron.getTextoBotao();
+        json += "&";
+        json += "botaoStatus=" + jumbotron.getStatusBotao();
+        
+        OkHttpClient client = new OkHttpClient().newBuilder()
+            .build();
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, json);
+        Request request = new Request.Builder()
+            .url(Host.getHost()+"home/desktopSetJumbotron")
+            .method("POST", body)
+            .addHeader("Content-Type", "application/x-www-form-urlencoded")
+            .build();
         
         try {
+<<<<<<< HEAD
             stmt = con.prepareStatement("UPDATE jumbotron SET status = ?, titulo = ?, subtitulo = ?, texto = ?, textobotao = ? WHERE id = ?");
             stmt.setInt(1, jumbotronData.getStatus());
             stmt.setString(2, jumbotronData.getTitulo());
@@ -69,12 +121,12 @@ public class HomeJumbotronDAO {
             
             stmt.executeUpdate();
             
+=======
+            Response response = client.newCall(request).execute();
+>>>>>>> origin/desktop
             return true;
-            
-        } catch (SQLException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(HomeJumbotronDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            ConnectionFactory.closeConnection(con, stmt);
         }
         return false;
     }

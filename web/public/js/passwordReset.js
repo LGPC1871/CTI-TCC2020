@@ -14,7 +14,6 @@ $(function(){
             success: function(response){
                 console.log(response);
                 if(response === true){
-                    /* EMAIL ENVIADO COM SUCESSO */
                     infoBlockMessage(false, "Senha redefinida");
                 }else{
                     let message;
