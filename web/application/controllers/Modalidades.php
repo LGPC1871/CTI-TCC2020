@@ -2,7 +2,11 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Modalidades extends CI_Controller{
-    
+    /**
+     * Construtor do controlador
+     * carrega os models usados
+     * carrega os DAO usados
+     */
     public function __construct(){
         parent::__construct();
         //REQUIRES\\
@@ -12,25 +16,46 @@ class Modalidades extends CI_Controller{
         $this->load->model('dao/ModalidadeDAO', 'modalidadeDAO');
     }
 
-    public function index(){
-        $modalidades = $this->carregarModalidades();
+    /**
+     * Exibir view com todas as modalidades cadastradas
+     * @return View
+     * @return Content
+     */
+    public function exibirModalidades(){
+        $modalidades = $this->modalidadeDAO->getModalidades(array('return' => 'multiple'));
         if(!$modalidades) exit("ocorreu um erro!");
 
         $content = array(
             "modalidades" => $modalidades
         );
+
         $this->template->show('modalidades.php', $content);
     }
 
     /**
-     * Função carrega as modalidades cadastradas
-     * @param
-     * @return Array
+     * Exibir view com uma modalidade, recebida por GET
+     * @param GET
+     * @return View
+     * @return Content
      */
-    private function carregarModalidades(){
+    public function exibirModalidade(){
+        $idModalidade = $this->input->get('id');
+
+        //preparar consulta
         $options = array(
-            'return' => 'multiple'
+            'where' => array(
+                'id' => $idModalidade
+            ),
+            'return' => 'single',
         );
-        return $this->modalidadeDAO->getModalidades($options);
+        $dadosModalidade = $this->modalidadeDAO->getModalidades($options);
+
+        //preparar conteudo da pagina
+        $content = array(
+            "modalidade" => $dadosModalidade,
+        );
+
+        //mostrar view, passando conteudo gerado
+        $this->template->show('modalidade.php', $content);
     }
 }
