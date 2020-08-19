@@ -11,9 +11,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <hr class="w-100 border-gray m-1">
             
-            <div class="align-self-center p-2">
-                <img class="rounded-circle" src="../src/data/img/user/default.jpg" alt="img-perfil" style="width: 6vw; min-width: 100px;">
-            </div>
+            <?php $avatar = "src/data/user/avatar/". substr($usuario->getRA(), 0, 2) ."/".$usuario->getRA().".jpg"?>
+            <?php if(file_exists($avatar)): ?>
+                <div class="align-self-center p-2">
+                    <img class="rounded-circle" src="<?=$diretorio.$avatar?>" alt="img-perfil" style="width: 6vw; min-width: 100px;">
+                </div>
+            <?php else: ?>
+                <div class="align-self-center p-2">
+                    <img class="rounded-circle" src="<?=$diretorio?>src/data/user/avatar/default.jpg" alt="img-perfil" style="width: 6vw; min-width: 100px;">
+                </div>
+            <?php endif ?>
+
+
             <div class="align-self-center">
                 <?php if(isset($usuario)): ?>
                     <?php if($usuario->getSexo() == 1): ?>

@@ -44,6 +44,7 @@ class Profile extends CI_Controller{
         if(!$usuario) return false;
         
         $content["usuario"] = $usuario;
+        $content["isProfilePage"] = true;
 
         $this->template->show("profile.php", $content);
     }
