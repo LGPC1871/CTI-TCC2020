@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php $avatar = "src/data/user/avatar/". substr($usuario->getRA(), 0, 2) ."/".$usuario->getRA().".jpg"?>
             <?php if(file_exists($avatar)): ?>
                 <div class="align-self-center p-2">
-                    <img class="rounded-circle" src="<?=$diretorio.$avatar?>" alt="img-perfil" style="width: 6vw; min-width: 100px;">
+                    <img class="rounded-circle" src="<?=$diretorio.$avatar?>" alt="img-perfil" style="width: 3rem; height: 3rem; min-height: 100px; min-width: 100px;">
                 </div>
             <?php else: ?>
                 <div class="align-self-center p-2">
@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <div class="d-flex flex-column rounded pl-2 pr-2 pl-md-5 pr-md-5 flex-xl-row justify-content-center">
                 
-                <div class="card col-8 col-md-3">
+                <div class="card col-8 col-md-3 mt-2">
                     <h5 class="card-header text-center text-nowrap">
                         <i class="fas fa-cog"></i>&nbsp Configurações
                     </h5>
@@ -77,7 +77,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                         <div class="tab-pane fade show active" id="perfil" role="tabpanel" aria-labelledby="perfil-tab">
                             <!--<?php $this->load->view('template/loading.php')?>-->
-                            <?php $this->load->view('content/profile/config_profile.php')?>
                             <?php $this->load->view('content/profile/config_perfil.php')?>
                         </div>
                     </div>

@@ -19,6 +19,33 @@ class Profile extends CI_Controller{
             redirect('user');
         }
     }
+    /*
+    |--------------------------------------------------------------------------
+    | Ajax
+    |--------------------------------------------------------------------------
+    | Requisicoes ajax
+    */
+        public function ajaxAlterarAvatar(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+            if(isset($_FILES["avatar"]["name"])){
+                $result = $this->setUserAvatar($_FILES["avatar"]);
+            }else{
+                $result = array(
+                    "error_type" => "no_file"
+                );                
+            }
+            return $result;
+        }
+
+        public function ajaxAlterarNome(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+
+            echo json_encode("teste");
+        }
 
     /*
     |--------------------------------------------------------------------------
@@ -26,26 +53,58 @@ class Profile extends CI_Controller{
     |--------------------------------------------------------------------------
     | Funções da classe
     */
+        private function setUserAvatar($image){
 
-    private function loadProfile(){
-        if(!$this->session->userdata("logged")) return false;
+            if(!$this->session->userdata('logged')){
+                $result['error_type'] = 'access';
+            }
 
-        $content = array();
+            $userRa = $this->session->userdata('ra');
+            $userSubRa = substr($userRa, 0, 2);
+            $dir = 'src/data/user/avatar/' . $userSubRa;
 
-        $usuario = new UsuarioModel();
-        $id = $this->session->userdata("id");
-        $options = array(
-            "where" => array(
-                "id" => $id,
-            ),
-        );
-        $usuario = $this->usuarioDAO->getUser($options);
+            //verificar diretorio
+            if(!is_dir($dir)){
+                mkdir($dir, 0777, true);
+            }
 
-        if(!$usuario) return false;
-        
-        $content["usuario"] = $usuario;
-        $content["isProfilePage"] = true;
+            //preparando classe upload
+            $config['upload_path'] = $dir;
+            $config['allowed_types'] = 'jpg|png';
+            $config['file_name'] = $userRa . '.jpg';
+            $config['overwrite'] = true;
 
-        $this->template->show("profile.php", $content);
-    }
+            $this->load->library('upload', $config);
+            if(!$this->upload->do_upload('avatar'))  
+            {  
+                 echo $this->upload->display_errors();  
+            }  
+            else  
+            {  
+                 echo 'funcionou!!';  
+            } 
+        }
+
+        private function loadProfile(){
+            if(!$this->session->userdata("logged")) return false;
+
+            $content = array();
+
+            $usuario = new UsuarioModel();
+            $id = $this->session->userdata("id");
+            $options = array(
+                "where" => array(
+                    "id" => $id,
+                ),
+            );
+            $usuario = $this->usuarioDAO->getUser($options);
+
+            if(!$usuario) return false;
+            
+            $content["usuario"] = $usuario;
+            $content["isProfilePage"] = true;
+            $content["scripts"] = array('profile.js', 'form.js');
+
+            $this->template->show("profile.php", $content);
+        }
 }

@@ -25,7 +25,7 @@ if($this->session->userdata("logged")){
                             <?php if($this->session->userdata('logged')): ?>
                                 <?php $avatar = "src/data/user/avatar/". substr($cabecalho['ra'], 0, 2) ."/".$cabecalho['ra'].".jpg"?>
                                 <?php if(file_exists($avatar)): ?>
-                                    <img class="rounded-circle" src="<?=$diretorio.$avatar?>" alt="user_avatar">
+                                    <img class="rounded-circle" src="<?=$diretorio.$avatar?>" alt="user_avatar" style="height: 35px; width: 35px;">
                                 <?php else:?>
                                     <img class="rounded-circle" src="<?=$diretorio?>src/data/user/avatar/default.jpg" alt="user_avatar">
                                 <?php endif ?>
