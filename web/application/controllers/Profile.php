@@ -81,7 +81,7 @@ class Profile extends CI_Controller{
             }  
             else  
             {  
-                 echo 'funcionou!!';  
+                return $result['success'] = true;
             } 
         }
 

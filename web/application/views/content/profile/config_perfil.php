@@ -15,7 +15,7 @@
                 <form id="form-avatar" method="post">
                     <div class="form-group">
                         <label for="avatar">Envie uma foto</label>
-                        <input type="file" class="form-control-file" id="avatar" name="avatar">
+                        <input type="file" class="form-control-file" id="avatar" name="avatar" required>
                     </div>
                     <div class="d-flex justify-content-start pt-3">
                         <button type="submit" class="btn btn-success">SALVAR</button>
@@ -31,11 +31,11 @@
                 <form id="form-nome" method="post">
                     <div class="form-group">
                         <label for="nome">Alterar Nome</label>
-                        <input type="text" class="form-control-file" id="nome" name="nome" value="<?=$usuario->getNome()?>">
+                        <input type="text" class="form-control-file" id="nome" name="nome" value="<?=$usuario->getNome()?>" required>
                     </div>
                     <div class="form-group">
                         <label for="sobrenome">Alterar Nome</label>
-                        <input type="text" class="form-control-file" id="sobrenome" name="sobrenome" value="<?=$usuario->getSobrenome()?>">
+                        <input type="text" class="form-control-file" id="sobrenome" name="sobrenome" value="<?=$usuario->getSobrenome()?>" required>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success">SALVAR</button>
