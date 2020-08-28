@@ -11,9 +11,11 @@ class Modalidades extends CI_Controller{
         parent::__construct();
         //REQUIRES\\
         require_once(APPPATH . 'libraries/model/ModalidadeModel.php');
+        require_once(APPPATH . 'libraries/model/ModalidadeEdicaoModel.php');
 
         //LOADS\\
         $this->load->model('dao/ModalidadeDAO', 'modalidadeDAO');
+        $this->load->model('dao/ModalidadeEdicaoDAO', 'modalidadeEdicaoDAO');
     }
 
     /**
@@ -41,21 +43,71 @@ class Modalidades extends CI_Controller{
     public function exibirModalidade(){
         $idModalidade = $this->input->get('id');
 
-        //preparar consulta
+        //preparar consulta para modalidade
         $options = array(
             'where' => array(
                 'id' => $idModalidade
             ),
-            'return' => 'single',
+            'return' => 'row',
         );
         $dadosModalidade = $this->modalidadeDAO->getModalidades($options);
-
+        $options = null;
+ 
         //preparar conteudo da pagina
         $content = array(
             "modalidade" => $dadosModalidade,
+            "scripts" => array('modalidade.js'),
         );
 
         //mostrar view, passando conteudo gerado
         $this->template->show('modalidade.php', $content);
+    }
+
+    
+     /**
+     * Retorna uma view contendo um accordion, listando todas
+     * as edicoes da modalidade informada
+     * @param ModalidadeId
+     * @return View
+     */
+    public function ajaxExibirModalidadeEdicoes(){
+        if (!$this->input->is_ajax_request()) exit("Nenhum acesso de script direto permitido!");
+        $modalidadeId = $this->input->post("id");
+
+        $modalidadeEdicoes = $this->modalidadeEdicaoDAO->getModalidadeEdicoesLista($modalidadeId);
+
+        if(!$modalidadeEdicoes) return false;
+
+        $content = array(
+            "modalidadeEdicoes" => $modalidadeEdicoes
+        );
+        echo $this->load->view("content/modalidade/modalidade_edicoes.php", $content, true);
+    }
+
+    /**
+     * Requisicao do form de inscricao de uma determinada 
+     * edicao de modalidade
+     * @param ModalidadeEdicao
+     * @return View
+     */
+    public function ajaxExibirAccordion(){
+        if (!$this->input->is_ajax_request()) exit("Nenhum acesso de script direto permitido!");
+        $modalidadeEdicaoId = $this->input->post("id");
+
+        $options = array(
+            'where' => array(
+                'id' => $modalidadeEdicaoId,
+            ),
+        );
+        $modalidadeEdicao = $this->modalidadeEdicaoDAO->getModalidadeEdicao($options);
+
+        if(!$modalidadeEdicao) return false;
+
+        $content = array(
+            "modalidadeEdicao" => $modalidadeEdicaoId,
+        );
+
+        
+        echo $this->load->view("content/modalidade/modalidade_edicao.php", $content, true);
     }
 }

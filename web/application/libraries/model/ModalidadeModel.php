@@ -4,6 +4,7 @@ class ModalidadeModel{
     private $id;
     private $nome;
     private $descricao;
+    private $limiteJogadoresTime;
     private $status;
 
     public function __construct(){
@@ -37,83 +38,103 @@ class ModalidadeModel{
     | Funções get e set
     */
 
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
-    {
-        return $this->id;
-    }
+        /**
+         * Get the value of id
+         */ 
+        public function getId()
+        {
+            return $this->id;
+        }
 
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
-    {
-        $this->id = $id;
+        /**
+         * Set the value of id
+         *
+         * @return  self
+         */ 
+        public function setId($id)
+        {
+            $this->id = $id;
 
-        return $this;
-    }
+            return $this;
+        }
 
-    /**
-     * Get the value of nome
-     */ 
-    public function getNome()
-    {
-        return $this->nome;
-    }
+        /**
+         * Get the value of nome
+         */ 
+        public function getNome()
+        {
+            return $this->nome;
+        }
 
-    /**
-     * Set the value of nome
-     *
-     * @return  self
-     */ 
-    public function setNome($nome)
-    {
-        $this->nome = $nome;
+        /**
+         * Set the value of nome
+         *
+         * @return  self
+         */ 
+        public function setNome($nome)
+        {
+            $this->nome = $nome;
 
-        return $this;
-    }
+            return $this;
+        }
 
-    /**
-     * Get the value of descricao
-     */ 
-    public function getDescricao()
-    {
-        return $this->descricao;
-    }
+        /**
+         * Get the value of descricao
+         */ 
+        public function getDescricao()
+        {
+            return $this->descricao;
+        }
 
-    /**
-     * Set the value of descricao
-     *
-     * @return  self
-     */ 
-    public function setDescricao($descricao)
-    {
-        $this->descricao = $descricao;
+        /**
+         * Set the value of descricao
+         *
+         * @return  self
+         */ 
+        public function setDescricao($descricao)
+        {
+            $this->descricao = $descricao;
 
-        return $this;
-    }
+            return $this;
+        }
 
-    /**
-     * Get the value of status
-     */ 
-    public function getStatus()
-    {
-        return $this->status;
-    }
+        /**
+         * Get the value of status
+         */ 
+        public function getStatus()
+        {
+            return $this->status;
+        }
 
-    /**
-     * Set the value of status
-     *
-     * @return  self
-     */ 
-    public function setStatus($status)
-    {
-        $this->status = $status;
+        /**
+         * Set the value of status
+         *
+         * @return  self
+         */ 
+        public function setStatus($status)
+        {
+            $this->status = $status;
 
-        return $this;
-    }
+            return $this;
+        }
+
+        /**
+         * Get the value of limiteJogadoresTime
+         */ 
+        public function getLimiteJogadoresTime()
+        {
+            return $this->limiteJogadoresTime;
+        }
+
+        /**
+         * Set the value of limiteJogadoresTime
+         *
+         * @return  self
+         */ 
+        public function setLimiteJogadoresTime($limiteJogadoresTime)
+        {
+            $this->limiteJogadoresTime = $limiteJogadoresTime;
+
+            return $this;
+        }
 }
