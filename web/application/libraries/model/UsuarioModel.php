@@ -6,6 +6,7 @@ class UsuarioModel{
     private $email;
     private $nome;
     private $sobrenome;
+    private $sexo;
     private $picture;
     private $created;
     private $updated;
@@ -33,6 +34,7 @@ class UsuarioModel{
             if($this->getEmail()) $response['email'] = true;
             if($this->getNome()) $response['nome'] = true;
             if($this->getSobrenome()) $response['sobrenome'] = true;
+            if($this->getSexo()) $response['sexo'] = true;
             if($this->getSobrenome()) $response['picture'] = true;
             if($this->getCreated()) $response['created'] = true;
             if($this->getUpdated()) $response['updated'] = true;
@@ -222,6 +224,26 @@ class UsuarioModel{
         public function setPicture($picture)
         {
             $this->picture = $picture;
+
+            return $this;
+        }
+
+        /**
+         * Get the value of sexo
+         */ 
+        public function getSexo()
+        {
+            return $this->sexo;
+        }
+
+        /**
+         * Set the value of sexo
+         *
+         * @return  self
+         */ 
+        public function setSexo($sexo)
+        {
+            $this->sexo = $sexo;
 
             return $this;
         }

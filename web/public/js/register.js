@@ -9,7 +9,7 @@ $(function(){
     $("form").submit(function(){
         $.ajax({
             type: "post",
-            url: `${BASE_URL}user/ajaxRegister`,
+            url: `${BASE_URL}register/ajaxRegister`,
             dataType: "json",
             data: $(this).serialize(),
 
@@ -44,6 +44,9 @@ $(function(){
                     }
                     if(response["error_type"] == "password"){
                         mensagem = "senha inválida"
+                    }
+                    if(response["error_type"] == "invalid_sex"){
+                        mensagem = "sexo inválido"
                     }
                     if(response["error_type"] == "database"){
                         mensagem = "ocorreu um erro"

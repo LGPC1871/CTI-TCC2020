@@ -108,7 +108,8 @@ class DAO extends CI_Model{
                 'where' => array(0 => 0),
                 'like' => array(0 => 0),
                 'return' => 'row',
-                'join' => null /*array(0 => array())*/
+                'join' => null, /*array(0 => array())*/
+                'order_by' => null,
             );
             $options = $this->_default($defaultOptions, $options);
             
@@ -131,6 +132,9 @@ class DAO extends CI_Model{
                 foreach($join as $joinOptions){
                     $this->db->join($joinOptions['table'], $joinOptions['on'], $joinOptions['join']);
                 }
+            }
+            if(isset($options['order_by'])){
+                $this->db->order_by($options['order_by']);
             }
             $this->db->from($from);
             
