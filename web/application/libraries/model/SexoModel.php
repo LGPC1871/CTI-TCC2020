@@ -1,11 +1,12 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); 
 
-class SenhaModel{
-    private $usuarioId;
-    private $senha;
+class SexoModel{
+    private $id;
+    private $nome;
 
     public function __construct(){
     }
+
     /*
     |--------------------------------------------------------------------------
     | PUBLIC
@@ -21,8 +22,8 @@ class SenhaModel{
          */
         public function _verifyObjectAttr(){
             $response = array();
-            if($this->getUsuarioId()) $response['usuario_id'] = true;
-            if($this->getSenha()) $response['senha'] = true;
+            if($this->getId()) $response['id'] = true;
+            if($this->getNome()) $response['nome'] = true;
             
             return $response;
         }
@@ -32,42 +33,43 @@ class SenhaModel{
     |--------------------------------------------------------------------------
     | Funções get e set
     */
+
         /**
-         * Get the value of usuarioId
+         * Get the value of id
          */ 
-        public function getUsuarioId()
+        public function getId()
         {
-            return $this->usuarioId;
+            return $this->id;
         }
 
         /**
-         * Set the value of usuarioId
+         * Set the value of id
          *
          * @return  self
          */ 
-        public function setUsuarioId($usuarioId)
+        public function setId($id)
         {
-            $this->usuarioId = $usuarioId;
+            $this->id = $id;
 
             return $this;
         }
 
         /**
-         * Get the value of senha
+         * Get the value of nome
          */ 
-        public function getSenha()
+        public function getNome()
         {
-            return $this->senha;
+            return $this->nome;
         }
 
         /**
-         * Set the value of senha
+         * Set the value of nome
          *
          * @return  self
          */ 
-        public function setSenha($senha)
+        public function setNome($nome)
         {
-            $this->senha = $senha;
+            $this->nome = $nome;
 
             return $this;
         }

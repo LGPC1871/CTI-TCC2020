@@ -18,7 +18,7 @@ class SenhaResetModel{
         /**
          * Método required, retorna quais atributos do objeto inserido
          * NÃO são nulos
-         * @param object $pessoaModel
+         * @param this
          * @return array
          */
         public function _verifyObjectAttr(){
