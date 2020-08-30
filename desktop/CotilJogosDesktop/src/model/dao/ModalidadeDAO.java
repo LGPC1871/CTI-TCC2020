@@ -8,11 +8,15 @@ package model.dao;
 import connection.ConnectionFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static model.dao.UsuarioDAO.getUser;
 import model.domain.Modalidade;
+import model.domain.UsuarioModel;
 
 /**
  *
@@ -42,5 +46,75 @@ public class ModalidadeDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-    
+         public void delete(Modalidade m){
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("DELETE FROM modalidade WHERE id = ?");
+            stmt.setInt(1,m.getId());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "MODALIDADE EXCLUIDA COM SUCESSO!!!");
+        } catch (SQLException ex) {
+            Logger.getLogger(ModalidadeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERRO AO EXCLUIR MODALIDADE : "+ex);
+        } finally{
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
+    }
+        public java.util.List<Modalidade> read() {
+        
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        java.util.List<Modalidade> modalidades = new ArrayList<>();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM modalidade");
+            rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                
+                Modalidade modalidade = new Modalidade();
+                modalidade.setId(rs.getInt("id"));
+                modalidade.setNome(rs.getString("nome"));
+                modalidade.setDescricao(rs.getString("descricao"));
+                modalidades.add(modalidade);
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ModalidadeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return modalidades;
+    }
+     public void update(Modalidade m) {
+
+        Connection con = ConnectionFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = con.prepareStatement("UPDATE modalidade SET nome = ?,descricao = ? WHERE id = ?");
+            stmt.setString(1, m.getNome());
+            stmt.setString(2, m.getDescricao());
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "MODALIDADE ATUALIZADA COM SUCESSO!!!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ERRO AO ATUALIZAR MODALIDADE: " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+
+    }
 }
