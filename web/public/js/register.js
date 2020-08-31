@@ -58,7 +58,7 @@ $(function(){
             error: function(response){
                 formEnabled(true);
                 infoBlockMessage(true, "Ocorreu um erro");
-                showFormErrors(true)
+                showFormErrors(true);
                 console.log(response);
             }
         })

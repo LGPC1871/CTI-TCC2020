@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <small class="text-muted">Se inscrever sozinho em uma modalidade que requer um time o colocará numa lista para preencher times incompletos</small>
             </p>
             <a class="btn btn-primary btn-lg" href="#" role="button">Inscrever-se</a>
-            <a class="btn btn-success btn-lg" href="#" role="button">Criar Time</a>
+            <a class="btn btn-success btn-lg" href="<?=$diretorio?>times/criar" role="button">Criar Time</a>
         </div>
 
         <?php if(isset($modalidades)): ?>

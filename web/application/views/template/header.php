@@ -51,7 +51,7 @@ if($this->session->userdata("logged")){
                             </button>
                             <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
                                 <ul class="navbar-nav text-center">
-                                    <li class="nav-item active">
+                                    <li class="nav-item">
                                         <a class="nav-link" href="<?=$diretorio?>home">HOME <span class="sr-only">(current)</span></a>
                                     </li>
                                     <li class="nav-item">
@@ -63,8 +63,16 @@ if($this->session->userdata("logged")){
                                     <li class="nav-item">
                                         <a class="nav-link" href="<?=$diretorio?>modalidades">MODALIDADES</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="<?=$diretorio?>times">TIMES</a>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        TIMES
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#">Meus Times</a>
+                                        <a class="dropdown-item" href="#">Ver Times</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="<?=$diretorio?>times/criar">Criar Time</a>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
