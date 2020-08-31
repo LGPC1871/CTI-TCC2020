@@ -59,6 +59,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['modalidades']['GET'] = 'Modalidades/exibirModalidades';
 $route['modalidade']['GET'] = 'Modalidades/exibirModalidade';
 
+/**
+ * PARTICIPAR 
+ * rotas pre definidas para funcoes
+ * referentes a controllers de participar
+ * 
+ */
+$route['participar']['GET'] = 'Participar/exibirPaginaParticipar';
 
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
