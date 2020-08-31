@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-md-12 mb-3">
                             <label for="email">Email</label>
                             <div class="input-group-prepend">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu nome">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Digite seu email">
                             </div>
                         </div>
                     </div>
