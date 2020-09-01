@@ -136,11 +136,21 @@ class Times extends CI_Controller{
             $input = array(
                 'timeModel' => $novoTime
             );
-            $result = $this->timeDAO->addTime($input);
+            $timeId = $this->timeDAO->addTime($input);
 
-            if(!$result){$response['error_type'] = "database"; return $response;}
+            //adicionar na tabela usuario_time
+            $usuarioTime = new UsuarioTimeModel();
+            $usuarioTime->setUsuarioId($usuarioId);
+            $usuarioTime->setTimeId($timeId);
+            $usuarioTime->setAtivo(true);
+
+            $usuarioTimeOptions = array(
+                'UsuarioTimeModel' => $usuarioTime,
+            );
+            $this->usuarioTimeDAO->addUsuarioTime($usuarioTimeOptions);
+            if(!$timeId){$response['error_type'] = "database"; return $response;}
             
-            return $result;
+            return $timeId;
         }
     
     /*
