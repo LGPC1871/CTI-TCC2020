@@ -15,25 +15,71 @@ class Times extends CI_Controller{
 
         $this->load->library('Util', 'util');
     }
+    /*
+    |--------------------------------------------------------------------------
+    | View
+    |--------------------------------------------------------------------------
+    | Funções da classe que chamam views
+    */
+        /**
+         * Exibe a view de criar um time
+         * @return View
+         */
+        public function exibirFormCriarTime(){
+            if(!$this->session->userdata("logged")) redirect('user/login');
 
-    public function exibirFormCriarTime(){
-        if(!$this->session->userdata("logged")) redirect('user/login');
+            $options = array(
+                'select' => array('id', 'nome'),
+                'return' => 'multiple',
+            );
 
-        $options = array(
-            'select' => array('id', 'nome'),
-            'return' => 'multiple',
-        );
+            $modalidades = $this->modalidadeDAO->getModalidades($options);
 
-        $modalidades = $this->modalidadeDAO->getModalidades($options);
+            $content = array(
+                'modalidades' => $modalidades,
+                'styles' => array('form.css'),
+                'scripts' => array('criarTime.js', 'form.js'),
+            );
 
-        $content = array(
-            'modalidades' => $modalidades,
-            'styles' => array('form.css'),
-            'scripts' => array('criarTime.js', 'form.js'),
-        );
+            $this->template->show("cadastrar_time.php", $content);
+        }
 
-        $this->template->show("cadastrar_time.php", $content);
-    }
+        /**
+         * Exibe a view do time
+         * faz a verificacao do usuario, se for o criador do time, exibe
+         * o restrict
+         * @param GET
+         * @
+         */
+        public function exibirTime(){
+            $timeId = $this->input->get('id');
+            if(!$timeId) redirect('home');
+
+            $timeOptions = array(
+                'where' => array(
+                    'id' => $timeId
+                ),
+                'return' => 'row'
+            );
+
+            //verificar se o time existe
+            $time = $this->timeDAO->getTime($timeOptions);
+            if(!$time) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Time não encontrado')); return false;}
+            
+            //verificar se o usuário logado é o admin do time
+            $isAdmin = false;
+            if($this->session->userdata('logged')){
+                $time['usuarioId'] == $this->session->userdata('id') ? $isAdmin = true : $isAdmin = false;
+            }
+
+            //carregar view passando o conteudo gerado
+            $content = array(
+                'time' => $time,
+                'isAdmin' => $isAdmin,
+            );
+            $this->template->show('time.php', $content);
+        }
+
     /*
     |--------------------------------------------------------------------------
     | Private
@@ -56,7 +102,7 @@ class Times extends CI_Controller{
             //verificar nome, se já existe, etc...
             $pattern = '/[^ A-Za-z0-9]+/';
             $nome = $inputArray['nome'];
-            if($this->util->validateInputRegex($pattern, array("nome" => $nome))){ $response['error_type'] = "invalid_name";return $response;}
+            if($this->util->validateInputRegex($pattern, array("nome" => $nome))){ $response['error_type'] = "invalid_name";return $response; }
             
             $options = array(
                 'where' => array(

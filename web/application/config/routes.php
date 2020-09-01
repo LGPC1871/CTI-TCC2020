@@ -66,6 +66,7 @@ $route['modalidade']['GET'] = 'Modalidades/exibirModalidade';
  * 
  */
 $route['participar']['GET'] = 'Participar/exibirPaginaParticipar';
+
 /**
  * TIMES 
  * rotas pre definidas para funcoes
@@ -73,6 +74,7 @@ $route['participar']['GET'] = 'Participar/exibirPaginaParticipar';
  * 
  */
 $route['times/criar']['GET'] = 'Times/exibirFormCriarTime';
+$route['time']['GET'] = 'Times/exibirTime';
 
 $route['default_controller'] = 'Home';
 $route['404_override'] = '';
