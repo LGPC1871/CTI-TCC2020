@@ -110,6 +110,7 @@ class DAO extends CI_Model{
                 'return' => 'row',
                 'join' => null, /*array(0 => array())*/
                 'order_by' => null,
+                'group_by' => null
             );
             $options = $this->_default($defaultOptions, $options);
             
@@ -135,6 +136,9 @@ class DAO extends CI_Model{
             }
             if(isset($options['order_by'])){
                 $this->db->order_by($options['order_by']);
+            }
+            if(isset($options['group_by'])){
+                $this->db->group_by($options['group_by']);
             }
             $this->db->from($from);
             
