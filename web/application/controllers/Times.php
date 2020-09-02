@@ -8,9 +8,11 @@ class Times extends CI_Controller{
         //REQUIRES\\
         require_once(APPPATH . 'libraries/model/ModalidadeModel.php');
         require_once(APPPATH . 'libraries/model/TimeModel.php');
+        require_once(APPPATH . 'libraries/model/UsuarioTimeModel.php');
 
         //LOADS\\
         $this->load->model('dao/ModalidadeDAO', 'modalidadeDAO');
+        $this->load->model('dao/UsuarioTimeDAO', 'usuarioTimeDAO');
         $this->load->model('dao/TimeDAO', 'timeDAO');
 
         $this->load->library('Util', 'util');
@@ -55,29 +57,58 @@ class Times extends CI_Controller{
             $timeId = $this->input->get('id');
             if(!$timeId) redirect('home');
 
+            //verificar se o time existe
             $timeOptions = array(
                 'where' => array(
                     'id' => $timeId
                 ),
                 'return' => 'row'
             );
-
-            //verificar se o time existe
             $time = $this->timeDAO->getTime($timeOptions);
             if(!$time) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Time não encontrado')); return false;}
+            
+            //recolher a modalidade do time
+            $modalidadeOptions = array(
+                'where' => array(
+                    'id' => $time->getModalidadeId(),
+                ),
+                'return' => 'row',
+            );
+            $modalidade = $this->modalidadeDAO->getModalidades($modalidadeOptions);
+            if(!$modalidade) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Erro ao carregar')); return false;}
             
             //verificar se o usuário logado é o admin do time
             $isAdmin = false;
             if($this->session->userdata('logged')){
-                $time['usuarioId'] == $this->session->userdata('id') ? $isAdmin = true : $isAdmin = false;
+                $time->getUsuarioId() == $this->session->userdata('id') ? $isAdmin = true : $isAdmin = false;
             }
+            
+            //recolher participantes do time
+            $membros = $this->usuarioTimeDAO->getUsuariosTime($timeId);
+            if(!$membros) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Erro ao carregar')); return false;}
 
             //carregar view passando o conteudo gerado
             $content = array(
                 'time' => $time,
                 'isAdmin' => $isAdmin,
+                'modalidade' => $modalidade,
+                'membros' => $membros,
             );
             $this->template->show('time.php', $content);
+        }
+
+        /**
+         * Exibe a view dos times, contendo uma tabela
+         * com todos os times cadastrados
+         * @param null
+         * @return View
+         */
+        public function exibirTimes(){
+            $content = array(
+                'times' => $this->timeDAO->getTime(array('return' => 'multiple')),
+                'scripts' => array('times.js'),
+            );
+            $this->template->show('times.php', $content);
         }
 
     /*

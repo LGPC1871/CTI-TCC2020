@@ -4,6 +4,7 @@ class UsuarioTimeDAO extends DAO{
     public function __construct(){
         parent::__construct();
         $this->load->library('model/UsuarioTimeModel', 'usuarioTimeModel');
+        $this->load->library('model/JoinTableModel', 'JoinTableModel');
     }
     /*
     |--------------------------------------------------------------------------
@@ -49,5 +50,67 @@ class UsuarioTimeDAO extends DAO{
             $newRow = $this->create($options);
 
             return $newRow;
+        }
+
+        /**
+         * Método especifico getUsuariosTime
+         * retorna usuarios de um time
+         * @param $options
+         * @return UsuarioTimeModel
+         * @return array
+         */
+        public function getUsuariosTime($timeId){
+            $select = array(
+                'usuario.id',
+                'usuario.ra',
+                'usuario.nome',
+                'sexo.nome sexo'
+            );
+
+            $joinOptions = array(
+                array(
+                    'table' => 'usuario',
+                    'on' => 'usuario_time.usuario_id = usuario.id',
+                    'join' => 'inner',
+                ),
+                array(
+                    'table' => 'sexo',
+                    'on' => 'usuario.sexo_id = sexo.id',
+                    'join' => 'inner',
+                ),
+            );
+
+            $options = array(
+                'select' => $select,
+                'from' => 'usuario_time',
+                'where' => array(
+                    'usuario_time.time_id' => $timeId,
+                ),
+                'join' => $joinOptions,
+                'order_by' => 'usuario.nome DESC',
+                'return' => 'multiple'
+            );
+
+            
+            $result = $this->read($options);
+            if(!$result) return false;
+            
+            $retorno = array();
+            
+            foreach($result as $linha){
+                $linhaObjeto = new JoinTableModel();
+                
+                $columns = array(
+                    'id' => $linha->id,
+                    'ra' => $linha->ra,
+                    'nome' => $linha->nome,
+                    'sexo' => $linha->sexo,
+                );
+                $linhaObjeto->setColumns($columns);
+
+                array_push($retorno, $linhaObjeto);
+            }
+
+            return $retorno;
         }
 }

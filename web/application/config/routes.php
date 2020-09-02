@@ -73,6 +73,7 @@ $route['participar']['GET'] = 'Participar/exibirPaginaParticipar';
  * referentes a controllers de times
  * 
  */
+$route['times']['GET'] = 'Times/exibirTimes';
 $route['times/criar']['GET'] = 'Times/exibirFormCriarTime';
 $route['time']['GET'] = 'Times/exibirTime';
 
