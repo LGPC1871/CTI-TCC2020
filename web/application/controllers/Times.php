@@ -87,10 +87,22 @@ class Times extends CI_Controller{
             $membros = $this->usuarioTimeDAO->getUsuariosTime($timeId);
             if(!$membros) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Erro ao carregar')); return false;}
 
+            //verificar se o usuario logado é jogador do time
+            $isPlayer = false;
+            if($this->session->userdata("logged")){
+                foreach($membros as $membro){
+                    if($membro->getColumn('id') == $this->session->userdata('id')){
+                        $isPlayer = true;
+                        break;
+                    }
+                }
+            }
+
             //carregar view passando o conteudo gerado
             $content = array(
                 'time' => $time,
                 'isAdmin' => $isAdmin,
+                'isPlayer' => $isPlayer,
                 'modalidade' => $modalidade,
                 'membros' => $membros,
             );
@@ -105,7 +117,7 @@ class Times extends CI_Controller{
          */
         public function exibirTimes(){
             $content = array(
-                'times' => $this->timeDAO->getTime(array('return' => 'multiple')),
+                'times' => $this->timeDAO->getTimesTable(array('return' => 'multiple')),
                 'scripts' => array('times.js'),
             );
             $this->template->show('times.php', $content);
