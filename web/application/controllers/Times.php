@@ -80,7 +80,7 @@ class Times extends CI_Controller{
             //verificar se o usuário logado é o admin do time
             $isAdmin = false;
             if($this->session->userdata('logged')){
-                $time->getUsuarioId() == $this->session->userdata('id') ? $isAdmin = true : $isAdmin = false;
+                $time->getUsuarioId() == $this->session->userdata('id') ? $isAdmin = true: null;
             }
             
             //recolher participantes do time
@@ -98,14 +98,21 @@ class Times extends CI_Controller{
                 }
             }
 
+            //decidir privilegio
+            // |admin| |membro| |visitante|
+            $privilegio = "visitante";
+            if($isAdmin) $privilegio = "admin";
+            else if($isPlayer) $privilegio = "jogador";
+
             //carregar view passando o conteudo gerado
             $content = array(
                 'time' => $time,
-                'isAdmin' => $isAdmin,
-                'isPlayer' => $isPlayer,
+                'privilegio' => $privilegio,
                 'modalidade' => $modalidade,
                 'membros' => $membros,
+                'scripts' => array('form.js'),
             );
+            if($isAdmin)array_push($content['scripts'], 'timeConfig.js');
             $this->template->show('time.php', $content);
         }
 
@@ -195,6 +202,125 @@ class Times extends CI_Controller{
             
             return $timeId;
         }
+
+        /**
+         * Funcao setTimeAvatar
+         * faz upload da imagem no diretorio especificado
+         */
+        private function setTimeAvatar($timeId, $image){
+            //echo var_dump("fui chamado");
+            $result = array();
+            if(!$this->session->userdata('logged')){
+                $result['error_type'] = 'access';
+                return $result;
+            }
+            $timeOptions = array(
+                'return' => 'row',
+                'select' => array(
+                    'id',
+                    'modalidade_id',
+                    'usuario_id'
+                ),
+                'where' => array(
+                    'id' => $timeId
+                ),
+            );
+            $time = $this->timeDAO->getTime($timeOptions);
+            if($this->session->userdata('id') != $time->getUsuarioId()){
+                $result['error_type'] = 'access';
+                return $result;
+            }
+            
+            $modalidadeOptions = array(
+                'return' => 'row',
+                'select' => array(
+                    'modalidade.nome'
+                ),
+                'where' => array(
+                    'id' => $time->getModalidadeId()
+                ),
+            );
+            $modalidade = $this->modalidadeDAO->getModalidades($modalidadeOptions);
+            
+            $userRa = $time->getUsuarioId();
+            $userSubRa = substr($userRa, 0, 2);
+            $dir = 'src/data/times/avatar/'. $modalidade->getNome(). "/" . $userSubRa;
+            
+            //verificar diretorio
+            if(!is_dir($dir)){
+                mkdir($dir, 0777, true);
+            }
+            
+            //preparando classe upload
+            $config['upload_path'] = $dir;
+            $config['allowed_types'] = 'jpg|png';
+            $config['file_name'] = $time->getId() . '.jpg';
+            $config['overwrite'] = true;
+            
+            $this->load->library('upload', $config);
+            if(!$this->upload->do_upload('avatar'))  
+            {  
+                echo $this->upload->display_errors();  
+            }  
+            else  
+            {  
+                return true;
+            } 
+        }
+
+        /**
+         * Funcao setTimeNome
+         * altera o nome do time
+         * @param $input = array('nome', 'timeId')
+         */
+        private function setTimeNome($input){
+            //echo var_dump("teste");
+            $retorno = array(
+                'error' => false,
+            );
+            if(!$this->session->userdata("logged")){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "user_not_logged_in";
+                return $retorno;
+            }
+            
+            $novoNome = $input['nome'];
+            $timeId = $input['timeId'];
+
+            $timeOptions = array(
+                "select" => array(
+                    'id',
+                    'usuario_id',
+                ),
+                "return" => "row",
+                "where" => array(
+                    'id' => $timeId,
+                ),
+            );
+            $time = $this->timeDAO->getTime($timeOptions);
+
+            if($time->getUsuarioId() != $this->session->userdata('id')){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "access";
+                return $retorno;
+            }
+            $alterTimeOptions = array(
+                'where' => array(
+                    'id' => $timeId,
+                ),
+                'values' => array(
+                    'nome' => $novoNome,
+                ),
+            );
+            $result = $this->timeDAO->alterTime($alterTimeOptions);
+            if(!$result){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "database";
+                return $retorno;
+            }
+
+            return $retorno;
+        }
     
     /*
     |--------------------------------------------------------------------------
@@ -218,6 +344,41 @@ class Times extends CI_Controller{
                 'modalidade' => $this->input->post('modalidade'),
             );
             $result = $this->novoTime($inputArray);
+
+            echo json_encode($result);
+        }
+
+        /**
+         * Alterar Avatar do time
+         */
+        public function ajaxAlterarAvatarTime(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+            if(isset($_FILES["avatar"]["name"])){
+                $timeId = $this->input->post("time_id");
+                $result = $this->setTimeAvatar($timeId, $_FILES["avatar"]);
+                echo var_dump($result);
+            }else{
+                $result = array(
+                    "error_type" => "no_file"
+                );                
+            }
+            echo json_encode($result);
+        }
+        /**
+         * Alterar nome do time
+         */
+        public function ajaxAlterarNomeTime(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+            $input = array(
+                'timeId' => $this->input->post('time_id'),
+                'nome' => $this->input->post("nome"),
+            );
+
+            $result = $this->setTimeNome($input);
 
             echo json_encode($result);
         }

@@ -25,7 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php foreach($times as $time): ?>
                             <tr>
                                 <td>
-                                    <?php $avatar = "src/data/times/avatar/". substr($time->getColumn('time'), 0, 1) ."/".$time->getColumn('id').".jpg"?>
+                                    <?php $avatar = "src/data/times/avatar/". $time->getColumn('modalidade') ."/". substr($time->getColumn('usuario_id'), 0, 2) ."/".$time->getColumn('id').".jpg"?>
                                     <?php if(!file_exists($avatar)): ?>
                                         <?php $avatar = "src/data/times/avatar/default.jpg"?>
                                     <?php endif ?>

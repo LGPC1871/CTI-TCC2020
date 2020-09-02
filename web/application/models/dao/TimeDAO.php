@@ -51,6 +51,11 @@ class TimeDAO extends DAO{
          * @return array
          */
         public function getTime($options = array()){
+            $required = array(
+                'return'
+            );
+            if(!$this->_required($required, $options, 1)) return false;
+            
             $options['from'] = 'time';
 
             $result = $this->read($options);
@@ -144,6 +149,22 @@ class TimeDAO extends DAO{
             }
 
             return $retorno;
+        }
+        /**
+         * Método alterTime
+         * roda um update nas linhas selecionadas
+         * @param $options
+         * @return bool
+         */
+        public function alterTime($options = array()){
+            $required = array(
+                'where',
+                'values'
+            );
+            if(!$this->_required($required, $options, 1)) return false;
+            $options['table'] = 'time';
+
+            return $this->update($options);
         }
 
         /**
