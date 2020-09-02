@@ -90,6 +90,7 @@ class TimeDAO extends DAO{
             $select = array(
                 'time.id',
                 'time.nome time',
+                'usuario.id usuario_id',
                 'usuario.nome usuario',
                 'modalidade.nome modalidade',
                 'count(*) quantidade_jogadores',
@@ -116,7 +117,8 @@ class TimeDAO extends DAO{
                 'select' => $select,
                 'from' => 'time',
                 'join' => $joinOptions,
-                'return' => 'multiple'
+                'return' => 'multiple',
+                'group_by' => 'usuario_time.time_id',
             );
 
             $result = $this->read($options);
@@ -130,6 +132,7 @@ class TimeDAO extends DAO{
                 $columns = array(
                     'id' => $linha->id,
                     'time' => $linha->time,
+                    'usuario_id' => $linha->usuario_id,
                     'usuario' => $linha->usuario,
                     'modalidade' => $linha->modalidade,
                     'quantidade_jogadores' => $linha->quantidade_jogadores,
