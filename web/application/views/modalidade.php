@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </small>
                             </p>
                             <p>
-                                <a href="#" class="btn btn-success">Criar Time</a>
+                                <a href="<?=$diretorio?>times/criar" class="btn btn-success">Criar Time</a>
                             </p>
 
                         </div>

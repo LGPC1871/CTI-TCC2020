@@ -39,7 +39,7 @@ class UsuarioDAO extends DAO{
             
             //preparar options para o insert
             $time = date("Y-m-d H:i:s");
-            $atributos = array(
+            $values = array(
                 'ra' => $usuario->getRa(),
                 'email' => $usuario->getEmail(),
                 'nome' => $usuario->getNome(),
@@ -51,7 +51,7 @@ class UsuarioDAO extends DAO{
 
             $options = array(
                 'table' => 'usuario',
-                'values' => $atributos
+                'values' => $values
             );
             
             $newUserId = $this->create($options);

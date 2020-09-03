@@ -100,7 +100,6 @@ class Modalidades extends CI_Controller{
             ),
         );
         $modalidadeEdicao = $this->modalidadeEdicaoDAO->getModalidadeEdicao($options);
-
         if(!$modalidadeEdicao) return false;
 
         $content = array(

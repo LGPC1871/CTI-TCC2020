@@ -9,6 +9,12 @@ $templateStyles = array("body.css", "header.css", "footer.css", "main.css");
     <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0" />
     <!--JQuery-->
     <script type="text/javascript" src="<?=$diretorio?>vendor/components/jquery/jquery.js"></script>
+    <!--DataTables-->
+    <link rel="stylesheet" type="text/css" href="<?=$diretorio?>vendor/datatables/datatables/media/css/dataTables.bootstrap4.css">
+    <script type="text/javascript" charset="utf8" src="<?=$diretorio?>vendor/datatables/datatables/media/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="<?=$diretorio?>vendor/datatables/datatables/media/js/dataTables.bootstrap4.js"></script>
+
+    <script type="text/javascript" src="<?=$diretorio?>vendor/datatables/datatables/"></script>
     <!--Bootstrap-->
     <script type="text/javascript" src="<?=$diretorio?>vendor/twbs/bootstrap/dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="<?=$diretorio?>vendor/twbs/bootstrap/dist/css/bootstrap.css" />
