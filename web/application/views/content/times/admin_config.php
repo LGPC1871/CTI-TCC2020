@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <i class="fas fa-users-cog"></i>&nbsp Equipe
             </a>
             <a class="nav-link" id="v-pills-mensagens-tab" data-toggle="pill" href="#v-pills-mensagens" role="tab" aria-controls="v-pills-mensagens" aria-selected="false">
-                <i class="fas fa-envelope"></i>&nbsp Mensagens
+                <i class="fas fa-envelope"></i>&nbsp Notificacoes
             </a>
             <a class="nav-link" id="v-pills-inscricoes-tab" data-toggle="pill" href="#v-pills-inscricoes" role="tab" aria-controls="v-pills-inscricoes" aria-selected="false">
                 <i class="fas fa-pen-fancy"></i>&nbsp Inscrições
@@ -26,7 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
             <?php $this->load->view('content/times/config/equipe.php') ?>
         </div>
-        <div class="tab-pane fade" id="v-pills-mensagens" role="tabpanel" aria-labelledby="v-pills-mensagens-tab">MENSAGENS</div>
+        <div class="tab-pane fade" id="v-pills-mensagens" role="tabpanel" aria-labelledby="v-pills-mensagens-tab">
+            <?php $this->load->view('content/times/config/notificacoes.php') ?>
+        </div>
         <div class="tab-pane fade" id="v-pills-inscricoes" role="tabpanel" aria-labelledby="v-pills-inscricoes-tab">Inscrições</div>
         </div>
     </div>

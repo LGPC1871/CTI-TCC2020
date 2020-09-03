@@ -9,11 +9,13 @@ class Times extends CI_Controller{
         require_once(APPPATH . 'libraries/model/ModalidadeModel.php');
         require_once(APPPATH . 'libraries/model/TimeModel.php');
         require_once(APPPATH . 'libraries/model/UsuarioTimeModel.php');
+        require_once(APPPATH . 'libraries/model/SolicitarTimeModel.php');
 
         //LOADS\\
         $this->load->model('dao/ModalidadeDAO', 'modalidadeDAO');
         $this->load->model('dao/UsuarioTimeDAO', 'usuarioTimeDAO');
         $this->load->model('dao/TimeDAO', 'timeDAO');
+        $this->load->model('dao/SolicitarTimeDAO', 'solicitarTimeDAO');
 
         $this->load->library('Util', 'util');
     }
@@ -76,7 +78,6 @@ class Times extends CI_Controller{
             );
             $modalidade = $this->modalidadeDAO->getModalidades($modalidadeOptions);
             if(!$modalidade) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Erro ao carregar')); return false;}
-            
             //verificar se o usuário logado é o admin do time
             $isAdmin = false;
             if($this->session->userdata('logged')){
@@ -86,24 +87,27 @@ class Times extends CI_Controller{
             //recolher participantes do time
             $membros = $this->usuarioTimeDAO->getUsuariosTime($timeId);
             if(!$membros) {$this->template->show('errors/custom/error_message', array('mensagem' => 'Erro ao carregar')); return false;}
-
+            
             //verificar se o usuario logado é jogador do time
             $isPlayer = false;
             if($this->session->userdata("logged")){
                 foreach($membros as $membro){
                     if($membro->getColumn('id') == $this->session->userdata('id')){
                         $isPlayer = true;
-                        break;
-                    }
+                    break;
                 }
             }
-
-            //decidir privilegio
-            // |admin| |membro| |visitante|
-            $privilegio = "visitante";
-            if($isAdmin) $privilegio = "admin";
-            else if($isPlayer) $privilegio = "jogador";
-
+        }
+        
+        //decidir privilegio
+        // |admin| |membro| |visitante|
+        $privilegio = "visitante";
+        if($isAdmin) $privilegio = "admin";
+        else if($isPlayer) $privilegio = "jogador";
+        
+        //carregar solicitacoes do time
+        if($isAdmin) $solicitacoes = $this->solicitarTimeDAO->getSolicitacoesTime($time->getId());
+        
             //carregar view passando o conteudo gerado
             $content = array(
                 'time' => $time,
@@ -111,8 +115,10 @@ class Times extends CI_Controller{
                 'modalidade' => $modalidade,
                 'membros' => $membros,
                 'scripts' => array('form.js', 'time.js'),
+                'styles' => array('form.css'),
             );
             if($isAdmin)array_push($content['scripts'], 'timeConfig.js');
+            if($isAdmin) $content['solicitacoes'] = $solicitacoes;
             $this->template->show('time.php', $content);
         }
 
@@ -367,9 +373,63 @@ class Times extends CI_Controller{
             }
             return $retorno;
         }
-        /*
-        |--------------------------------------------------------------------------
-        | AJAX
+
+        /**
+         * Envia uma solicitacao de entrada 
+         * ao admin do time
+         */
+        public function solicitarEntrarTime($input = array()){
+            $retorno = array(
+                'error' => false,
+            );
+            if(!$this->session->userdata("logged") || $this->session->userdata("logged") != $input['usuarioId']){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "invalid_user";
+                return $retorno;
+            }
+            $usuarioId = $input['usuarioId'];
+            //verificar se time existe
+            $optionsTime = array(
+                'return' => 'row',
+                'where' => array(
+                    'id' => $input['timeId'],
+                ),
+            );
+            $time = $this->timeDAO->getTime($optionsTime);
+            if(!$time){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "invalid_team";
+                return $retorno;
+            }
+
+            //verificar se já existe solicitacao
+            $existeSolicitacao = $this->solicitarTimeDAO->verificarSolicitacao($time->getId(), $usuarioId);
+            if($existeSolicitacao){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "already_exist";
+                return $retorno;
+            }
+
+            //criar solicitacao
+            $solicitarTimeModel = new SolicitarTimeModel();
+
+            $solicitarTimeModel->setTimeId($time->getId());
+            $solicitarTimeModel->setUsuarioId($usuarioId);
+
+            $options = array(
+                "SolicitarTimeModel" => $solicitarTimeModel,
+            );
+            $result = $this->solicitarTimeDAO->addSolicitacaoTime($options);
+            
+            if(!$result){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "database";
+            }
+            return $retorno;
+        }
+    /*
+    |--------------------------------------------------------------------------
+    | AJAX
     |--------------------------------------------------------------------------
     | Requisicoes Ajax
     */
@@ -463,6 +523,27 @@ class Times extends CI_Controller{
             );
             $result = $this->removerUsuarioTime($input);
 
+            echo json_encode($result);
+        }
+
+        /**
+         * Solicitar Entrada no time
+         */
+        public function ajaxSolicitarEntradaTime(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+            
+            if(!$this->session->userdata("logged")){
+                exit("Nenhum acesso de script direto permitido!");
+            }
+
+            $input = array(
+                'timeId' => $this->input->post("timeId"),
+                'usuarioId' => $this->session->userdata("id"),
+            );
+            $result = $this->solicitarEntrarTime($input);
+            
             echo json_encode($result);
         }
 }

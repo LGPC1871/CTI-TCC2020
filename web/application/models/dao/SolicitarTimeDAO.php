@@ -23,25 +23,25 @@ class SolicitarTimeDAO extends DAO{
             );
             if(!$this->_required($requiredInput, $input, 1)) return false;
             $novaSolicitacao = $input['SolicitarTimeModel'];
-
             $requiredSolicitacao = array(
                 "timeId",
                 "usuarioId",
             );
             $solicitacaoAttr = $novaSolicitacao->_verifyObjectAttr();
-            if(!$this->_required($requiredSolicitacao, $solicitacaoAttr, 2)) return false;
+            //echo var_dump($novaSolicitacao->_verifyObjectAttr());
+            //if(!$this->_required($requiredSolicitacao, $solicitacaoAttr, 2)) return false;
             
             $values = array(
                 'time_id' => $novaSolicitacao->getTimeId(),
-                'modalidade_id' => $novaSolicitacao->getUsuarioId(),
+                'usuario_id' => $novaSolicitacao->getUsuarioId(),
             );
 
             $options = array(
                 'table' => 'solicitar_time',
-                'values' => $values
+                'values' => $values,
+                'return' => 'boolean',
             );
             $result = $this->create($options);
-
             return $result;
         }
 
@@ -54,7 +54,7 @@ class SolicitarTimeDAO extends DAO{
          * @return SolicitarTimeModel
          */
         public function verificarSolicitacao($timeId, $usuarioId){
-            $options - array(
+            $options = array(
                 'from' => 'solicitar_time',
                 'where' => array(
                     'time_id' => $timeId,
@@ -73,5 +73,59 @@ class SolicitarTimeDAO extends DAO{
             $solicitarTimeModel->setRecusado($result->recusado);
 
             return $solicitarTimeModel;
+        }
+
+        /**
+         * Método específico getSolicitacoesTime
+         * retorna um select com join das tabelas
+         * |time| |usuario| |solicitar_time|
+         */
+        public function getSolicitacoesTime($timeId){
+            $select = array(
+                'usuario.id id',
+                'usuario.ra ra',
+                'usuario.nome nome',
+                'usuario.sobrenome sobrenome',
+            );
+            $joinOptions = array(
+                array(
+                    'table' => 'usuario',
+                    'on' => 'solicitar_time.usuario_id = usuario.id',
+                    'join' => 'inner',
+                ),
+            );
+                        
+            $options = array(
+                'select' => $select,
+                'from' => 'solicitar_time',
+                'where' => array(
+                    'solicitar_time.time_id' => $timeId,
+                ),
+                'join' => $joinOptions,
+                'order_by' => 'usuario.nome DESC',
+                'return' => 'multiple'
+            );
+
+            
+            $result = $this->read($options);
+            if(!$result) return false;
+            
+            $retorno = array();
+            
+            foreach($result as $linha){
+                $linhaObjeto = new JoinTableModel();
+                
+                $columns = array(
+                    'id' => $linha->id,
+                    'ra' => $linha->ra,
+                    'nome' => $linha->nome,
+                    'sobrenome' => $linha->sobrenome,
+                );
+                $linhaObjeto->setColumns($columns);
+
+                array_push($retorno, $linhaObjeto);
+            }
+
+            return $retorno;
         }
 }

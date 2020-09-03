@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <form id="form-remover" method="post">
                     <div class="form-group">
                     <input type="hidden" class="form-control-file" id="timeId" name="timeId" value="<?=$time->getId()?>" required>
-                    <label for="jogador">Selecionar Jogadorpara Remover</label>
+                    <label for="jogador">Selecionar Jogador para Remover</label>
                     <select class="form-control" id="jogadorSelect" name="jogador" required>
                         <option selected disabled value="">Selecionar...</option>
                         <?php foreach($membros as $membro): ?>
@@ -33,7 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
             <li class="list-group-item">
                 <h5 class="card-title">Adicionar Jogador</h5>
-                <form id="form-nome" method="post">
+                <form id="form-adicionar" method="post">
                     <div class="form-group">
                         <label for="nome">RA do jogador</label>
                         <input type="number" class="form-control-file" id="ra" name="ra" required>

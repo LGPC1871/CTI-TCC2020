@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         <?php elseif($privilegio == "visitante" && $this->session->userdata('logged')): ?>
             <div class="p-2 text-center">
-                <form id="pedir-para-entrar-no-time" method="post">
+                <form id="form-solicitar-entrada" method="post">
                     <input type="hidden" name="timeId" value="<?=$time->getId()?>">    
                     <button type="submit" class="btn btn-success">
                         Entrar No Time

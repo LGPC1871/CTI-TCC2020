@@ -1,4 +1,14 @@
 $(function(){
+    $(document).ready(function() {
+        $('#tabela-solicitacoes').DataTable({
+            "paging":   false,
+            "info": false,
+            language: {
+                url: `${BASE_URL}public/util/dataTablesTraducao.json`,
+            }
+        });
+    } );
+
     $("#form-avatar").submit(function(){
         $.ajax({
             url: `${BASE_URL}times/ajaxAlterarAvatarTime`,
