@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="tab-pane fade show active" id="v-pills-personalizar" role="tabpanel" aria-labelledby="v-pills-personalizar-tab">
             <?php $this->load->view('content/times/config/personalizar.php') ?>
         </div>
-        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">EQUIPE</div>
+        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <?php $this->load->view('content/times/config/equipe.php') ?>
+        </div>
         <div class="tab-pane fade" id="v-pills-mensagens" role="tabpanel" aria-labelledby="v-pills-mensagens-tab">MENSAGENS</div>
         <div class="tab-pane fade" id="v-pills-inscricoes" role="tabpanel" aria-labelledby="v-pills-inscricoes-tab">Inscrições</div>
         </div>

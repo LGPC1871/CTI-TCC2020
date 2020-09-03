@@ -110,7 +110,7 @@ class Times extends CI_Controller{
                 'privilegio' => $privilegio,
                 'modalidade' => $modalidade,
                 'membros' => $membros,
-                'scripts' => array('form.js'),
+                'scripts' => array('form.js', 'time.js'),
             );
             if($isAdmin)array_push($content['scripts'], 'timeConfig.js');
             $this->template->show('time.php', $content);
@@ -274,7 +274,6 @@ class Times extends CI_Controller{
          * @param $input = array('nome', 'timeId')
          */
         private function setTimeNome($input){
-            //echo var_dump("teste");
             $retorno = array(
                 'error' => false,
             );
@@ -321,10 +320,56 @@ class Times extends CI_Controller{
 
             return $retorno;
         }
-    
-    /*
-    |--------------------------------------------------------------------------
-    | AJAX
+        
+        /**
+         * Funcao removerUsuarioTime
+         * remove o usuario do time
+         */
+        private function removerUsuarioTime($input = array()){
+            $retorno = array(
+                'error' => false,
+            );
+            if(!$this->session->userdata("logged")){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "user_not_logged_in";
+                return $retorno;
+            }
+            
+            $timeId = $input['timeId'];
+            $jogadorId = $input['jogadorId'];
+            
+            $timeOptions = array(
+                'select' => array(
+                    'usuario_id'
+                ),
+                'return' => 'row',
+                'where' => array(
+                    'id' => $timeId,
+                ),
+            );
+            $time = $this->timeDAO->getTime($timeOptions);
+            if($jogadorId == $time->getUsuarioId()){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "player_is_admin";
+                return $retorno;
+            }
+            $options = array(
+                'where' => array(
+                    'time_id' => $timeId,
+                    'usuario_id' => $jogadorId,
+                ),
+            );
+            $result = $this->usuarioTimeDAO->removerUsuarioDoTime($options);
+            
+            if(!$result){
+                $retorno['error'] = true;
+                $retorno['error_type'] = "database";
+            }
+            return $retorno;
+        }
+        /*
+        |--------------------------------------------------------------------------
+        | AJAX
     |--------------------------------------------------------------------------
     | Requisicoes Ajax
     */
@@ -379,6 +424,44 @@ class Times extends CI_Controller{
             );
 
             $result = $this->setTimeNome($input);
+
+            echo json_encode($result);
+        }
+
+        /**
+         * Remover um jogador do time
+         */
+        public function ajaxRemoverJogador(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+
+            $input = array(
+                'timeId' => $this->input->post("timeId"),
+                'jogadorId' => $this->input->post("jogador"),
+            );
+            $result = $this->removerUsuarioTime($input);
+
+            echo json_encode($result);
+        }
+
+        /**
+         * Sair do time, se for um jogador
+         */
+        public function ajaxSairDoTime(){
+            if (!$this->input->is_ajax_request()) {
+                exit("Nenhum acesso de script direto permitido!");
+            }
+            
+            if(!$this->session->userdata("logged")){
+                exit("Nenhum acesso de script direto permitido!");
+            }
+
+            $input = array(
+                'timeId' => $this->input->post("timeId"),
+                'jogadorId' => $this->session->userdata("id"),
+            );
+            $result = $this->removerUsuarioTime($input);
 
             echo json_encode($result);
         }

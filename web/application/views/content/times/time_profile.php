@@ -3,6 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="d-flex justify-content-center">
     <div class="d-flex flex-column">
+        <?php if($privilegio == "jogador"):?>
+            <div class="p-2 text-center">
+                <form id="form-sair-do-time" method="post">
+                    <input type="hidden" name="timeId" value="<?=$time->getId()?>">    
+                    <button type="submit" class="btn btn-danger">
+                        Sair do Time
+                    </button>
+                </form>
+            </div>
+        <?php elseif($privilegio == "visitante" && $this->session->userdata('logged')): ?>
+            <div class="p-2 text-center">
+                <form id="pedir-para-entrar-no-time" method="post">
+                    <input type="hidden" name="timeId" value="<?=$time->getId()?>">    
+                    <button type="submit" class="btn btn-success">
+                        Entrar No Time
+                    </button>
+                </form>
+            </div>
+        <?php endif ?>
         <div>
             <ul class="d-flex justify-content-center flex-column flex-sm-row nav text-center nav-pills font-weight-bold" id="tabsTime" role="tablist">
                 <li class="nav-item" role="presentation">

@@ -113,4 +113,22 @@ class UsuarioTimeDAO extends DAO{
 
             return $retorno;
         }
+
+        /**
+         * Método removerUsuarioDoTime
+         * retira uma linha da tabela usuario_time
+         * @param $options
+         * @return bool
+         */
+        public function removerUsuarioDoTime($options = array()){
+            $required = array(
+                'where'
+            );
+            if(!$this->_required($required, $options, 1)) return false;
+            
+            $options['table'] = 'usuario_time';
+            $result = $this->delete($options);
+
+            return $result;
+        }
 }
