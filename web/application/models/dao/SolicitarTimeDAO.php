@@ -54,10 +54,6 @@ class SolicitarTimeDAO extends DAO{
          * @return SolicitarTimeModel
          */
         public function verificarSolicitacao($timeId, $usuarioId){
-            $required = array(
-                'where'
-            );
-            if(!$this->_required($required, $options, 1)) return false;
             $options - array(
                 'from' => 'solicitar_time',
                 'where' => array(
