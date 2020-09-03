@@ -14,6 +14,8 @@ public class Modalidade {
     private int id;
     private String nome;
     private String descricao;
+    private int limite;
+    private int status;
 
     public String getNome() {
         return nome;
@@ -38,7 +40,21 @@ public class Modalidade {
     public void setId(int id) {
         this.id = id;
     }
-    
-    
+
+    public int getLimite() {
+        return limite;
+    }
+
+    public void setLimite(int limite) {
+        this.limite = limite;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     
 }

@@ -30,9 +30,11 @@ public class ModalidadeDAO {
         PreparedStatement stmt = null;
         
         try{
-            stmt = con.prepareStatement("INSERT INTO modalidade (nome,descricao) VALUES (?,?)");
+            stmt = con.prepareStatement("INSERT INTO modalidade (nome,descricao,limite_jogadores_time,status) VALUES (?,?,?,?)");
             stmt.setString(1,m.getNome());
             stmt.setString(2,m.getDescricao());
+            stmt.setInt(3,m.getLimite());
+            stmt.setInt(4,m.getStatus());
             
             stmt.executeUpdate();
             
@@ -84,6 +86,10 @@ public class ModalidadeDAO {
                 modalidade.setId(rs.getInt("id"));
                 modalidade.setNome(rs.getString("nome"));
                 modalidade.setDescricao(rs.getString("descricao"));
+                modalidade.setLimite(rs.getInt("limite_jogadores_time"));
+                modalidade.setStatus(rs.getInt("status"));
+                
+                
                 modalidades.add(modalidade);
                 
             }
@@ -103,9 +109,12 @@ public class ModalidadeDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE modalidade SET nome = ?,descricao = ? WHERE id = ?");
+            stmt = con.prepareStatement("UPDATE modalidade SET nome = ?,descricao = ?,limite_jogadores_time = ?,status = ?");
             stmt.setString(1, m.getNome());
             stmt.setString(2, m.getDescricao());
+            stmt.setInt(3,m.getLimite());
+            stmt.setInt(4,m.getStatus());
+
 
             stmt.executeUpdate();
 
