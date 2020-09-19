@@ -57,4 +57,10 @@ public class Modalidade {
         this.status = status;
     }
     
+    @Override
+    public String toString(){
+        return getNome();
+    }
+            
+    
 }

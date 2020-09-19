@@ -109,13 +109,13 @@ public class ModalidadeDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("UPDATE modalidade SET nome = ?,descricao = ?,limite_jogadores_time = ?,status = ?");
+            stmt = con.prepareStatement("UPDATE modalidade SET nome = ?,descricao = ?,limite_jogadores_time = ?,status = ? WHERE id = ?");
             stmt.setString(1, m.getNome());
             stmt.setString(2, m.getDescricao());
             stmt.setInt(3,m.getLimite());
             stmt.setInt(4,m.getStatus());
-
-
+            stmt.setInt(5,m.getId());
+            System.out.println("");
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "MODALIDADE ATUALIZADA COM SUCESSO!!!");
