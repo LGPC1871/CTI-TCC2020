@@ -21,6 +21,7 @@ public class ViewMain extends javax.swing.JFrame {
     ViewCadastrarAno viewCadastrarAno = null;
     ViewCadastrarModalidade viewCadastrarModalidade = null;
     ViewCadastrarTime viewCadastrarTime = null;
+    ViewCadastroModalidadeEdicao viewCadastroModalidadeEdicao = null;
     /**
      * Creates new form ViewMain
      */
@@ -63,6 +64,7 @@ public class ViewMain extends javax.swing.JFrame {
         menuCadastrarUsuario = new javax.swing.JMenuItem();
         menuCadastrarModalidade = new javax.swing.JMenuItem();
         menuCadastrarTime = new javax.swing.JMenuItem();
+        menuModalidadePorEdicao = new javax.swing.JMenuItem();
         menuMidia = new javax.swing.JMenu();
         menuMidiaHome = new javax.swing.JMenu();
         midiaHomeJumbotron = new javax.swing.JMenuItem();
@@ -112,6 +114,14 @@ public class ViewMain extends javax.swing.JFrame {
             }
         });
         menuCadatrar.add(menuCadastrarTime);
+
+        menuModalidadePorEdicao.setText("Modalidade por Edição");
+        menuModalidadePorEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuModalidadePorEdicaoActionPerformed(evt);
+            }
+        });
+        menuCadatrar.add(menuModalidadePorEdicao);
 
         menuBar.add(menuCadatrar);
 
@@ -230,6 +240,17 @@ public class ViewMain extends javax.swing.JFrame {
             viewCadastrarTime.toFront();
         }
     }//GEN-LAST:event_menuCadastrarTimeActionPerformed
+
+    private void menuModalidadePorEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuModalidadePorEdicaoActionPerformed
+        // TODO add your handling code here:
+        if(viewCadastroModalidadeEdicao == null || viewCadastroModalidadeEdicao.isClosed()){
+            viewCadastroModalidadeEdicao = new ViewCadastroModalidadeEdicao();
+            this.desktopPane.add(viewCadastroModalidadeEdicao);
+            viewCadastroModalidadeEdicao.setVisible(true);
+        }else{
+            viewCadastroModalidadeEdicao.toFront();
+        }
+    }//GEN-LAST:event_menuModalidadePorEdicaoActionPerformed
     
 
     /**
@@ -281,6 +302,7 @@ public class ViewMain extends javax.swing.JFrame {
     private javax.swing.JMenu menuCadatrar;
     private javax.swing.JMenu menuMidia;
     private javax.swing.JMenu menuMidiaHome;
+    private javax.swing.JMenuItem menuModalidadePorEdicao;
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem midiaHomeCarrossel;
     private javax.swing.JMenuItem midiaHomeGaleria;
